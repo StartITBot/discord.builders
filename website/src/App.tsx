@@ -1,5 +1,5 @@
 import {Capsule} from "components-sdk";
-import {useCallback, useEffect, useMemo} from "react";
+import {useCallback, useEffect, useMemo, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {actions, DisplaySliceManager, RootState} from "./state";
 import {BetterInput} from "./BetterInput";
@@ -17,16 +17,54 @@ function App() {
     const state = useSelector((state: RootState) => state.display.data)
     const webhookUrl = useSelector((state: RootState) => state.display.webhookUrl);
     const response = useSelector((state: RootState) => state.display.webhookResponse);
+    const currentHash = useRef<string | null>(null);
 
     const setFile = useCallback(webhookImplementation.setFile, []);
     const getFile = useCallback(webhookImplementation.getFile, [])
-    useEffect(() => webhookImplementation.clean(state), [state]);
+    useEffect(() => {
+        webhookImplementation.clean(state);
+        if (currentHash === null) {
+            // ignore state changes, it should be loaded from URL first
+            return;
+        }
+
+        const getData = setTimeout(() => {
+            const value = btoa(encodeURIComponent(JSON.stringify(state)));
+            currentHash.current = value;  // infinite loop resolver
+            document.location.hash = value;
+        }, 600)
+
+        return () => clearTimeout(getData)
+    }, [state]);
+
+    useEffect(() => {
+        const handleChange = (event: {newURL: string}) => {
+            const newHash = new URL(event.newURL).hash.substring(1);
+            if (newHash === currentHash.current) return;
+            console.log("Loaded state from URL");
+
+            let value;
+            try {
+                value = JSON.parse(decodeURIComponent(atob(newHash)));
+            } catch (e) {
+                value = [];
+            }
+
+            dispatch(actions.setKey({key: ['data'], value}))
+            currentHash.current = event.newURL.substring(1);
+        };
+
+        handleChange({newURL: window.location.toString()})
+        window.addEventListener('hashchange', handleChange);
+        return () => window.removeEventListener('hashchange', handleChange);
+    }, [])
 
     let parsed_url: URL | null = null;
     try {
         parsed_url = new URL(webhookUrl);
         parsed_url.search = '?with_components=true'
-    } catch (e) {}
+    } catch (e) {
+    }
 
     return <div className={Styles.app}>
         <ErrorBoundary fallback={<></>}>
