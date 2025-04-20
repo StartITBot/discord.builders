@@ -37,6 +37,12 @@ function App() {
         return () => clearTimeout(getData)
     }, [state]);
 
+
+    useEffect(() => {
+        const getData = setTimeout(() => localStorage.setItem("discord.builders__webhookToken", webhookUrl), 1000)
+        return () => clearTimeout(getData)
+    }, [webhookUrl]);
+
     useEffect(() => {
         const handleChange = (event: {newURL: string}) => {
             const newHash = new URL(event.newURL).hash.substring(1);
