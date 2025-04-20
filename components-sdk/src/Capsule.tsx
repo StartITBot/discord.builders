@@ -8,6 +8,7 @@ import {Container} from "./components/Container";
 import {Button} from "./components/Button";
 import {ActionRow} from "./components/ActionRow";
 import {StringSelect} from "./components/StringSelect";
+import {File} from "./components/File"
 import {CapsuleInner} from "./CapsuleInner";
 import {generateRandomAnimal, randomSentence, uuidv4} from "./utils/randomGen";
 import {stateKeyType, StateManager} from "./polyfills/StateManager";
@@ -15,7 +16,7 @@ import {
     ActionRowComponent,
     ButtonComponent,
     Component,
-    ContainerComponent,
+    ContainerComponent, FileComponent,
     MediaGalleryComponent,
     MediaGalleryItem,
     PassProps,
@@ -98,9 +99,13 @@ export const default_settings = {
             _Image
         ]
     },
-    // File: {
-    //     type: 13,
-    // },
+    File: {
+        type: 13,
+        file: {
+            url: ''
+        },
+        spoiler: false,
+    },
     Separator: {
         type: 14,
         divider: true,
@@ -120,7 +125,8 @@ export const default_settings = {
     Thumbnail: ThumbnailComponent,
     MediaGallery: MediaGalleryComponent,
     Separator: SeparatorComponent,
-    Container:ContainerComponent
+    Container:ContainerComponent,
+    File: FileComponent
 }
 
 export type ComponentsProps = {
@@ -141,6 +147,7 @@ export const COMPONENTS = {
     12: MediaGallery,
     14: Separator,
     17: Container,
+    13: File,
 } as unknown as {
     [K: number]: (props: ComponentsProps) => JSX.Element
 }

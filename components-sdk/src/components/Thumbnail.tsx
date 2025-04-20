@@ -1,5 +1,9 @@
 import Styles from "./Thumbnail.module.css";
 import ThumbnailIcon from "../icons/Thumbnail.svg";
+import TrashIcon from "../icons/Trash.svg";
+import UploadImage from "../icons/UploadImage.svg";
+import Url from "../icons/Url.svg";
+import AddDescription from "../icons/AddDescription.svg";
 import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
 import CapsuleStyles from "../Capsule.module.css";
 import {MenuLabel} from "./Button";
@@ -8,6 +12,8 @@ import {ComponentsProps, default_settings} from "../Capsule";
 import {MediaGalleryItem, ThumbnailComponent} from "../utils/componentTypes";
 import {stateKeyType} from "../polyfills/StateManager";
 import {useFileUpload} from "../utils/useFileUpload";
+import SpoilerActiveIcon from "../icons/SpoilerActive.svg";
+import SpoilerIcon from "../icons/Spoiler.svg";
 
 
 export function Thumbnail({state, stateKey, stateManager, passProps, removeKeyParent = undefined, className=undefined} : Omit<ComponentsProps, 'state'> & {state: MediaGalleryItem | ThumbnailComponent, className?: string}) {
@@ -62,26 +68,26 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
             setOpen(2)
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Url} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Set image url</div>
         </div>
         <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             openFileSelector();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={UploadImage} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Upload image</div>
         </div>
         <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             setOpen(3)
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Set description</div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={AddDescription} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>Add description</div>
         </div>
         <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             stateManager.setKey({key: [...stateKey, "spoiler"], value: !state.spoiler});
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={state.spoiler ? SpoilerActiveIcon : SpoilerIcon} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>{state.spoiler ? "Remove spoiler" : "Set spoiler"}</div>
         </div>
         {!!removeKeyParent && <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
@@ -89,7 +95,7 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
             stateManager.deleteKey({key: stateKey, removeKeyParent});
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={TrashIcon} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Delete</div>
         </div>}
         {!!removeKeyParent && <div className={CapsuleStyles.large_button_ctx_item + ' ' + CapsuleStyles.separator} onClick={ev => {

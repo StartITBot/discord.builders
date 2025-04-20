@@ -8,7 +8,7 @@ import {MenuEmoji, MenuLabel} from "./Button";
 import {StringSelectComponent, StringSelectComponentOption} from "../utils/componentTypes";
 import {stateKeyType} from "../polyfills/StateManager";
 import Slider from "rc-slider";
-
+import TrashIcon from "../icons/Trash.svg";
 
 export function StringSelect({state, stateKey, stateManager, passProps} : ComponentsProps & {state: StringSelectComponent}) {
     useEffect(() => {
@@ -259,7 +259,7 @@ function MenuFirst({state, stateKey, stateManager, setOpen} : {
         <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
             stateManager.deleteKey({key: stateKey});
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={TrashIcon} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Delete</div>
         </div>
     </>

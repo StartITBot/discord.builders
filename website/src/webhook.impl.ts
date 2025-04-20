@@ -1,7 +1,7 @@
 import {
     Component,
     ComponentType,
-    ContainerComponent,
+    ContainerComponent, FileComponent,
     getFileType,
     MediaGalleryComponent,
     SectionComponent,
@@ -27,6 +27,11 @@ export const webhookImplementation = {
             if (dataAsSection.accessory.type !== ComponentType.THUMBNAIL) return []
 
             const url = dataAsSection.accessory.media.url;
+            if (url.startsWith("attachment://")) return [url.slice(13)]
+        } else if (data.type === ComponentType.FILE) {
+            const dataAsSection = data as FileComponent;
+
+            const url = dataAsSection.file.url;
             if (url.startsWith("attachment://")) return [url.slice(13)]
         } else if (data.type === ComponentType.MEDIA_GALLERY) {
             const dataAsGallery = data as MediaGalleryComponent;

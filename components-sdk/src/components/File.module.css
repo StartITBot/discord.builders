@@ -1,0 +1,28 @@
+.file {
+  background: #43464d;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 15px;
+  position: relative;
+  width: 100%;
+  max-width: 290px;
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  font-weight: 500;
+
+  .file_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .file_text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+  }
+}

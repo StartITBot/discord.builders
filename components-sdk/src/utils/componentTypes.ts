@@ -12,7 +12,7 @@ export enum ComponentType {
   TEXT_DISPLAY = 10,
   THUMBNAIL = 11,
   MEDIA_GALLERY = 12,
-  // FILE = 13,
+  FILE = 13,
   SEPARATOR = 14,
   CONTAINER = 17
 }
@@ -128,12 +128,12 @@ export interface SeparatorComponent extends Component {
   spacing?: SeparatorSpacingSize;
 }
 
-// export interface FileComponent extends Component {
-//   type: ComponentType.FILE;
-//   // The UnfurledMediaItem ONLY supports attachment://<filename> references
-//   file: UnfurledMediaItem;
-//   spoiler?: boolean;
-// }
+export interface FileComponent extends Component {
+  type: ComponentType.FILE;
+  // The UnfurledMediaItem ONLY supports attachment://<filename> references
+  file: UnfurledMediaItem;
+  spoiler?: boolean;
+}
 
 export interface ContainerComponent extends Component {
   type: ComponentType.CONTAINER;

@@ -9,6 +9,7 @@ import Icons from "../icons/Icons.svg";
 import {ButtonComponent, ButtonStyle, EmojiObject} from "../utils/componentTypes";
 import {ComponentsProps} from "../Capsule";
 import {stateKeyType} from "../polyfills/StateManager";
+import TrashIcon from "../icons/Trash.svg";
 
 /*
 
@@ -179,7 +180,7 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent} : {
         {!!removeKeyParent && <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
             stateManager.deleteKey({key: stateKey, removeKeyParent})
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={TrashIcon} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Delete</div>
         </div>}
     </>

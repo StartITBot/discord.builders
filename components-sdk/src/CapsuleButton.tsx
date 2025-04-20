@@ -1,6 +1,7 @@
 import Styles from "./Capsule.module.css";
 import Icons from "./icons/Icons.svg";
 import TextDisplayIcon from "./icons/TextDisplay.svg";
+import UploadIcon from "./icons/Upload.svg";
 import ContainerIcon from "./icons/Container.svg";
 import MediaGalleryIcon from "./icons/MediaGallery.svg";
 import SeparatorIcon from "./icons/Separator.svg";
@@ -61,6 +62,12 @@ export function CapsuleButton({context, callback, className} : props) {
                 }}>
                     <div className={Styles.large_button_ctx_item_img}><img src={MediaGalleryIcon} alt=""/></div>
                     <div className={Styles.large_button_ctx_item_text}>Image</div>
+                </div>}
+                {['main', 'container'].includes(context) && <div className={Styles.large_button_ctx_item} onClick={() => {
+                    callback(default_settings.File)
+                }}>
+                    <div className={Styles.large_button_ctx_item_img}><img src={UploadIcon} alt=""/></div>
+                    <div className={Styles.large_button_ctx_item_text}>File</div>
                 </div>}
                 {['main', 'container'].includes(context) && <div className={Styles.large_button_ctx_item} onClick={() => {
                     callback(default_settings.Separator)
