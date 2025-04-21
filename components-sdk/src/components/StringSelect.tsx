@@ -9,6 +9,7 @@ import {StringSelectComponent, StringSelectComponentOption} from "../utils/compo
 import {stateKeyType} from "../polyfills/StateManager";
 import Slider from "rc-slider";
 import TrashIcon from "../icons/Trash.svg";
+import { useStateOpen } from '../utils/useStateOpen';
 
 export function StringSelect({state, stateKey, stateManager, passProps} : ComponentsProps & {state: StringSelectComponent}) {
     useEffect(() => {
@@ -58,23 +59,13 @@ function GlobalSettings({state, stateKey, stateManager} : {
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
 }) {
-    const [open, setOpen] = useState(0);
-    const btn = useRef<HTMLDivElement>(null);
+    const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
-
-    const documentClick = useCallback((ev: MouseEvent) => {
-        if (btn.current && !btn.current.contains(ev.target as HTMLElement)) setOpen(0);
-    }, [btn.current]);
-
-    useEffect(() => {
-        document.addEventListener('mousedown', documentClick);
-        return () => document.removeEventListener('mousedown', documentClick);
-    }, []);
 
     return <div className={Styles.select_option + ' ' + Styles.select_default + (open ? " " + Styles.open :  "")} onClick={(ev) => {
         if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
         setOpen(1)
-    }} ref={btn}>
+    }} ref={ignoreRef}>
         <div className={Styles.icon}><img src={EditIcon} alt="(Edit)"/></div>
         <div className={Styles.with_badge}>
             <div className={Styles.text}>{state.placeholder || "Global settings"}</div>
@@ -82,7 +73,7 @@ function GlobalSettings({state, stateKey, stateManager} : {
         </div>
         { !!open && <div className={CapsuleStyles.large_button_ctx+ ' ' + CapsuleStyles.noright} ref={btn_select}>
             {open === 1 && <GlobalSettingsFirst state={state} stateKey={stateKey} stateManager={stateManager} setOpen={setOpen}/>}
-            {open === 2 && <MenuLabel state={state.placeholder || ""} stateKey={[...stateKey, 'placeholder']} stateManager={stateManager} setOpen={setOpen}/>}
+            {open === 2 && <MenuLabel closeLockRef={closeLockRef} state={state.placeholder || ""} stateKey={[...stateKey, 'placeholder']} stateManager={stateManager} setOpen={setOpen}/>}
             {open === 3 && <MenuRange min={1} max={state.options.length} state={state.min_values} stateKey={[...stateKey, 'min_values']} stateManager={stateManager}/>}
             {open === 4 && <MenuRange min={1} max={state.options.length} state={state.max_values} stateKey={[...stateKey, 'max_values']} stateManager={stateManager}/>}
         </div>}
@@ -161,25 +152,15 @@ function StringSelectOption({state, stateKey, stateManager, passProps} : {
     stateManager: ComponentsProps['stateManager'],
     passProps: ComponentsProps['passProps']
 }) {
-    const [open, setOpen] = useState(0);
-    const btn = useRef<HTMLDivElement>(null);
+    const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
-    const documentClick = useCallback((ev: MouseEvent) => {
-        if (btn.current && !btn.current.contains(ev.target as HTMLElement)) setOpen(0);
-    }, [btn.current]);
-
     const Comp = passProps.EmojiShow;
-
-    useEffect(() => {
-        document.addEventListener('mousedown', documentClick);
-        return () => document.removeEventListener('mousedown', documentClick);
-    }, []);
 
     return (
         <div className={Styles.select_option + (open ? " " + Styles.open : "") + (state.default ? " " + Styles.blue : "") + (state.disabled ? " " + Styles.disabled : "")} onClick={(ev) => {
             if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
             setOpen(1)
-        }} ref={btn}>
+        }} ref={useRef}>
             {state.emoji !== null && <div className={CapsuleStyles.emoji}>
                 <Comp passProps={passProps} emoji={state.emoji} />
             </div>}
@@ -189,8 +170,8 @@ function StringSelectOption({state, stateKey, stateManager, passProps} : {
             { !!open && <div className={CapsuleStyles.large_button_ctx+ ' ' + CapsuleStyles.noright} ref={btn_select}>
                 {open === 1 && <MenuFirst state={state} stateKey={stateKey} stateManager={stateManager} setOpen={setOpen}/>}
                 {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager} passProps={passProps}/>}
-                {open === 3 && <MenuLabel state={state.label} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
-                {open === 4 && <MenuLabel state={state.description || ""} nullable={true} stateKey={[...stateKey, "description"]} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.description || ""} nullable={true} stateKey={[...stateKey, "description"]} stateManager={stateManager} setOpen={setOpen}/>}
             </div>}
         </div>
     )

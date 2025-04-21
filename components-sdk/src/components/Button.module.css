@@ -55,3 +55,17 @@
     text-overflow: ellipsis;
   }
 }
+
+.menu_label {
+  position: relative;
+  padding-right: 7px;
+  img {
+    width: 25px;
+    height: 25px;
+    padding: 7px;
+    cursor: pointer;
+    position: absolute;
+    top:0;
+    right: 0;
+  }
+}

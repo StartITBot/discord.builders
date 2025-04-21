@@ -1,6 +1,16 @@
 import Styles from "./Button.module.css";
 import CapsuleStyles from "../Capsule.module.css";
-import {Dispatch, Fragment, SetStateAction, useCallback, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {
+    Dispatch, forwardRef,
+    Fragment,
+    MutableRefObject, RefObject,
+    SetStateAction,
+    useCallback,
+    useEffect, useImperativeHandle,
+    useLayoutEffect,
+    useRef,
+    useState
+} from 'react';
 import ColorBlue from "../icons/ColorBlue.svg";
 import ColorGrey from "../icons/ColorGrey.svg";
 import ColorGreen from "../icons/ColorGreen.svg";
@@ -10,6 +20,8 @@ import {ButtonComponent, ButtonStyle, EmojiObject} from "../utils/componentTypes
 import {ComponentsProps} from "../Capsule";
 import {stateKeyType} from "../polyfills/StateManager";
 import TrashIcon from "../icons/Trash.svg";
+import { useStateOpen } from '../utils/useStateOpen';
+import TimesSolid from "../icons/times-solid.svg"
 
 /*
 
@@ -53,20 +65,9 @@ export function Button(
     {state, stateKey, stateManager, removeKeyParent = undefined, passProps} :
     ComponentsProps & {state: ButtonComponent}
 ) {
-    const [open, setOpen] = useState(0);
-    const btn = useRef<HTMLDivElement>(null);
+    const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
-    const documentClick = useCallback((ev: MouseEvent) => {
-        if (btn.current && !btn.current.contains(ev.target as HTMLElement)) setOpen(0);
-    }, [btn.current]);
-
-    useEffect(() => {
-        document.addEventListener('mousedown', documentClick);
-        return () => document.removeEventListener('mousedown', documentClick);
-    }, []);
-
     const Comp = passProps.EmojiShow
-
 
     // LINK BUTTON START
 
@@ -84,7 +85,7 @@ export function Button(
             onClick={(ev) => {
                 if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
                 setOpen(1)
-            }} ref={btn}
+            }} ref={ignoreRef}
         >
             {state.emoji !== null && <div className={CapsuleStyles.emoji}>
                 <Comp passProps={passProps} emoji={state.emoji}/>
@@ -102,8 +103,8 @@ export function Button(
             {!!open && <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
                 {open === 1 && <MenuFirst state={state} stateManager={stateManager} stateKey={stateKey} removeKeyParent={removeKeyParent} setOpen={setOpen}/>}
                 {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager} passProps={passProps}/>}
-                {open === 3 && <MenuLabel state={state.label} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
-                {open === 4 && <MenuLabel state={state.url || ""} stateKey={[...stateKey, 'url']} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.url || ""} stateKey={[...stateKey, 'url']} stateManager={stateManager} setOpen={setOpen}/>}
             </div>}
         </div>
     )
@@ -200,29 +201,32 @@ export function MenuEmoji({stateKey, stateManager, passProps} : {
     />
 }
 
-export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = false} : {
+export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = false, closeLockRef} : {
     state: string,
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
     setOpen: Dispatch<SetStateAction<number>>,
-    nullable?: boolean
+    nullable?: boolean,
+    closeLockRef: RefObject<any>
 }) {
     const ref = useRef<HTMLInputElement>(null);
+    useImperativeHandle(closeLockRef, () => true);
+
     useEffect(() => {
         if (ref.current) ref.current.focus();
     }, [ref.current]);
-    return <input
-        ref={ref}
-        type="text"
-        value={state}
-        className={Styles.input}
-        placeholder="abcdefg"
-        onChange={(ev) => stateManager.setKey({key: stateKey, value: nullable ? (ev.target.value || null) : ev.target.value})}
-        onKeyUp={(ev) => {
-            if (ev.key == "Enter" || ev.key == "Escape"){
-                setOpen(0);
-            }
-        }}
-        onBlur={() => setOpen(0)}
-    />
+    return <div className={Styles.menu_label}>
+        <input
+            ref={ref}
+            type="text"
+            value={state}
+            className={Styles.input}
+            placeholder="abcdefg"
+            onChange={(ev) => stateManager.setKey({
+                key: stateKey,
+                value: nullable ? (ev.target.value || null) : ev.target.value
+            })}
+        />
+        <img width={30} height={30} src={TimesSolid} alt={'x'} onClick={() => setOpen(0)} />
+    </div>
 }
