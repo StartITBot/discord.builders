@@ -10,6 +10,10 @@ build/
 .vite/
 .yarn/
 
+# Yarn Plug'n'Play
+.pnp.loader.mjs
+.pnp.cjs
+
 # Compiled Java class files
 *.class
 
