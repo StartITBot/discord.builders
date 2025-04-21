@@ -218,6 +218,11 @@ export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = fa
         className={Styles.input}
         placeholder="abcdefg"
         onChange={(ev) => stateManager.setKey({key: stateKey, value: nullable ? (ev.target.value || null) : ev.target.value})}
+        onKeyUp={(ev) => {
+            if (ev.key == "Enter" || ev.key == "Escape"){
+                setOpen(0);
+            }
+        }}
         onBlur={() => setOpen(0)}
     />
 }
