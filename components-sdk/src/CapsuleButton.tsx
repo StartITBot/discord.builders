@@ -11,6 +11,7 @@ import SelectIcon from "./icons/Select.svg";
 import {default_settings} from "./Capsule";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {Component} from "./utils/componentTypes";
+import { useStateOpen } from './utils/useStateOpen';
 
 export type capsuleButtonCtx = 'main' | 'container' | 'inline' | 'button-row' | 'frame';
 
@@ -21,23 +22,14 @@ type props = {
 };
 
 export function CapsuleButton({context, callback, className} : props) {
-    const [open, setOpen] = useState(false);
+    const {open, setOpen, ignoreRef} = useStateOpen(false);
     const cls = className ? " " + className : "";
-    const btn = useRef<HTMLDivElement>(null);
     const btn_select = useRef<HTMLDivElement>(null);
-    const documentClick = useCallback((ev: MouseEvent) => {
-        if (btn.current && !btn.current.contains(ev.target as HTMLElement)) setOpen(false);
-    }, [btn.current]);
-
-    useEffect(() => {
-        document.addEventListener('mousedown', documentClick);
-        return () => document.removeEventListener('mousedown', documentClick);
-    }, []);
 
     return (
         <div className={Styles.large_button + cls} onClick={(ev) => {
             setOpen(!(btn_select.current && btn_select.current.contains(ev.target as HTMLElement)));
-        }} ref={btn}>
+        }} ref={ignoreRef}>
             <img  className={Styles.large_button_icon} src={Icons} alt=""/>
             {context === "main" && "Add component"}
             {context === "inline" && "Add inline component"}

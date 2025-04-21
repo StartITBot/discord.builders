@@ -14,11 +14,11 @@ import {stateKeyType} from "../polyfills/StateManager";
 import {useFileUpload} from "../utils/useFileUpload";
 import SpoilerActiveIcon from "../icons/SpoilerActive.svg";
 import SpoilerIcon from "../icons/Spoiler.svg";
+import { useStateOpen } from '../utils/useStateOpen';
 
 
 export function Thumbnail({state, stateKey, stateManager, passProps, removeKeyParent = undefined, className=undefined} : Omit<ComponentsProps, 'state'> & {state: MediaGalleryItem | ThumbnailComponent, className?: string}) {
-    const [open, setOpen] = useState(0);
-    const btn = useRef<HTMLDivElement>(null);
+    const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
 
     const {src, setSrc, openFileSelector} = useFileUpload(
@@ -27,26 +27,16 @@ export function Thumbnail({state, stateKey, stateManager, passProps, removeKeyPa
         passProps?.getFile, passProps?.setFile, stateManager
     );
 
-    const documentClick = useCallback((ev: MouseEvent) => {
-        if (btn.current && !btn.current.contains(ev.target as HTMLElement)) setOpen(0);
-    }, [btn.current]);
-
-    useEffect(() => {
-        document.addEventListener('mousedown', documentClick);
-        return () => document.removeEventListener('mousedown', documentClick);
-    }, []);
-
-
     return <div className={(className || Styles.thumbnail) + ' ' + (state.spoiler ? Styles.spoiler : '')}
     onClick={(ev) => {
         if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
         setOpen(1)
-    }} ref={btn}>
+    }} ref={ignoreRef}>
         <img src={src || ThumbnailIcon} alt=""/>
         {!!open && <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
             {open === 1 && <MenuFirst state={state} stateKey={stateKey} stateManager={stateManager} setOpen={setOpen} removeKeyParent={removeKeyParent} openFileSelector={openFileSelector}/>}
-            {open === 2 && <MenuLabel state={state.media.url} stateKey={[...stateKey, "media", "url"]} stateManager={stateManager} setOpen={setOpen}/>}
-            {open === 3 && <MenuLabel state={state.description || ""} stateKey={[...stateKey, "description"]} stateManager={stateManager} nullable={true} setOpen={setOpen}/>}
+            {open === 2 && <MenuLabel closeLockRef={closeLockRef} state={state.media.url} stateKey={[...stateKey, "media", "url"]} stateManager={stateManager} setOpen={setOpen}/>}
+            {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.description || ""} stateKey={[...stateKey, "description"]} stateManager={stateManager} nullable={true} setOpen={setOpen}/>}
         </div>}
 
     </div>
