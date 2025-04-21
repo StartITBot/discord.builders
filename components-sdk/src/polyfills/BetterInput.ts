@@ -1,24 +1,21 @@
-import {FC} from "react";
-import {PassProps} from "../utils/componentTypes";
+import { FC } from 'react';
+import { PassProps } from '../utils/componentTypes';
 
 interface EventValue {
-    value: string
+    value: string;
 }
 
 interface EventValueTarget {
-    target: EventValue
+    target: EventValue;
 }
 
 export interface BetterInputProps {
-    passProps: PassProps,
-    onChange: (ev: EventValueTarget) => any,
-    value: string
+    passProps: PassProps;
+    onChange: (ev: EventValueTarget) => any;
+    value: string;
 }
 
-export type BetterInput = FC<BetterInputProps>
-
-
-
+export type BetterInput = FC<BetterInputProps>;
 
 /*
 import BetterInput from "@internal/BetterInput";

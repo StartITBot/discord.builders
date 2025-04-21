@@ -1,71 +1,76 @@
 .blue {
-  background: #5865F2;
-  border: 1px solid rgba(255,255,255, 0.2);
+    background: #5865f2;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .green {
-  background: #248045;
-  border: 1px solid rgba(255,255,255, 0.2);
+    background: #248045;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .grey {
-  background: #4E5058;
-  border: 1px solid rgba(255,255,255, 0.1);
+    background: #4e5058;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .red {
-  background: #DA373C;
-  border: 1px solid rgba(255,255,255, 0.25);
+    background: #da373c;
+    border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .blue_disabled {
-  background: rgb(88, 101, 242, 0.4);
+    background: rgb(88, 101, 242, 0.4);
 }
 .green_disabled {
-  background: rgb(36, 128, 69, 0.4);
+    background: rgb(36, 128, 69, 0.4);
 }
 .grey_disabled {
-  background: rgb(78, 80, 88, 0.4);
+    background: rgb(78, 80, 88, 0.4);
 }
 .red_disabled {
-  background: rgb(218, 55, 60, 0.4);
+    background: rgb(218, 55, 60, 0.4);
 }
 
-.blue, .green, .grey, .red {
-  color: #fff;
+.blue,
+.green,
+.grey,
+.red {
+    color: #fff;
 }
 
-.blue_disabled, .green_disabled, .grey_disabled, .red_disabled {
-  color: #aaa;
-  border: 1px solid rgba(255,255,255, 0.1);
+.blue_disabled,
+.green_disabled,
+.grey_disabled,
+.red_disabled {
+    color: #aaa;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.input[type="text"] {
-  padding: 0.8rem 1.6rem;
-  width: 200px;
+.input[type='text'] {
+    padding: 0.8rem 1.6rem;
+    width: 200px;
 }
 
 .link_btn {
-  line-height: 100%;
-  .text {
-    width: fit-content;
+    line-height: 100%;
+    .text {
+        width: fit-content;
+    }
 
-  }
-
-  .link {
-    font-size: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    .link {
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 .menu_label {
-  position: relative;
-  padding-right: 7px;
-  img {
-    width: 25px;
-    height: 25px;
-    padding: 7px;
-    cursor: pointer;
-    position: absolute;
-    top:0;
-    right: 0;
-  }
+    position: relative;
+    padding-right: 7px;
+    img {
+        width: 25px;
+        height: 25px;
+        padding: 7px;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 }

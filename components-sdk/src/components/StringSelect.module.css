@@ -1,112 +1,114 @@
 .select {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 5px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  user-select: none;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 5px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    user-select: none;
 }
 
 .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 2.2rem;
-    height: 2.2rem;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
 }
 
 .select_option {
-  background: #36393f;
+    background: #36393f;
 
-  border-radius: 4px;
+    border-radius: 4px;
 
-  padding: 0.8rem 1rem;
-  cursor: pointer;
-  color: #fff;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    color: #fff;
 
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
 
-  position: relative;
+    position: relative;
 
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  .text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    .desc {
-      color: #8e8e99;
-    }
-  }
-
-  .with_badge {
     display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 0;
-    gap: 1rem;
-  }
-
-  .badge {
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    color: white;
-    border-radius: 100px;
-    font-size: 12px;
-    padding: 0 1.6rem;
-    white-space: nowrap;
-  }
-
-  &:hover, &.open {
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  &.blue {
-    background: #34396f;
-    border: 1px solid rgba(82, 93, 226, 0.7);
-  }
-
-  &.disabled {
-    background: #2b2d32;
-    color: #828387;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    .desc {
-      color: #47474e;
-    }
-  }
-
-  &.select_default {
-    color: #ccc;
-    background: unset;
-
-    &:hover, &.open {
-      background: rgba(0, 0, 0, 0.2);
-    }
-  }
-
-  &.select_new {
-    color: #ccc;
-    border: unset;
-    background: unset;
-    box-shadow: unset;
-    display: inline-flex;
     align-items: center;
     gap: 1rem;
 
-    &:hover {
-      background: rgba(0, 0, 0, 0.2);
+    .text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        .desc {
+            color: #8e8e99;
+        }
     }
-  }
+
+    .with_badge {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 0;
+        gap: 1rem;
+    }
+
+    .badge {
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        color: white;
+        border-radius: 100px;
+        font-size: 12px;
+        padding: 0 1.6rem;
+        white-space: nowrap;
+    }
+
+    &:hover,
+    &.open {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    &.blue {
+        background: #34396f;
+        border: 1px solid rgba(82, 93, 226, 0.7);
+    }
+
+    &.disabled {
+        background: #2b2d32;
+        color: #828387;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        .desc {
+            color: #47474e;
+        }
+    }
+
+    &.select_default {
+        color: #ccc;
+        background: unset;
+
+        &:hover,
+        &.open {
+            background: rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    &.select_new {
+        color: #ccc;
+        border: unset;
+        background: unset;
+        box-shadow: unset;
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+    }
 }
 
 .menu_range {
-  width: 200px;
-  padding: 0 20px;
+    width: 200px;
+    padding: 0 20px;
 }

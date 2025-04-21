@@ -1,22 +1,21 @@
 .embed {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  padding: 16px;
-  position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
 
-  .bar {
-    position: absolute;
-    left: 1px;
-    top: 1px;
-    bottom: 1px;
-    width: 4px;
-    border-radius: 9px 0 0 9px;
-  }
+    .bar {
+        position: absolute;
+        left: 1px;
+        top: 1px;
+        bottom: 1px;
+        width: 4px;
+        border-radius: 9px 0 0 9px;
+    }
 
-  &.spoiler {
-    background-image:
-        radial-gradient(at 0% 0%, hsla(231, 46%, 22%, 0.6) 0, transparent 59%),
-        radial-gradient(at 50% 50%, hsla(321, 40%, 25%, 0.4) 0, transparent 55%);
-  }
+    &.spoiler {
+        background-image: radial-gradient(at 0% 0%, hsla(231, 46%, 22%, 0.6) 0, transparent 59%),
+            radial-gradient(at 50% 50%, hsla(321, 40%, 25%, 0.4) 0, transparent 55%);
+    }
 }

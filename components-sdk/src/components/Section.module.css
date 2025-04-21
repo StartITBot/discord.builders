@@ -1,7 +1,5 @@
 .section {
-  display: grid;
-  grid-template-columns: 1fr min-content;
-  gap: 1rem;
-
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    gap: 1rem;
 }
-

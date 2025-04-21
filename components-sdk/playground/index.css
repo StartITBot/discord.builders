@@ -11,12 +11,14 @@ body {
     background-color: #07080e;
     background-attachment: fixed;
     color: #b4b7b9;
-    font-family: "gg sans",Whitney,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'gg sans', Whitney, 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1.4rem;
     padding: 0;
     overflow-x: hidden;
 }
 
-*, ::after, ::before {
-	box-sizing: border-box;
+*,
+::after,
+::before {
+    box-sizing: border-box;
 }

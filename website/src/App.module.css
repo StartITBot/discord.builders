@@ -1,78 +1,77 @@
 .app {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
-
-  .preview {
-    border-radius: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     min-height: 100vh;
-  }
-  .json {
-    padding: 2rem 4rem;
-    background: #2f3136;
-    font-size: 15px;
-    overflow: hidden;
-    min-width: 0;
-    word-wrap: anywhere;
-    height: 100vh;
-    overflow-y: auto;
-    position: sticky;
-    top: 0;
-    right: 0;
 
-    h1 {
-      font-size: 2.4rem;
-      margin: 0;
-      color: #fff;
+    .preview {
+        border-radius: 0;
+        min-height: 100vh;
     }
-
-    .data {
-      white-space: pre-wrap;
-    }
-
-    .input_pair {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      margin-bottom: 2rem;
-
-      input {
-        padding: 0.8rem 1.6rem;
+    .json {
+        padding: 2rem 4rem;
         background: #2f3136;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
-        border-radius: 4px 0 0 4px;
-        color: #dcddde;
-        font-size: inherit;
-        line-height: inherit;
-        letter-spacing: inherit;
-        font-weight: inherit;
-        font-family: inherit;
-        width: 100%;
-        outline: none;
+        font-size: 15px;
+        overflow: hidden;
+        min-width: 0;
+        word-wrap: anywhere;
+        height: 100vh;
+        overflow-y: auto;
+        position: sticky;
+        top: 0;
+        right: 0;
 
-        &::placeholder {
-          font-style: italic !important;
-          color: gray !important;
+        h1 {
+            font-size: 2.4rem;
+            margin: 0;
+            color: #fff;
         }
-      }
 
-      button {
-        background: #5865F2;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 2px rgba(0, 0, 0, 0.4), 0 0 40px rgba(88, 101, 242, 0.32);
-        border-radius: 0 4px 4px 0;
-        padding: 0.8rem 2.5rem;
-        color: #fff;
-        font-size: inherit;
-        line-height: inherit;
-        letter-spacing: inherit;
-        font-weight: inherit;
-        cursor: pointer;
-        &:hover {
-          background: #4752C4;
+        .data {
+            white-space: pre-wrap;
         }
-      }
 
+        .input_pair {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            margin-bottom: 2rem;
+
+            input {
+                padding: 0.8rem 1.6rem;
+                background: #2f3136;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+                border-radius: 4px 0 0 4px;
+                color: #dcddde;
+                font-size: inherit;
+                line-height: inherit;
+                letter-spacing: inherit;
+                font-weight: inherit;
+                font-family: inherit;
+                width: 100%;
+                outline: none;
+
+                &::placeholder {
+                    font-style: italic !important;
+                    color: gray !important;
+                }
+            }
+
+            button {
+                background: #5865f2;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 0 2px rgba(0, 0, 0, 0.4), 0 0 40px rgba(88, 101, 242, 0.32);
+                border-radius: 0 4px 4px 0;
+                padding: 0.8rem 2.5rem;
+                color: #fff;
+                font-size: inherit;
+                line-height: inherit;
+                letter-spacing: inherit;
+                font-weight: inherit;
+                cursor: pointer;
+                &:hover {
+                    background: #4752c4;
+                }
+            }
+        }
     }
-  }
 }

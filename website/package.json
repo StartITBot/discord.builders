@@ -1,32 +1,32 @@
 {
-    "name": "website",
-    "version": "0.0.0",
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "preview": "vite preview"
-    },
-    "dependencies": {
-        "@reduxjs/toolkit": "^1.8.5",
-        "components-sdk": "*",
-        "emoji-mart": "^3.0.1",
-        "rc-slider": "^9.7.5",
-        "react": "^18.2.0",
-        "react-color": "^2.19.3",
-        "react-dom": "^18.2.0",
-        "react-error-boundary": "^5.0.0",
-        "react-redux": "^8.0.2",
-        "react-textarea-autosize": "^8.3.4",
-        "use-file-picker": "^2.1.2"
-    },
-    "devDependencies": {
-        "@types/emoji-mart": "^3.0.1",
-        "@types/react": "^18",
-        "@types/react-dom": "^18",
-        "@vitejs/plugin-react": "1.2.0",
-        "postcss-nesting": "^13.0.1",
-        "typescript": "4.6.3",
-        "vite": "2.8.6"
-    }
+  "name": "website",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.5",
+    "components-sdk": "*",
+    "emoji-mart": "^3.0.1",
+    "rc-slider": "^9.7.5",
+    "react": "^18.2.0",
+    "react-color": "^2.19.3",
+    "react-dom": "^18.2.0",
+    "react-error-boundary": "^5.0.0",
+    "react-redux": "^8.0.2",
+    "react-textarea-autosize": "^8.3.4",
+    "use-file-picker": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/emoji-mart": "^3.0.1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "1.2.0",
+    "postcss-nesting": "^13.0.1",
+    "typescript": "4.6.3",
+    "vite": "2.8.6"
+  }
 }
