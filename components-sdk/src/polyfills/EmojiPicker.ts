@@ -1,12 +1,12 @@
-import {FC} from "react";
-import {EmojiObject, PassProps} from "../utils/componentTypes";
+import { FC } from 'react';
+import { EmojiObject, PassProps } from '../utils/componentTypes';
 
 export interface EmojiPickerProps {
-    passProps: PassProps,
-    onSelect: (emoji: EmojiObject) => any,
+    passProps: PassProps;
+    onSelect: (emoji: EmojiObject) => any;
 }
 
-export type EmojiPicker = FC<EmojiPickerProps>
+export type EmojiPicker = FC<EmojiPickerProps>;
 
 /*
 export function MenuEmoji({stateKey, stateManager, guild_emojis} : {

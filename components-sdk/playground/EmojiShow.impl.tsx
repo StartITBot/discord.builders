@@ -1,5 +1,5 @@
-import {EmojiShow} from "../src/polyfills/EmojiShow";
+import { EmojiShow } from '../src/polyfills/EmojiShow';
 
 export const DummyEmojiShow: EmojiShow = ({}) => {
-    return <div>:o</div>
-}
+    return <div>:o</div>;
+};

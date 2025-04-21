@@ -1,7 +1,7 @@
 export declare global {
-  interface Window {
-    uploadedFiles: {
-      [name: string]: File
+    interface Window {
+        uploadedFiles: {
+            [name: string]: File;
+        };
     }
-  }
 }

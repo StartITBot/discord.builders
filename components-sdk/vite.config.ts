@@ -2,21 +2,21 @@
 import react from '@vitejs/plugin-react';
 // @ts-ignore
 import path from 'node:path';
-import {defineConfig} from 'vite';
+import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import postcssNesting from 'postcss-nesting';
 
 export default defineConfig({
     plugins: [
         react({
-          jsxRuntime: 'classic',
+            jsxRuntime: 'classic',
         }),
         dts({
             insertTypesEntry: true,
-        })
+        }),
     ],
     esbuild: {
-        jsxInject: `import React from 'react'`
+        jsxInject: `import React from 'react'`,
     },
     build: {
         sourcemap: true,
@@ -24,26 +24,24 @@ export default defineConfig({
             entry: path.resolve(__dirname, 'src/index.ts'),
             name: 'components-sdk',
             formats: ['es', 'umd'],
-            fileName: format => `components-sdk.${format}.js`
+            fileName: (format) => `components-sdk.${format}.js`,
         },
         rollupOptions: {
             external: (source) => {
-                if(source.startsWith("/") || source.startsWith(".")) return null;
+                if (source.startsWith('/') || source.startsWith('.')) return null;
                 return true;
             },
             output: {
                 globals: {
                     react: 'React',
-                    'react-dom': 'ReactDOM'
+                    'react-dom': 'ReactDOM',
                 },
             },
         },
     },
     css: {
         postcss: {
-            plugins: [
-                postcssNesting
-            ],
+            plugins: [postcssNesting],
         },
     },
 });

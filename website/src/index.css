@@ -11,7 +11,7 @@ body {
     background-color: #07080e;
     background-attachment: fixed;
     color: #b4b7b9;
-    font-family: "gg sans", Whitney, "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'gg sans', Whitney, 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1.4rem;
     padding: 0;
     overflow-x: hidden;
@@ -97,8 +97,9 @@ body {
     font-display: swap;
 }
 
-
-*, ::after, ::before {
+*,
+::after,
+::before {
     box-sizing: border-box;
 }
 
@@ -115,7 +116,6 @@ body {
 .chrome-picker svg {
     filter: invert(100%);
 }
-
 
 .emoji-picker {
     text-wrap: auto;
@@ -144,14 +144,14 @@ body {
     }
 
     .emoji-mart-dark .emoji-mart-search input {
-    /*    border: 1px solid #232629;*/
-    /*    border-radius: 6px;*/
-    /*    outline: none;*/
-    /*    background: #232629;*/
-    /*    color: #b4b7b9;*/
-    /*    width: 100%;*/
-    /*    padding: 6px 15px;*/
-    /*    font-weight: 700;*/
+        /*    border: 1px solid #232629;*/
+        /*    border-radius: 6px;*/
+        /*    outline: none;*/
+        /*    background: #232629;*/
+        /*    color: #b4b7b9;*/
+        /*    width: 100%;*/
+        /*    padding: 6px 15px;*/
+        /*    font-weight: 700;*/
         font-family: inherit;
         font-size: 14px;
     }

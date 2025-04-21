@@ -2,9 +2,9 @@ Copyright (c) 2025 Kacper Podpora
 
 Portions of this repository are licensed as follows:
 
-* All software that resides under a "components-sdk/" directory is licensed under the license defined in "components-sdk/LICENSE.md".
+-   All software that resides under a "components-sdk/" directory is licensed under the license defined in "components-sdk/LICENSE.md".
 
-* All software outside the above-mentioned directories is available under the MIT license as set forth below.
+-   All software outside the above-mentioned directories is available under the MIT license as set forth below.
 
 MIT License
 

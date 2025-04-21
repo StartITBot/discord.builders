@@ -1,22 +1,23 @@
-import Styles from './Capsule.module.css'
-import {TextDisplay} from "./components/TextDisplay";
-import {Thumbnail} from "./components/Thumbnail";
-import {MediaGallery} from "./components/MediaGallery";
-import {Separator} from "./components/Separator";
-import {Section} from "./components/Section";
-import {Container} from "./components/Container";
-import {Button} from "./components/Button";
-import {ActionRow} from "./components/ActionRow";
-import {StringSelect} from "./components/StringSelect";
-import {File} from "./components/File"
-import {CapsuleInner} from "./CapsuleInner";
-import {generateRandomAnimal, randomSentence, uuidv4} from "./utils/randomGen";
-import {stateKeyType, StateManager} from "./polyfills/StateManager";
+import Styles from './Capsule.module.css';
+import { TextDisplay } from './components/TextDisplay';
+import { Thumbnail } from './components/Thumbnail';
+import { MediaGallery } from './components/MediaGallery';
+import { Separator } from './components/Separator';
+import { Section } from './components/Section';
+import { Container } from './components/Container';
+import { Button } from './components/Button';
+import { ActionRow } from './components/ActionRow';
+import { StringSelect } from './components/StringSelect';
+import { File } from './components/File';
+import { CapsuleInner } from './CapsuleInner';
+import { generateRandomAnimal, randomSentence, uuidv4 } from './utils/randomGen';
+import { stateKeyType, StateManager } from './polyfills/StateManager';
 import {
     ActionRowComponent,
     ButtonComponent,
     Component,
-    ContainerComponent, FileComponent,
+    ContainerComponent,
+    FileComponent,
     MediaGalleryComponent,
     MediaGalleryItem,
     PassProps,
@@ -24,7 +25,7 @@ import {
     StringSelectComponent,
     TextDisplayComponent,
     ThumbnailComponent,
-} from "./utils/componentTypes";
+} from './utils/componentTypes';
 
 export const SPACING_SMALL = 1;
 export const SPACING_LARGE = 2;
@@ -35,55 +36,60 @@ const _Button = {
     label: '',
     emoji: null,
     disabled: false,
-} as ButtonComponent
+} as ButtonComponent;
 
 const _Image = {
     media: {
-        url: ''
+        url: '',
     },
     description: null,
     spoiler: false,
-} as MediaGalleryItem
+} as MediaGalleryItem;
 
-const _StringSelect = () => ({
-    type: 3,
-    custom_id: uuidv4(),
-    options: [
-        {
-            label: generateRandomAnimal(),
-            value: uuidv4(),
-            description: null,
-            emoji: null,
-            default: false,
-        }
-    ],
-    placeholder: "",
-    min_values: 1,
-    max_values: 1,
-    disabled: false,
-} as StringSelectComponent)
+const _StringSelect = () =>
+    ({
+        type: 3,
+        custom_id: uuidv4(),
+        options: [
+            {
+                label: generateRandomAnimal(),
+                value: uuidv4(),
+                description: null,
+                emoji: null,
+                default: false,
+            },
+        ],
+        placeholder: '',
+        min_values: 1,
+        max_values: 1,
+        disabled: false,
+    } as StringSelectComponent);
 
 export const default_settings = {
     Button: () => ({
         type: 1,
-        components: [{
-            ..._Button,
-            custom_id: uuidv4(),
-            label: generateRandomAnimal()
-        }]
+        components: [
+            {
+                ..._Button,
+                custom_id: uuidv4(),
+                label: generateRandomAnimal(),
+            },
+        ],
     }),
     LinkButton: () => ({
         type: 1,
-        components: [{
-            ..._Button,
-            style: 5,
-            url: 'https://google.com',
-            label: generateRandomAnimal()
-        }]
+        components: [
+            {
+                ..._Button,
+                style: 5,
+                url: 'https://google.com',
+                label: generateRandomAnimal(),
+            },
+        ],
     }),
     StringSelect: () => ({
         type: 1,
-        components: [_StringSelect()]
+        components: [_StringSelect()],
     }),
     TextDisplay: () => ({
         type: 10,
@@ -91,25 +97,23 @@ export const default_settings = {
     }),
     Thumbnail: {
         type: 11,
-        ..._Image
+        ..._Image,
     },
     MediaGallery: {
         type: 12,
-        items: [
-            _Image
-        ]
+        items: [_Image],
     },
     File: {
         type: 13,
         file: {
-            url: ''
+            url: '',
         },
         spoiler: false,
     },
     Separator: {
         type: 14,
         divider: true,
-        spacing: SPACING_SMALL
+        spacing: SPACING_SMALL,
     },
     Container: {
         type: 17,
@@ -118,24 +122,24 @@ export const default_settings = {
         components: [],
     },
 } as {
-    Button: () => ActionRowComponent<ButtonComponent>,
-    LinkButton: () => ActionRowComponent<ButtonComponent>,
-    StringSelect: () => ActionRowComponent<StringSelectComponent>,
-    TextDisplay: () => TextDisplayComponent,
-    Thumbnail: ThumbnailComponent,
-    MediaGallery: MediaGalleryComponent,
-    Separator: SeparatorComponent,
-    Container:ContainerComponent,
-    File: FileComponent
-}
+    Button: () => ActionRowComponent<ButtonComponent>;
+    LinkButton: () => ActionRowComponent<ButtonComponent>;
+    StringSelect: () => ActionRowComponent<StringSelectComponent>;
+    TextDisplay: () => TextDisplayComponent;
+    Thumbnail: ThumbnailComponent;
+    MediaGallery: MediaGalleryComponent;
+    Separator: SeparatorComponent;
+    Container: ContainerComponent;
+    File: FileComponent;
+};
 
 export type ComponentsProps = {
-    state: Component,
-    stateKey: stateKeyType,
-    passProps: PassProps,
-    stateManager: StateManager,
-    removeKeyParent?: stateKeyType,
-}
+    state: Component;
+    stateKey: stateKeyType;
+    passProps: PassProps;
+    stateManager: StateManager;
+    removeKeyParent?: stateKeyType;
+};
 
 export const COMPONENTS = {
     1: ActionRow,
@@ -149,22 +153,25 @@ export const COMPONENTS = {
     17: Container,
     13: File,
 } as unknown as {
-    [K: number]: (props: ComponentsProps) => JSX.Element
-}
+    [K: number]: (props: ComponentsProps) => JSX.Element;
+};
 
 export const SECTIONABLE = [
-    10 // TextDisplay,
-]
+    10, // TextDisplay,
+];
 
-export function Capsule(props : {
-    stateManager: StateManager,
-    stateKey: stateKeyType,
-    state: Component[],
-    className?: string | null,
-} & PassProps) {
+export function Capsule(
+    props: {
+        stateManager: StateManager;
+        stateKey: stateKeyType;
+        state: Component[];
+        className?: string | null;
+    } & PassProps
+) {
     const cls = props.className ? ' ' + props.className : '';
 
-    return <div className={Styles.preview + cls}>
+    return (
+        <div className={Styles.preview + cls}>
             <CapsuleInner
                 state={props.state}
                 stateKey={props.stateKey}
@@ -173,4 +180,5 @@ export function Capsule(props : {
                 passProps={props}
             />
         </div>
-    }
+    );
+}
