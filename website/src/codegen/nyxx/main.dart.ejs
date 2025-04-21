@@ -1,0 +1,56 @@
+import 'package:nyxx/nyxx.dart';
+void main() async {
+  final client = await Nyxx.connectRest('...');
+[
+    <%- include('/nyxx/subcomponent.dart.ejs', {components: data.components}); %>
+]
+  await (client.channels[Snowflake(1038831656682930227)] as PartialTextChannel).sendMessage(
+    MessageBuilder(
+      flags: MessageFlags.isComponentsV2,
+      components: [
+        TextDisplayComponentBuilder(
+          content:
+              'Wondering what Components V2 are?'
+              " Here's an example of what you can make with them!",
+        ),
+        SeparatorComponentBuilder(spacing: SeparatorSpacingSize.large),
+        SectionComponentBuilder(
+          accessory: ThumbnailComponentBuilder(
+            media: UnfurledMediaItemBuilder(
+              url: Uri.parse(
+                'https://cdn.discordapp.com/icons/846136758470443069/bd6aceb3a823c005bdaf86db89076635.webp?size=128&quality=lossless',
+              ),
+            ),
+          ),
+          components: [
+            TextDisplayComponentBuilder(
+              content: 'This message was created using Components V2 and nyxx.',
+            ),
+            TextDisplayComponentBuilder(
+              content:
+                  'As you can see, Components V2 allow for more advanced layout options in your messages, as well as more options for interactivity!',
+            ),
+            TextDisplayComponentBuilder(
+              content:
+                  'You can still continue to use existing components, as seen below.',
+            ),
+          ],
+        ),
+        SeparatorComponentBuilder(),
+        ActionRowBuilder(
+          components: [
+            ButtonBuilder.link(url: Uri.https('discord.com'), label: 'Discord'),
+            ButtonBuilder.link(
+              url: Uri.https('pub.dev', '/packages/nyxx'),
+              label: 'nyxx on pub.dev',
+            ),
+            ButtonBuilder.link(
+              url: Uri.https('github.com', '/nyxx-discord/nyxx'),
+              label: 'nyxx on GitHub',
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}

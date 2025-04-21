@@ -30,6 +30,22 @@
       white-space: pre-wrap;
     }
 
+    .tabs {
+      display: flex;
+      background: rgba(0,0,0,0.1);
+      border-radius: 4px;
+      .tab {
+        cursor: pointer;
+        padding: 5px 15px;
+        &:hover {
+          background: rgba(0,0,0,0.1);
+        }
+        &.active {
+          border-bottom: 2px solid #5865F2;
+        }
+      }
+    }
+
     .input_pair {
       display: grid;
       grid-template-columns: 1fr auto;

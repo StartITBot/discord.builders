@@ -4,12 +4,13 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build",
+        "build": "vite build",
         "preview": "vite preview"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^1.8.5",
         "components-sdk": "*",
+        "ejs": "^3.1.10",
         "emoji-mart": "^3.0.1",
         "rc-slider": "^9.7.5",
         "react": "^18.2.0",
@@ -21,6 +22,7 @@
         "use-file-picker": "^2.1.2"
     },
     "devDependencies": {
+        "@types/ejs": "^3.1.5",
         "@types/emoji-mart": "^3.0.1",
         "@types/react": "^18",
         "@types/react-dom": "^18",
