@@ -1,13 +1,14 @@
-import {Capsule} from "components-sdk";
-import {useCallback, useEffect, useMemo, useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {actions, DisplaySliceManager, RootState} from "./state";
-import {BetterInput} from "./BetterInput";
-import {EmojiPicker} from "./EmojiPicker";
-import {EmojiShow} from "./EmojiShow";
-import Styles from './App.module.css'
-import {webhookImplementation} from "./webhook.impl";
-import {ErrorBoundary} from "react-error-boundary";
+import { Capsule } from 'components-sdk';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions, DisplaySliceManager, RootState } from './state';
+import { BetterInput } from './BetterInput';
+import { EmojiPicker } from './EmojiPicker';
+import { EmojiShow } from './EmojiShow';
+import Styles from './App.module.css';
+import { webhookImplementation } from './webhook.impl';
+import { ErrorBoundary } from 'react-error-boundary';
+import { JsonDisplay } from './JsonDisplay';
 
 webhookImplementation.init();
 
@@ -108,12 +109,8 @@ function App() {
                 </button>
             </div>
 
-            {!!response && <div className={Styles.data}
-                                style={{
-                                    marginBottom: '2rem',
-                                    color: '#dd9898'
-                                }}>{JSON.stringify(response, undefined, 4)}</div>}
-            <div className={Styles.data}>{JSON.stringify(state, undefined, 4)}</div>
+            {!!response && <JsonDisplay textColor={'#dd9898'} obj={response}/>}
+            <JsonDisplay obj={state}/>
         </div>
     </div>
 }

@@ -1,0 +1,21 @@
+.json_display {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1em;
+    margin-bottom: 1em;
+
+    span {
+        white-space: pre-wrap;
+    }
+
+    button {
+        float: right;
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        img:hover {
+            background: #4f5659;
+        }
+    }
+}

@@ -26,10 +26,6 @@
       color: #fff;
     }
 
-    .data {
-      white-space: pre-wrap;
-    }
-
     .input_pair {
       display: grid;
       grid-template-columns: 1fr auto;
