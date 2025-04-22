@@ -103,6 +103,7 @@ body {
 }
 
 .chrome-picker {
+    border: 1px solid black;
     background-color: #36393f !important;
 }
 .chrome-picker input {
