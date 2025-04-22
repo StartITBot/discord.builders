@@ -1,0 +1,5 @@
+<% if (!data.hideConstructor) { %>hikari.impl.ThumbnailComponentBuilder(<% } -%>
+    <%_ %>media=<%=data.comp.media.url%><% _%>
+    <%_ %><% if (data.comp.description) { %>, description=<%=data.comp.description%><% } %><% _%>
+    <%_ %><% if (data.comp.spoiler) { %>, spoiler=True<% } %><% _%>
+<% if (!data.hideConstructor) { %>)<% } -%>

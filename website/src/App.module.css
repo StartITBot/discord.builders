@@ -28,6 +28,7 @@
 
     .data {
       white-space: pre-wrap;
+      line-height: 100%;
     }
 
     .tabs {

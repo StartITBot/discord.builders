@@ -9,6 +9,7 @@ import Styles from './App.module.css'
 import {webhookImplementation} from "./webhook.impl";
 import {ErrorBoundary} from "react-error-boundary";
 import { ClientFunction, IncludeCallback } from 'ejs';
+import { CodeBlock, dracula } from 'react-code-blocks';
 
 const codegenModules: {
     [name: string]: {default: ClientFunction}
@@ -27,7 +28,7 @@ for (const key of Object.keys(codegenModules)) {
 const importCallback: IncludeCallback = (name, data) => {
     const mainDart = codegenModules['./codegen' + name]?.default;
     if (typeof mainDart === "undefined") throw Error(`Component ${name} doesn't exist.`)
-    return mainDart(data);
+    return mainDart(data, undefined, importCallback);
 };
 
 
@@ -96,10 +97,12 @@ function App() {
     }
 
     let data;
+    let language = 'json';
 
     if (Object.keys(libComponents).includes(libSelected)) {
         const mainDart = libComponents[libSelected];
         data = mainDart({components: state}, undefined, importCallback);
+        language = 'python'; // temp
     } else {
         data = JSON.stringify(state, undefined, 4)
     }
@@ -151,7 +154,14 @@ function App() {
                 {Object.keys(libComponents).map(comp => <div className={Styles.tab + ' ' + (comp === libSelected ? Styles.active : '')} onClick={() => setLibSelected(comp)}>{comp}</div>)}
             </div>
 
-            <div className={Styles.data}>{data}</div>
+            <div className={Styles.data}>
+                <CodeBlock
+                    text={data}
+                    language={language}
+                    showLineNumbers={false}
+                    theme={dracula}
+                />
+            </div>
         </div>
     </div>
 }

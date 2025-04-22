@@ -14,6 +14,7 @@
         "emoji-mart": "^3.0.1",
         "rc-slider": "^9.7.5",
         "react": "^18.2.0",
+        "react-code-blocks": "^0.1.6",
         "react-color": "^2.19.3",
         "react-dom": "^18.2.0",
         "react-error-boundary": "^5.0.0",
