@@ -8,6 +8,7 @@ import {EmojiShow} from "./EmojiShow";
 import Styles from './App.module.css'
 import {webhookImplementation} from "./webhook.impl";
 import {ErrorBoundary} from "react-error-boundary";
+import { ColorPicker } from './ColorPicker';
 
 webhookImplementation.init();
 
@@ -81,6 +82,7 @@ function App() {
                      setFile={setFile}
                      BetterInput={BetterInput}
                      EmojiPicker={EmojiPicker}
+                     ColorPicker={ColorPicker}
                      EmojiShow={EmojiShow}
                      className={Styles.preview}
             />

@@ -2,6 +2,7 @@ import {BetterInput} from "../polyfills/BetterInput";
 import {EmojiPicker} from "../polyfills/EmojiPicker";
 import {EmojiShow} from "../polyfills/EmojiShow";
 import {getFileType, setFileType} from "../polyfills/files";
+import { ColorPicker } from '../polyfills/ColorPicker';
 
 export enum ComponentType {
   ACTION_ROW = 1,
@@ -22,7 +23,8 @@ export type PassProps = {
   setFile: setFileType,
   BetterInput: BetterInput,
   EmojiPicker: EmojiPicker,
-  EmojiShow: EmojiShow
+  ColorPicker: ColorPicker
+  EmojiShow: EmojiShow,
 }
 
 export enum ButtonStyle {

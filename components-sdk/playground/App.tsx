@@ -5,6 +5,7 @@ import {DummyStateManager} from "./StateManager.impl";
 import {DummyBetterInput} from "./BetterInput.impl";
 import {DummyEmojiPicker} from "./EmojiPicker.impl";
 import {DummyEmojiShow} from "./EmojiShow.impl";
+import { DummyColorPicker } from './ColorPicker.impl';
 
 function App() {
     const stateManager = useMemo(()=> new DummyStateManager(), [])
@@ -22,6 +23,7 @@ function App() {
             stateKey={[]}
             BetterInput={DummyBetterInput}
             EmojiPicker={DummyEmojiPicker}
+            ColorPicker={DummyColorPicker}
             EmojiShow={DummyEmojiShow}
             getFile={undefined}
             setFile={undefined}
