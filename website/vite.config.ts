@@ -2,11 +2,14 @@ import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 import {resolve} from "node:path";
 import postcssNesting from 'postcss-nesting';
+import ejsTemplatePlugin from './src/rollupPlugin';
 
 
 export default defineConfig(({command, mode}) => ({
     plugins: [react({
       jsxRuntime: 'classic',
+    }), ejsTemplatePlugin({
+        compileDebug: mode === 'development'
     })],
 
     esbuild: {

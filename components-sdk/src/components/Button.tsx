@@ -85,7 +85,9 @@ export function Button(
             onClick={(ev) => {
                 if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
                 setOpen(1)
-            }} ref={ignoreRef}
+            }}
+            ref={ignoreRef}
+            title={state.url}
         >
             {state.emoji !== null && <div className={CapsuleStyles.emoji}>
                 <Comp passProps={passProps} emoji={state.emoji}/>

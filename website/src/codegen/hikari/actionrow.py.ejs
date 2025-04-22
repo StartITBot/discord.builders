@@ -1,0 +1,4 @@
+hikari.impl.MessageActionRowBuilder()<% data.comp.components.forEach(function(comp){ -%>.add_component(
+            <%- include('/hikari/components.py.ejs', {comp: comp}); %>,
+        )<% _%>
+<% }); -%>
