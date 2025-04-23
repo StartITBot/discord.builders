@@ -32,6 +32,22 @@ const importCallback: IncludeCallback = (name, data) => {
     return mainDart(data, undefined, importCallback);
 };
 
+const libs = {
+    hikari:{
+        name: "Python: hikari",
+        language: 'python'
+    },
+
+    nyxx: {
+        name: "Dart: nyxx",
+        language: "dart"
+    }
+} as {
+    [name: string] : {
+        name: string,
+        language: string
+    }
+}
 
 webhookImplementation.init();
 
@@ -103,7 +119,7 @@ function App() {
     if (Object.keys(libComponents).includes(libSelected)) {
         const mainDart = libComponents[libSelected];
         data = mainDart({components: state}, undefined, importCallback);
-        language = 'python'; // temp
+        language = libs[libSelected]?.language || 'json';
     } else {
         data = JSON.stringify(state, undefined, 4)
     }
@@ -153,7 +169,7 @@ function App() {
 
             <div className={Styles.tabs}>
                 <div className={Styles.tab + ' ' + ('json' === libSelected ? Styles.active : '')} onClick={() => setLibSelected("json")}>JSON</div>
-                {Object.keys(libComponents).map(comp => <div className={Styles.tab + ' ' + (comp === libSelected ? Styles.active : '')} onClick={() => setLibSelected(comp)}>{comp}</div>)}
+                {Object.keys(libComponents).map(comp => <div className={Styles.tab + ' ' + (comp === libSelected ? Styles.active : '')} onClick={() => setLibSelected(comp)}>{libs[comp]?.name || comp}</div>)}
             </div>
 
             <div className={Styles.data}>
