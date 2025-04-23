@@ -1,0 +1,10 @@
+import 'package:nyxx/nyxx.dart';
+
+final message = MessageBuilder(
+  flags: MessageFlags.isComponentsV2,
+  components: [
+<% data.components.forEach(comp => { -%>
+  <%_ %><%- include('/nyxx/components.dart.ejs', {comp: comp, indent: 4}); %>,
+<% }); -%>
+  ],
+);
