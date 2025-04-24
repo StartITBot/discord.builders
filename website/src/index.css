@@ -102,20 +102,27 @@ body {
     box-sizing: border-box;
 }
 
-.chrome-picker {
-    background-color: #36393f !important;
+.sketch-picker {
+    background-color: #1c1d20 !important;
 }
-.chrome-picker input {
-    background-color: #262626 !important;
+.sketch-picker div {
+    box-sizing: content-box !important;
+}
+.sketch-picker input {
+    background-color: transparent !important;
     color: white !important;
-    box-shadow: none !important;
-    border: 1px solid #1a1a1a !important;
+    box-shadow: 0 0 2px rgb(0, 0, 0) !important;
+    border: 1px solid rgba(248, 248, 248, 0.16) !important;
     outline: none;
+    border-radius: 5px;
 }
-.chrome-picker svg {
-    filter: invert(100%);
+.sketch-picker input {
+    box-sizing: content-box;
+    text-align: center;
 }
-
+.sketch-picker label {
+    color: white !important;
+}
 
 .emoji-picker {
     text-wrap: auto;

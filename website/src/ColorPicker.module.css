@@ -1,0 +1,14 @@
+.color_picker {
+    button {
+        float: right;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5em;
+
+        img {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+}

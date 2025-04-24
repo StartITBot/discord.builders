@@ -1,0 +1,10 @@
+<%=data.comp.label%>, <%=data.comp.value%><% _%>
+<% if (data.comp.description) { %>, description=<%=data.comp.description%><% } %><% _%>
+<% if (data.comp.emoji) { %>, emoji=<% _%>
+    <%_ %><% if (data.comp.emoji.id) {-%>
+        <%_ %>hikari.emojis.CustomEmoji.parse("<<%-data.comp.emoji.name%>:<%-data.comp.emoji.id%>>")<% _%>
+    <%_ %><%}else{-%>
+        <%_ %><%=data.comp.emoji.name%><% _%>
+    <%_ %><%}-%>
+<% } -%>
+<% if (data.comp.default) { %>, is_default=True<% } %><% _%>

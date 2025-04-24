@@ -12,17 +12,17 @@ import TrashIcon from "../icons/Trash.svg";
 import { useStateOpen } from '../utils/useStateOpen';
 
 export function StringSelect({state, stateKey, stateManager, passProps} : ComponentsProps & {state: StringSelectComponent}) {
-    useEffect(() => {
-        if (state.min_values > state.max_values) {
-            stateManager.setKey({key: [...stateKey, "max_values"], value: state.min_values})
-        }
-    }, [state.min_values]);
-
-    useEffect(() => {
-        if (state.max_values < state.min_values) {
-            stateManager.setKey({key: [...stateKey, "min_values"], value: state.max_values})
-        }
-    }, [state.max_values]);
+    // useEffect(() => {
+    //     if (state.min_values > state.max_values) {
+    //         stateManager.setKey({key: [...stateKey, "max_values"], value: state.min_values})
+    //     }
+    // }, [state.min_values]);
+    //
+    // useEffect(() => {
+    //     if (state.max_values < state.min_values) {
+    //         stateManager.setKey({key: [...stateKey, "min_values"], value: state.max_values})
+    //     }
+    // }, [state.max_values]);
 
     return <div>
         <div className={Styles.select}>
@@ -160,7 +160,7 @@ function StringSelectOption({state, stateKey, stateManager, passProps} : {
         <div className={Styles.select_option + (open ? " " + Styles.open : "") + (state.default ? " " + Styles.blue : "") + (state.disabled ? " " + Styles.disabled : "")} onClick={(ev) => {
             if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
             setOpen(1)
-        }} ref={useRef}>
+        }} ref={ignoreRef}>
             {state.emoji !== null && <div className={CapsuleStyles.emoji}>
                 <Comp passProps={passProps} emoji={state.emoji} />
             </div>}

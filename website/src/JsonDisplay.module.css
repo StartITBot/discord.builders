@@ -6,6 +6,7 @@
 
     span {
         white-space: pre-wrap;
+        line-height: 100%;
     }
 
     button {

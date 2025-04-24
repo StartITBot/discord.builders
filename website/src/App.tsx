@@ -1,20 +1,61 @@
-import { Capsule } from 'components-sdk';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { actions, DisplaySliceManager, RootState } from './state';
-import { BetterInput } from './BetterInput';
-import { EmojiPicker } from './EmojiPicker';
-import { EmojiShow } from './EmojiShow';
-import Styles from './App.module.css';
-import { webhookImplementation } from './webhook.impl';
-import { ErrorBoundary } from 'react-error-boundary';
+import { Capsule } from "components-sdk";
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { actions, DisplaySliceManager, RootState } from "./state";
+import { BetterInput } from "./BetterInput";
+import { EmojiPicker } from "./EmojiPicker";
+import { EmojiShow } from "./EmojiShow";
+import Styles from './App.module.css'
+import { webhookImplementation } from "./webhook.impl";
+import { ErrorBoundary } from "react-error-boundary";
+import { ColorPicker } from './ColorPicker';
+import { ClientFunction, IncludeCallback } from 'ejs';
+import { CodeBlock, dracula } from 'react-code-blocks';
 import { JsonDisplay } from './JsonDisplay';
+
+const codegenModules: {
+    [name: string]: { default: ClientFunction }
+} = import.meta.globEager('./codegen/**/*.ejs')
+
+const libComponents: { [name: string]: ClientFunction } = {};
+
+for (const key of Object.keys(codegenModules)) {
+    const match = key.match(/^\.\/codegen\/([^/]+)\/main(?:\.[^/]*)?\.ejs$/);
+    if (match) {
+        const group = match[1];
+        libComponents[group] = codegenModules[key].default;
+    }
+}
+
+const importCallback: IncludeCallback = (name, data) => {
+    const mainDart = codegenModules['./codegen' + name]?.default;
+    if (typeof mainDart === "undefined") throw Error(`Component ${name} doesn't exist.`)
+    return mainDart(data, undefined, importCallback);
+};
+
+const libs = {
+    hikari: {
+        name: "Python: hikari",
+        language: 'python'
+    },
+
+    nyxx: {
+        name: "Dart: nyxx",
+        language: "dart"
+    }
+} as {
+    [name: string]: {
+        name: string,
+        language: string
+    }
+}
 
 webhookImplementation.init();
 
 function App() {
     const dispatch = useDispatch();
     const stateManager = useMemo(() => new DisplaySliceManager(dispatch), [dispatch]);
+    const [libSelected, setLibSelected] = useState<string>('json');
     const state = useSelector((state: RootState) => state.display.data)
     const webhookUrl = useSelector((state: RootState) => state.display.webhookUrl);
     const response = useSelector((state: RootState) => state.display.webhookResponse);
@@ -45,7 +86,7 @@ function App() {
     }, [webhookUrl]);
 
     useEffect(() => {
-        const handleChange = (event: {newURL: string}) => {
+        const handleChange = (event: { newURL: string }) => {
             const newHash = new URL(event.newURL).hash.substring(1);
             if (newHash === currentHash.current) return;
             console.log("Loaded state from URL");
@@ -57,11 +98,11 @@ function App() {
                 value = [];
             }
 
-            dispatch(actions.setKey({key: ['data'], value}))
+            dispatch(actions.setKey({ key: ['data'], value }))
             currentHash.current = event.newURL.substring(1);
         };
 
-        handleChange({newURL: window.location.toString()})
+        handleChange({ newURL: window.location.toString() })
         window.addEventListener('hashchange', handleChange);
         return () => window.removeEventListener('hashchange', handleChange);
     }, [])
@@ -73,34 +114,46 @@ function App() {
     } catch (e) {
     }
 
+    let data;
+    let language = 'json';
+
+    if (Object.keys(libComponents).includes(libSelected)) {
+        const mainDart = libComponents[libSelected];
+        data = mainDart({ components: state }, undefined, importCallback);
+        language = libs[libSelected]?.language || 'json';
+    } else {
+        data = JSON.stringify(state, undefined, 4)
+    }
+
     return <div className={Styles.app}>
         <ErrorBoundary fallback={<></>}>
             <Capsule state={state}
-                     stateManager={stateManager}
-                     stateKey={['data']}
-                     getFile={getFile}
-                     setFile={setFile}
-                     BetterInput={BetterInput}
-                     EmojiPicker={EmojiPicker}
-                     EmojiShow={EmojiShow}
-                     className={Styles.preview}
+                stateManager={stateManager}
+                stateKey={['data']}
+                getFile={getFile}
+                setFile={setFile}
+                BetterInput={BetterInput}
+                EmojiPicker={EmojiPicker}
+                ColorPicker={ColorPicker}
+                EmojiShow={EmojiShow}
+                className={Styles.preview}
             />
         </ErrorBoundary>
         <div className={Styles.json}>
             <h1>Message builder</h1>
-            <p style={{marginBottom: '2rem', marginTop: '1rem'}}>Warning: Non-link buttons and select menus are not
+            <p style={{ marginBottom: '2rem', marginTop: '1rem' }}>Warning: Non-link buttons and select menus are not
                 allowed when sending message via webhook.</p>
 
             <div className={Styles.input_pair}>
                 <div className={Styles.input}>
                     <input placeholder={"Webhook link"} type="text" value={webhookUrl}
-                           onChange={ev => dispatch(actions.setWebhookUrl(ev.target.value))}/>
+                        onChange={ev => dispatch(actions.setWebhookUrl(ev.target.value))} />
                 </div>
                 <button disabled={!parsed_url} onClick={async () => {
                     const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state))
 
                     const status_code = req.status;
-                    if (status_code === 204) return dispatch(actions.setWebhookResponse({"status": "204 Success"}));
+                    if (status_code === 204) return dispatch(actions.setWebhookResponse({ "status": "204 Success" }));
 
                     const error_data = await req.json();
                     dispatch(actions.setWebhookResponse(error_data))
@@ -109,10 +162,23 @@ function App() {
                 </button>
             </div>
 
-            {!!response && <JsonDisplay textColor={'#dd9898'} obj={response}/>}
-            <JsonDisplay obj={state}/>
-        </div>
-    </div>
+            {!!response && <JsonDisplay textColor={'#dd9898'} obj={response} />}
+
+            <div className={Styles.tabs}>
+                <div className={Styles.tab + ' ' + ('json' === libSelected ? Styles.active : '')} onClick={() => setLibSelected("json")}>JSON</div>
+                {Object.keys(libComponents).map(comp => <div className={Styles.tab + ' ' + (comp === libSelected ? Styles.active : '')} onClick={() => setLibSelected(comp)}>{libs[comp]?.name || comp}</div>)}
+            </div>
+
+            <div className={Styles.data}>
+                <CodeBlock
+                    text={data}
+                    language={language}
+                    showLineNumbers={false}
+                    theme={dracula}
+                />
+            </div>
+        </div >
+    </div >
 }
 
 export default App;

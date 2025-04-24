@@ -1,0 +1,28 @@
+<%
+const buttonStyle = {
+    1: "hikari.components.ButtonStyle.PRIMARY",
+    2: "hikari.components.ButtonStyle.SECONDARY",
+    3: "hikari.components.ButtonStyle.SUCCESS",
+    4: "hikari.components.ButtonStyle.DANGER"
+}
+
+const className = data.comp.style === 5 ? 'hikari.impl.LinkButtonBuilder' : 'hikari.impl.InteractiveButtonBuilder'
+
+-%>
+<%-className%>(<% _%>
+    <%_ %><% if (data.comp.style === 5) { -%>
+        <%_ %>url=<%=data.comp.url%><% _%>
+    <%_ %><% } else { %><% _%>
+        <%_ %>style=<%-buttonStyle[data.comp.style]%><% _%>
+    <%_ %><% } %><% _%>
+    <%_ %><% if (data.comp.label) { %>, label=<%=data.comp.label%><% } %><% _%>
+    <%_ %><% if (data.comp.emoji) { %>, emoji=<% _%>
+        <%_ %><% if (data.comp.emoji.id) {-%>
+            <%_ %>hikari.emojis.CustomEmoji.parse("<<%-data.comp.emoji.name%>:<%-data.comp.emoji.id%>>")<% _%>
+        <%_ %><%}else{-%>
+            <%_ %><%=data.comp.emoji.name%><% _%>
+        <%_ %><%}-%>
+    <%_ %><% } -%>
+    <%_ %><% if (data.comp.disabled) { %>, disabled=True<% } %><% _%>
+    <%_ %><% if (data.comp.custom_id) { %>, custom_id=<%=data.comp.custom_id%><% } %><% _%>
+)<% _%>

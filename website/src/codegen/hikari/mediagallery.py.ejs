@@ -1,0 +1,4 @@
+hikari.impl.MediaGalleryComponentBuilder()<% data.comp.items.forEach(function(comp){ -%>.add_media_gallery_item(
+            <%- include('/hikari/thumbnail.py.ejs', {comp: comp, hideConstructor: true}); %>,
+        )<% _%>
+<% }); -%>
