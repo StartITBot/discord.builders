@@ -1,6 +1,6 @@
 .app {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.3fr;
   min-height: 100vh;
 
   .preview {

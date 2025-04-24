@@ -1,16 +1,18 @@
-.json_display {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1em;
+.code_display {
     margin-bottom: 1em;
+    width: 100%;
+    position: relative;
+    display: inline-block;
 
-    span {
+    pre {
         white-space: pre-wrap;
-        line-height: 100%;
+        margin: 0;
     }
 
     button {
-        float: right;
+        position: absolute;
+        top: 0;
+        right: 0;
         background: none;
         border: none;
         cursor: pointer;

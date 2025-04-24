@@ -22,7 +22,7 @@ export default function ejsTemplatePlugin(options : {
         compileDebug: options.compileDebug,
         escape: "(markup => JSON.stringify(markup))",
       }).toString()
-      console.log(compiled)
+      // console.log(compiled)
       return {
         code: 'export default ' + compiled,
         map: null,
