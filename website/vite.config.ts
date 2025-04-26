@@ -12,9 +12,6 @@ export default defineConfig(({command, mode}) => ({
         compileDebug: mode === 'development'
     })],
 
-    esbuild: {
-        jsxInject: `import React from 'react'`
-    },
     resolve: (command === 'serve' && mode === 'development') ? {
         // Make library auto-reload only on yarn dev
         alias: [

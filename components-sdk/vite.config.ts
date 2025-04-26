@@ -15,9 +15,6 @@ export default defineConfig({
             insertTypesEntry: true,
         })
     ],
-    esbuild: {
-        jsxInject: `import React from 'react'`
-    },
     build: {
         sourcemap: true,
         lib: {
