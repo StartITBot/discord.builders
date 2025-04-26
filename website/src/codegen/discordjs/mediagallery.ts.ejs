@@ -1,0 +1,8 @@
+new Builders.MediaGalleryBuilder()<% _%>
+<%_ %><% if (data.comp.items.length > 0) { %>
+				.addItems(
+	<%_ %><% data.comp.items.forEach(function(comp){ -%>
+					<%- include('/discordjs/mediagalleryitem.ts.ejs', {comp: comp}); %>,
+	<% }); -%>
+				)<% _%>
+<% } -%>

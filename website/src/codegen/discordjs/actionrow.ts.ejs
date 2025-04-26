@@ -1,0 +1,6 @@
+new Builders.ActionRowBuilder<Builders.MessageActionRowComponentBuilder>()<% _%>
+<% data.comp.components.forEach(function(comp){ %>
+				.addComponents(
+				<%- include('/discordjs/components.ts.ejs', {comp: comp}); %>,
+				)<% _%>
+<% }); -%>

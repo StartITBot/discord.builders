@@ -1,0 +1,10 @@
+new Builders.ThumbnailBuilder()<% _%>
+<% if (data.comp.media) { %>
+						.setURL(<%= data.comp.media.url %>)<% _%>
+<% } -%><% _%>
+<% if (data.comp.description) { %>
+						.setDescription(<%= data.comp.description %>)<% _%>
+<% } -%><% _%>
+<% if (data.comp.spoiler) { %>
+						.setSpoiler(true)<% _%>
+<% } -%><% _%>

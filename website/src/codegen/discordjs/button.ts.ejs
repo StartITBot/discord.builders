@@ -1,0 +1,40 @@
+<%
+const buttonStyle = {
+	1: 'Enums.ButtonStyle.Primary',
+	2: 'Enums.ButtonStyle.Secondary',
+	3: 'Enums.ButtonStyle.Success',
+	4: 'Enums.ButtonStyle.Danger',
+	5: 'Enums.ButtonStyle.Link',
+	6: 'Enums.ButtonStyle.Premium',
+};
+-%><% _%>
+new Builders.ButtonBuilder()
+					.setStyle(<%- buttonStyle[data.comp.style] %>)<% _%>
+<%_ %><% if (data.comp.label) { %>
+					.setLabel(<%= data.comp.label %>)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.emoji && (data.comp.emoji.id || data.comp.emoji.name)) { %>
+					.setEmoji({<% _%>
+						<%_ %><% if (data.comp.emoji.id) { %>
+						id: <%= data.comp.emoji.id %>,<% _%>
+						<%_ %><% } -%>
+						<%_ %><% if (data.comp.emoji.name) { %>
+						name: <%= data.comp.emoji.name %>,<% _%>
+						<%_ %><% } -%>
+						<%_ %><% if (data.comp.emoji.animated) { %>
+						animated: true,<% _%>
+						<%_ %><% } %>
+					})<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.disabled) { %>
+					.setDisabled(true)<% _%>
+<% } -%>
+<%_ %><% if (data.comp.custom_id && data.comp.style !== 5 && data.comp.style !== 6) { %>
+					.setCustomId(<%= data.comp.custom_id %>)<% _%>
+<% } -%>
+<%_ %><% if (data.comp.sku_id && data.comp.style === 6) { %>
+					.setSKUId(<%= data.comp.sku_id %>)<% _%>
+<% } -%>
+<%_ %><% if (data.comp.url && data.comp.style === 5) { %>
+					.setURL(<%= data.comp.url %>)<% _%>
+<% } -%>
