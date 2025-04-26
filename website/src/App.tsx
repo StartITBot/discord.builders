@@ -117,8 +117,8 @@ function App() {
     let language = 'json';
 
     if (Object.keys(libComponents).includes(libSelected)) {
-        const mainDart = libComponents[libSelected];
-        data = mainDart({components: state}, undefined, importCallback);
+        const renderer = libComponents[libSelected];
+        data = renderer({components: state}, undefined, importCallback);
         language = libs[libSelected]?.language || 'json';
     } else {
         data = JSON.stringify(state, undefined, 4)
