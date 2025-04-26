@@ -33,6 +33,11 @@ const importCallback: IncludeCallback = (name, data) => {
 };
 
 const libs = {
+    dpp:{
+        name: "C++: DPP",
+        language: "cpp"
+    },
+
     hikari:{
         name: "Python: hikari",
         language: 'python'
