@@ -1,20 +1,7 @@
 import hikari
 
-bot = ...
-
-@bot.listen()
-async def command_interaction(event: hikari.InteractionCreateEvent) -> None:
-    interaction = event.interaction
-    
-    components = [
-<% data.components.forEach(function(comp){ -%>
-        <%- include('/hikari/components.py.ejs', {comp: comp}); %>,
-<% }); -%>
-    ]
-
-    await interaction.create_initial_response(
-        hikari.ResponseType.MESSAGE_CREATE,
-        components=components,
-    )
-
-    message = await interaction.fetch_initial_response()
+components = [
+    <%_ data.components.forEach(function(comp){ _%>
+        <%_ %><%- indent(include('/hikari/components.py.ejs', {comp: comp}), 4); %>,
+    <%_ }); _%>
+]

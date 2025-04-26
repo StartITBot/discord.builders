@@ -3,6 +3,19 @@ import type { PluginOption } from 'vite';
 
 // Yes, I have actually written plugin to compile .ejs files on build XD
 
+// To be used by the codegen templates
+const baseCode = `
+function indent(text, depth, skipFirst = false) {
+  const test = text.split('\\n').map(line => (line.length ? ' '.repeat(depth) : '') + line);
+
+  if (skipFirst) {
+    test[0] = test[0].trimStart();
+  }
+
+  return test.join('\\n');
+}
+`
+
 export default function ejsTemplatePlugin(options : {
   compileDebug: boolean
 }): PluginOption {
@@ -22,9 +35,9 @@ export default function ejsTemplatePlugin(options : {
         compileDebug: options.compileDebug,
         escape: "(markup => JSON.stringify(markup))",
       }).toString()
-      console.log(compiled)
+      //console.log(compiled)
       return {
-        code: 'export default ' + compiled,
+        code: baseCode + 'export default ' + compiled,
         map: null,
       }
     }

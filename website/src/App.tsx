@@ -148,7 +148,7 @@ function App() {
                     <input placeholder={"Webhook link"} type="text" value={webhookUrl}
                            onChange={ev => dispatch(actions.setWebhookUrl(ev.target.value))}/>
                 </div>
-                <button disabled={!parsed_url} onClick={async () => {
+                <button disabled={parsed_url == null} onClick={async () => {
                     const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state))
 
                     const status_code = req.status;
