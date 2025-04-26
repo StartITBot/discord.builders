@@ -1,0 +1,21 @@
+#include <dpp/dpp.h>
+    
+int main() {
+    dpp::cluster bot("token");
+
+    const dpp::snowflake SOME_CHANNEL_ID(123456789012345);
+    
+    bot.on_log(dpp::utility::cout_logger());
+    
+    bot.on_ready([&bot](const auto& event) {
+        auto m = dpp::message()
+            .set_flags(dpp::m_using_components_v2)
+            // This method allows you to add arbitrary JSON for components.
+            // It is ideal for pre-generated content such as this. If you need to change
+            // components on the fly, please see https://dpp.dev/classdpp_1_1component.html
+            .add_json_components("<%- JSON.stringify(data.components).replace(/[\n"\&\r\t\b\f]/g, '\\$&') %>");
+        bot.message_create(SOME_CHANNEL_ID, m);
+    });
+    
+    bot.start(dpp::st_wait);
+}
