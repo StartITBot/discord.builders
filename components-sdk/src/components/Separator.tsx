@@ -10,7 +10,7 @@ export function Separator({state, stateKey, stateManager} : ComponentsProps & {s
                 key: [...stateKey, "divider"],
                 value: ev.target.checked
             })} /></div>
-            <div className={Styles.line} style={!state.divider? {background: 'unset'} : {}}></div>
+            <div className={Styles.line} hidden={!state.divider}></div>
         </div>
         <div className={Styles.separator} style={state.spacing === SPACING_LARGE ? {height: 50} : {}}
              onClick={() => stateManager.setKey({
