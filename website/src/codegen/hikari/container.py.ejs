@@ -5,7 +5,7 @@ hikari.impl.ContainerComponentBuilder(
 <% if (data.comp.spoiler) { -%>
     spoiler=True,
 <% } -%>
-    items=[
+    components=[
         <%_ data.comp.components.forEach(function(comp){ _%>
             <%_ %><%- indent(include('/hikari/components.py.ejs', {comp: comp}), 8); -%>,
         <%_ }); _%>
