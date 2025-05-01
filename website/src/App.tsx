@@ -1,4 +1,4 @@
-import {Capsule} from "components-sdk";
+import { Capsule, PassProps } from 'components-sdk';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {actions, DisplaySliceManager, RootState} from "./state";
@@ -72,6 +72,14 @@ function App() {
 
     const setFile = useCallback(webhookImplementation.setFile, []);
     const getFile = useCallback(webhookImplementation.getFile, [])
+    const passProps = useMemo(() => ({
+        getFile,
+        setFile,
+        BetterInput,
+        EmojiPicker,
+        ColorPicker,
+        EmojiShow
+    } as PassProps), []);
     useEffect(() => {
         webhookImplementation.clean(state);
         if (currentHash === null) {
@@ -139,12 +147,7 @@ function App() {
             <Capsule state={state}
                      stateManager={stateManager}
                      stateKey={['data']}
-                     getFile={getFile}
-                     setFile={setFile}
-                     BetterInput={BetterInput}
-                     EmojiPicker={EmojiPicker}
-                     ColorPicker={ColorPicker}
-                     EmojiShow={EmojiShow}
+                     passProps={passProps}
                      className={Styles.preview}
             />
         </ErrorBoundary>

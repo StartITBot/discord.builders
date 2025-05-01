@@ -15,18 +15,22 @@ function App() {
       "content": "Never trust a robot with a banana."
     } as TextDisplayComponent])
 
+    const passProps = useMemo(() => ({
+        getFile: undefined,
+        setFile: undefined,
+        BetterInput: DummyBetterInput,
+        EmojiPicker: DummyEmojiPicker,
+        ColorPicker: DummyColorPicker,
+        EmojiShow: DummyEmojiShow
+    }), [])
+
     return <div>
         {Array.isArray(state) && <Capsule
             state={state}
             key={JSON.stringify(state)}
             stateManager={stateManager}
             stateKey={[]}
-            BetterInput={DummyBetterInput}
-            EmojiPicker={DummyEmojiPicker}
-            ColorPicker={DummyColorPicker}
-            EmojiShow={DummyEmojiShow}
-            getFile={undefined}
-            setFile={undefined}
+            passProps={passProps}
         />}
         <textarea value={typeof state === "string" ? state : JSON.stringify(state, undefined, 4)} onChange={ev => {
             try {
