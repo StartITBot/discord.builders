@@ -1,34 +1,34 @@
 new Builders.ContainerBuilder()<% _%>
 <% if (data.comp.accent_color) { %>
-				.setAccentColor(<%- data.comp.accent_color %>)<% _%>
+    .setAccentColor(<%- data.comp.accent_color %>)<% _%>
 <% } -%>
 <% if (data.comp.spoiler) { %>
-				.setSpoiler(true)<% _%>
+    .setSpoiler(true)<% _%>
 <% } -%>
 <%_ %><% data.comp.components.forEach(function(comp){ -%>
 <% if (comp.type == 1) { %>
-				.addActionRowComponents(
-					<%- include('/discordjs/components.ts.ejs', {comp: comp}); %>
-				)<% _%>
+    .addActionRowComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
 <% } else if (comp.type == 13) { %>
-				.addFileComponents(
-				<%- include('/discordjs/components.ts.ejs', {comp: comp}); %>
-				)<% _%>
+    .addFileComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
 <% } else if (comp.type == 12) { %>
-				.addMediaGalleryComponents(
-				<%- include('/discordjs/components.ts.ejs', {comp: comp}); %>
-				)<% _%>
+    .addMediaGalleryComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
 <% } else if (comp.type == 9) { %>
-				.addSectionComponents(
-				<%- include('/discordjs/components.ts.ejs', {comp: comp}); %>
-				)<% _%>
+    .addSectionComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
 <% } else if (comp.type == 10) { %>
-				.addTextDisplayComponents(
-				<%- include('/discordjs/components.ts.ejs', {comp: comp}); %>
-				)<% _%>
+    .addTextDisplayComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
 <% } else if (comp.type == 14) { %>
-				.addSeparatorComponents(
-				<%- include('/discordjs/components.ts.ejs', {comp: comp}); %>
-				)<% _%>
+    .addSeparatorComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
 <% } -%>
 <% }); -%>

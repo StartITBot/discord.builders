@@ -5,19 +5,19 @@ import * as Builders from '@discordjs/builders';
 const client = new Client();
 
 client.on(Events.InteractionCreate, async (interaction) => {
-	if (!interaction.isCommand()) {
-		return;
-	}
-	const message = await interaction.reply({
-		components: [
+    if (!interaction.isCommand()) {
+        return;
+    }
+    const message = await interaction.reply({
+        components: [
 <% data.components.forEach(function(comp){ -%>
-		<%- include('/discordjs/components.ts.ejs', {comp: comp}); %>,
+        <%_ %><%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 12); %>,
 <% }); -%>
-		],
-		flags: MessageFlags.Ephemeral,
-		withResponse: true,
-		// Handle files here!
-		files: [],
-	});
+        ],
+        flags: MessageFlags.Ephemeral,
+        withResponse: true,
+        // Handle files here!
+        files: [],
+    });
 });
 
