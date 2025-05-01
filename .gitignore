@@ -68,4 +68,3 @@ npm-debug.log*
 
 # VS Code
 .vscode/
-/.yarnrc.yml
