@@ -1,0 +1,5 @@
+<% if (data.emoji.id) { -%>
+hikari.CustomEmoji.parse("<<%-data.emoji.name%>:<%-data.emoji.id%>>")<% _%>
+<% } else { -%>
+<%=data.emoji.name%><% _%>
+<% } -%>

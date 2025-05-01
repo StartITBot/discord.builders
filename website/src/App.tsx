@@ -33,6 +33,11 @@ const importCallback: IncludeCallback = (name, data) => {
 };
 
 const libs = {
+    dpp:{
+        name: "C++: DPP",
+        language: "cpp"
+    },
+
     hikari:{
         name: "Python: hikari",
         language: 'python'
@@ -122,8 +127,8 @@ function App() {
     let language = 'json';
 
     if (Object.keys(libComponents).includes(libSelected)) {
-        const mainDart = libComponents[libSelected];
-        data = mainDart({components: state}, undefined, importCallback);
+        const renderer = libComponents[libSelected];
+        data = renderer({components: state}, undefined, importCallback);
         language = libs[libSelected]?.language || 'json';
     } else {
         data = JSON.stringify(state, undefined, 4)
@@ -153,7 +158,7 @@ function App() {
                     <input placeholder={"Webhook link"} type="text" value={webhookUrl}
                            onChange={ev => dispatch(actions.setWebhookUrl(ev.target.value))}/>
                 </div>
-                <button disabled={!parsed_url} onClick={async () => {
+                <button disabled={parsed_url == null} onClick={async () => {
                     const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state))
 
                     const status_code = req.status;

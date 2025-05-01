@@ -29,7 +29,6 @@ export const displaySlice = createSlice({
         webhookResponse: null as object | null
     }),
     reducers: {
-
         wrapKey(state, action: PayloadAction<wrapKeyType<any>>) {
             const key = action.payload.key;
             let current: any = state;

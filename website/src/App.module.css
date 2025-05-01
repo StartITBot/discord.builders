@@ -85,8 +85,15 @@
         letter-spacing: inherit;
         font-weight: inherit;
         cursor: pointer;
+
         &:hover {
           background: #4752C4;
+        }
+
+        &:disabled {
+          box-shadow: 0 0;
+          background: gray;
+          cursor: not-allowed;
         }
       }
 
