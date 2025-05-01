@@ -8,13 +8,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isCommand()) {
         return;
     }
+
     const message = await interaction.reply({
         components: [
 <% data.components.forEach(function(comp){ -%>
         <%_ %><%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 12); %>,
 <% }); -%>
         ],
-        flags: MessageFlags.Ephemeral,
+        flags: MessageFlags.IsComponentsV2,
         withResponse: true,
         // Handle files here!
         files: [],
