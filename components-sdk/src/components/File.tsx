@@ -20,7 +20,6 @@ export function File({state, stateManager, stateKey, passProps} : ComponentsProp
 
     const { openFilePicker: openFileSelector } = useFilePicker({
         multiple: false,
-        accept: ['.png', '.jpg', '.jpeg'],
         readFilesContent: false,
         onFilesSelected: ({ plainFiles } : SelectedFiles<undefined>) => {
             const link = passProps.setFile(sanitizeFilename(plainFiles[0].name) || 'file.bin', plainFiles[0]);
