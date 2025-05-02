@@ -130,25 +130,25 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent} : {
                 stateManager.setKey({key: [...stateKey, "style"], value: 1})
             }}>
                 <div className={CapsuleStyles.large_button_ctx_item_img}><img src={ColorBlue} alt=""/></div>
-                <div className={CapsuleStyles.large_button_ctx_item_text}>Set theme to blue</div>
+                <div className={CapsuleStyles.large_button_ctx_item_text}>Set as Main action</div>
             </div>
             <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
                 stateManager.setKey({key: [...stateKey, "style"], value: 2})
             }}>
                 <div className={CapsuleStyles.large_button_ctx_item_img}><img src={ColorGrey} alt=""/></div>
-                <div className={CapsuleStyles.large_button_ctx_item_text}>Set theme to grey</div>
+                <div className={CapsuleStyles.large_button_ctx_item_text}>Set as Secondary action</div>
             </div>
             <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
                 stateManager.setKey({key: [...stateKey, "style"], value: 3})
             }}>
                 <div className={CapsuleStyles.large_button_ctx_item_img}><img src={ColorGreen} alt=""/></div>
-                <div className={CapsuleStyles.large_button_ctx_item_text}>Set theme to green</div>
+                <div className={CapsuleStyles.large_button_ctx_item_text}>Set as Confirmation</div>
             </div>
             <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
                 stateManager.setKey({key: [...stateKey, "style"], value: 4})
             }}>
                 <div className={CapsuleStyles.large_button_ctx_item_img}><img src={ColorRed} alt=""/></div>
-                <div className={CapsuleStyles.large_button_ctx_item_text}>Set theme to red</div>
+                <div className={CapsuleStyles.large_button_ctx_item_text}>Set as Destructive</div>
             </div>
         </Fragment>}
         <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
