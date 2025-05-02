@@ -22,7 +22,12 @@ import {stateKeyType} from "../polyfills/StateManager";
 import TrashIcon from "../icons/Trash.svg";
 import { useStateOpen } from '../utils/useStateOpen';
 import TimesSolid from "../icons/times-solid.svg"
-
+import Emoji from "../icons/Emoji.svg"
+import EmojiActive from "../icons/EmojiActive.svg"
+import LockActive from '../icons/LockActive.svg';
+import Lock from '../icons/Lock.svg';
+import Url from '../icons/Url.svg';
+import DescriptionPen from '../icons/DescriptionPen.svg';
 /*
 
     type: 2,
@@ -149,7 +154,7 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent} : {
         <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
             stateManager.setKey({key: [...stateKey, "disabled"], value: !state.disabled})
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={state.disabled ? LockActive : Lock} alt=""/></div>
             <div
                 className={CapsuleStyles.large_button_ctx_item_text}>{state.disabled ? "Mark as enabled" : "Mark as disabled"}</div>
         </div>
@@ -157,27 +162,27 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent} : {
             setOpen(2);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Set emoji</div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Emoji} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{state.emoji === null ? "Set emoji" : "Change emoji"}</div>
         </div>
         {state.emoji !== null && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             stateManager.setKey({key: [...stateKey, "emoji"], value: null})
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={EmojiActive} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Clear emoji</div>
         </div>}
         <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             setOpen(3);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionPen} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Change label</div>
         </div>
         {state.style === 5 && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             setOpen(4);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Url} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Change url</div>
         </div>}
         {!!removeKeyParent && <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {

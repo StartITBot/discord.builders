@@ -2,6 +2,14 @@ import Styles from "./StringSelect.module.css"
 import CapsuleStyles from "../Capsule.module.css"
 import Icons from "../icons/Icons.svg"
 import EditIcon from "../icons/Edit.svg"
+import Emoji from "../icons/Emoji.svg"
+import EmojiActive from "../icons/EmojiActive.svg"
+import Lock from "../icons/Lock.svg"
+import LockActive from "../icons/LockActive.svg"
+import DefaultActive from "../icons/DefaultActive.svg"
+import Default from "../icons/Default.svg"
+import Minimum from "../icons/Minimum.svg"
+import Maximum from "../icons/Maximum.svg"
 import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
 import {ComponentsProps, default_settings} from "../Capsule";
 import {MenuEmoji, MenuLabel} from "./Button";
@@ -10,6 +18,9 @@ import {stateKeyType} from "../polyfills/StateManager";
 import Slider from "rc-slider";
 import TrashIcon from "../icons/Trash.svg";
 import { useStateOpen } from '../utils/useStateOpen';
+import DescriptionPen from '../icons/DescriptionPen.svg';
+import DescriptionText from '../icons/DescriptionText.svg';
+import DescriptionTextActive from '../icons/DescriptionTextActive.svg';
 
 export function StringSelect({state, stateKey, stateManager, passProps} : ComponentsProps & {state: StringSelectComponent}) {
     // useEffect(() => {
@@ -107,7 +118,7 @@ function GlobalSettingsFirst({state, stateKey, stateManager, setOpen} : {
         <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
             stateManager.setKey({key: [...stateKey, "disabled"], value: !state.disabled})
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={state.disabled ? LockActive : Lock} alt=""/></div>
             <div
                 className={CapsuleStyles.large_button_ctx_item_text}>{state.disabled ? "Mark everything as enabled" : "Mark everything as disabled"}</div>
         </div>
@@ -116,14 +127,14 @@ function GlobalSettingsFirst({state, stateKey, stateManager, setOpen} : {
             setOpen(2);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Change placeholder</div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionText} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{!state.placeholder ? "Add placeholder" : "Change placeholder"}</div>
         </div>
 
         {!!state.placeholder && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             stateManager.setKey({key: [...stateKey, "placeholder"], value: null})
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionTextActive} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Clear placeholder</div>
         </div>}
 
@@ -131,7 +142,7 @@ function GlobalSettingsFirst({state, stateKey, stateManager, setOpen} : {
             setOpen(3);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Minimum} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Set number of minimum options to be selected</div>
         </div>
 
@@ -139,8 +150,8 @@ function GlobalSettingsFirst({state, stateKey, stateManager, setOpen} : {
             setOpen(4);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Set number of maxiumum options to be selected</div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Maximum} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>Set number of maximum options to be selected</div>
         </div>
 
     </>
@@ -193,14 +204,14 @@ function MenuFirst({state, stateKey, stateManager, setOpen} : {
                 stateManager.setKey({key: [...stateKey, "default"], value: false})
             }
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={state.disabled ? LockActive : Lock} alt=""/></div>
             <div
                 className={CapsuleStyles.large_button_ctx_item_text}>{state.disabled ? "Mark as enabled" : "Mark as disabled"}</div>
         </div>
         {!state.disabled && <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
             stateManager.setKey({key: [...stateKey, "default"], value: !state.default})
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={state.default ? DefaultActive : Default} alt=""/></div>
             <div
                 className={CapsuleStyles.large_button_ctx_item_text}>{state.default ? "Unselect this by default" : "Select this by default"}</div>
         </div>}
@@ -208,33 +219,33 @@ function MenuFirst({state, stateKey, stateManager, setOpen} : {
             setOpen(2);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Set emoji</div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Emoji} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{state.emoji === null ? "Set emoji" : "Change emoji"}</div>
         </div>
         {state.emoji !== null && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             stateManager.setKey({key: [...stateKey, "emoji"], value: null})
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={EmojiActive} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Clear emoji</div>
         </div>}
         <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             setOpen(3);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionPen} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Change label</div>
         </div>
         <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             setOpen(4);
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Change description</div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionText} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{state.description === null ? "Add description" : "Change description"}</div>
         </div>
         {state.description !== null && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             stateManager.setKey({key: [...stateKey, "description"], value: null})
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Icons} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionTextActive} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Clear description</div>
         </div>}
         <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
