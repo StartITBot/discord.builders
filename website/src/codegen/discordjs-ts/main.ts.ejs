@@ -16,10 +16,7 @@ const builders = {
     17: 'ContainerBuilder'
 }
 function mapBuilderClasses(components) {
-    console.dir(components, {depth: null});
-    const res = components.reduce((acc, component) => acc.union(mapBuilderClasses(component.components ?? [])).union(new Set(component.accessory ? [builders[component.accessory.type]] : [])).add(builders[component.type]), new Set());
-    console.log(res);
-    return res;
+    return components.reduce((acc, component) => acc.union(mapBuilderClasses(component.components ?? [])).union(new Set(component.accessory ? [builders[component.accessory.type]] : [])).add(builders[component.type]), new Set());
 }
 -%>
 import { <%- [...mapBuilderClasses(data.components)].join(", ") %> } from 'discord.js';
