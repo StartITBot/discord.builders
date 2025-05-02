@@ -48,9 +48,13 @@ const libs = {
         language: "dart"
     },
 
-    discordjs: {
+    "discordjs-js": {
         name: "JavaScript: discord.js",
         language: "javascript"
+    },
+    "discordjs-ts": {
+        name: "TypeScript: discord.js",
+        language: "typescript"
     }
 } as {
     [name: string] : {

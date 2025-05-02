@@ -1,10 +1,10 @@
 <%
 const builderConstructor = {
-    3: 'Builders.StringSelectMenuBuilder',
-    5: 'Builders.UserSelectMenuBuilder',
-    6: 'Builders.RoleSelectMenuBuilder',
-    7: 'Builders.MentionableSelectMenuBuilder',
-    8: 'Builders.ChannelSelectMenuBuilder',
+    3: 'StringSelectMenuBuilder',
+    5: 'UserSelectMenuBuilder',
+    6: 'RoleSelectMenuBuilder',
+    7: 'MentionableSelectMenuBuilder',
+    8: 'ChannelSelectMenuBuilder',
 };
 -%><% _%>
 new <%- builderConstructor[data.comp.type] %>()
@@ -24,7 +24,7 @@ new <%- builderConstructor[data.comp.type] %>()
 <%_ %><% if (data.comp.options) { %>
     .addOptions(
 <%_ %><% data.comp.options.forEach(function(comp){ -%>
-<%- indent(include('/discordjs/selectmenu_option.ts.ejs', {comp: comp}), 8); %>,
+<%- indent(include('/discordjs-ts/selectmenu_option.ts.ejs', {comp: comp}), 4); %>,
 <% }); -%>
     )<% _%>
 <% } %><% _%>

@@ -1,0 +1,22 @@
+<%
+const names = {
+    1: 'ActionRow',
+    9: 'Section',
+    10: 'TextDisplay',
+    12: 'MediaGallery',
+    13: 'File',
+    14: 'Separator',
+};
+_%>
+new ContainerBuilder()<% _%>
+<% if (data.comp.accent_color) { %>
+    .setAccentColor(<%- data.comp.accent_color %>)<% _%>
+<% } -%>
+<% if (data.comp.spoiler) { %>
+    .setSpoiler(true)<% _%>
+<% } -%>
+<%_ %><% data.comp.components.forEach(function(comp){ %>
+    .add<%- names[comp.type] _%>Components(
+<%- indent(include('/discordjs-js/components.js.ejs', {comp: comp}), 8); %>,
+    )<% _%>
+<% }); -%>

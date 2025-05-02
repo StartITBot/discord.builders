@@ -1,0 +1,26 @@
+new SelectMenuOptionBuilder()<% _%>
+<%_ %><% if (data.comp.label) { %>
+    .setLabel(<%= data.comp.label %>)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.value) { %>
+    .setValue(<%= data.comp.value %>)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.description) { %>
+    .setDescription(<%= data.comp.description %>)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.default) { %>
+    .setDefault(true)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.emoji && (data.comp.emoji.id || data.comp.emoji.name)) { %>
+    .setEmoji({<% _%>
+<%_ %><% if (data.comp.emoji.id) { %>
+        id: <%= data.comp.emoji.id %>,<% _%>
+<%_ %><% } -%>
+<%_ %><% if (data.comp.emoji.name) { %>
+        name: <%= data.comp.emoji.name %>,<% _%>
+<%_ %><% } -%>
+<%_ %><% if (data.comp.emoji.animated) { %>
+        animated: true,<% _%>
+<%_ %><% } %>
+    })<% _%>
+<% } -%><% _%>

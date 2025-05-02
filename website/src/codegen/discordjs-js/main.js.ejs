@@ -1,0 +1,31 @@
+<%
+const builders = {
+    1: 'ActionRowBuilder',
+    2: 'ButtonBuilder, ButtonStyle',
+    3: 'StringSelectMenuBuilder',
+    5: 'UserSelectMenuBuilder',
+    6: 'RoleSelectMenuBuilder',
+    7: 'MentionableSelectMenuBuilder',
+    8: 'ChannelSelectMenuBuilder',
+    9: 'SectionBuilder',
+    10: 'TextDisplayBuilder',
+    11: 'ThumbnailBuilder',
+    12: 'MediaGalleryBuilder, MediaGalleryItemBuilder',
+    13: 'FileBuilder',
+    14: 'SeparatorBuilder, SeparatorSpacingSize',
+    17: 'ContainerBuilder'
+}
+function mapBuilderClasses(components) {
+    console.dir(components, {depth: null});
+    const res = components.reduce((acc, component) => acc.union(mapBuilderClasses(component.components ?? [])).union(new Set(component.accessory ? [builders[component.accessory.type]] : [])).add(builders[component.type]), new Set());
+    console.log(res);
+    return res;
+}
+-%>
+import { <%- [...mapBuilderClasses(data.components)].join(", ") %> } from 'discord.js';
+
+const components = [
+<% data.components.forEach(function(comp){ -%>
+    <%_ %><%- indent(include('/discordjs-js/components.js.ejs', {comp: comp}), 8); %>,
+<% }); -%>
+];

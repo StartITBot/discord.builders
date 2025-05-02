@@ -1,0 +1,6 @@
+new ActionRowBuilder<MessageActionRowComponentBuilder>()
+    .addComponents(
+<% data.comp.components.forEach(function(comp){ _%>
+<%- indent(include('/discordjs-ts/components.ts.ejs', {comp: comp}), 8); %>,
+<% }); _%>
+    )<% -%>
