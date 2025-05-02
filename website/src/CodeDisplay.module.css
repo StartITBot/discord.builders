@@ -1,0 +1,24 @@
+.code_display {
+    margin-bottom: 1em;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+
+    pre {
+        white-space: pre-wrap;
+        margin: 0;
+    }
+
+    button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        img:hover {
+            background: #4f5659;
+        }
+    }
+}
