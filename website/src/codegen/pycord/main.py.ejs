@@ -1,6 +1,6 @@
 import discord
 
-components: list[ = [
+components: list[discord.ui.Item[discord.ui.View]] = [
     <%_ data.components.forEach(function(comp){ _%>
         <%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); %><% if (comp.type !== 1) { %>,<% } %>
     <%_ }); _%>
