@@ -51,6 +51,11 @@ const libs = {
     discordjs: {
         name: "JavaScript: discord.js",
         language: "javascript"
+    },
+
+    itsmybot: {
+        name: "YAML: ItsMyBot",
+        language: "yaml"
     }
 } as {
     [name: string] : {

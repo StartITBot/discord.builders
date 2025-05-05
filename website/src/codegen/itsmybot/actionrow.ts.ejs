@@ -1,0 +1,5 @@
+- type: 'action-row'
+  components:<% _%>
+<% data.comp.components.forEach(function(comp){ %>
+    - <%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 6).trimStart() %><% _%>
+<% }); -%>

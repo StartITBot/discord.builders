@@ -1,0 +1,13 @@
+- type: 'section'
+<%_ %><% if (data.comp.accessory) { %><% _%>
+  accessory:
+<%_ %><% if (data.comp.accessory.type == 2) { %><% _%>
+<%- indent(include('/itsmybot/button.ts.ejs', {comp: data.comp.accessory}), 4); %>
+<%_ %><% } else if (data.comp.accessory.type == 11) { %><% _%>
+<%- indent(include('/itsmybot/thumbnail.ts.ejs', {comp: data.comp.accessory}), 4); %>
+<% } -%><% } -%>
+<% if (data.comp.components) { %><% _%>
+  components:
+<%_ %><% data.comp.components.forEach(function(comp){ -%>
+<%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 4); %><% _%>
+<% }); -%><% } -%><% _%>

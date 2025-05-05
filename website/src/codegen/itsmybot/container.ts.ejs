@@ -1,0 +1,25 @@
+- type: 'container'<% _%>
+<% if (data.comp.accent_color) { %>
+  color: <%- data.comp.accent_color %><% _%>
+<% } -%>
+<% if (data.comp.spoiler) { %>
+  spoiler: true<% _%>
+<% } -%>
+<% if (data.comp.components.length) { %>
+  components:<% _%>
+<% } -%>
+<%_ %><% data.comp.components.forEach(function(comp){ -%>
+<% if (comp.type == 1) { %>
+<%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 4); %><% _%>
+<% } else if (comp.type == 13) { %>
+<%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 4); %><% _%>
+<% } else if (comp.type == 12) { %>
+<%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 4); %><% _%>
+<% } else if (comp.type == 9) { %>
+<%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 4); %><% _%>
+<% } else if (comp.type == 10) { %>
+<%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 4); %><% _%>
+<% } else if (comp.type == 14) { %>
+<%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 4); %><% _%>
+<% } -%>
+<% }); -%>

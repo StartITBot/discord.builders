@@ -1,0 +1,6 @@
+- type: 'media-gallery'<% _%>
+<%_ %><% if (data.comp.items.length > 0) { %>
+  items:<% _%>
+<% data.comp.items.forEach(function(comp){ -%>
+<%- indent(include('/itsmybot/mediagalleryitem.ts.ejs', {comp: comp}), 4); %><% _%>
+<% }); -%><% } -%>

@@ -1,0 +1,19 @@
+type: 'select-menu'
+custom-id: <%= data.comp.custom_id %><% _%>
+<%_ %><% if (data.comp.disabled) { %>
+disabled: <%- data.comp.disabled ? 'true' : 'false' %><% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.placeholder) { %>
+placeholder: <%= data.comp.placeholder %><% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.min_values && data.comp.min_values !== 1) { %>
+min-values: <%= data.comp.min_values %><% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.max_values && data.comp.max_values !== 1) { %>
+max-values: <%= data.comp.max_values %>)% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.options) { %>
+options:<% _%>
+<%_ %><% data.comp.options.forEach(function(comp){ -%>
+<%- indent(include('/itsmybot/selectmenu_option.ts.ejs', {comp: comp}), 2); %><% _%>
+<% }); -%><% } %>

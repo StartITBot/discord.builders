@@ -1,0 +1,35 @@
+<%
+const buttonStyle = {
+    1: 'primary',
+    2: 'secondary',
+    3: 'success',
+    4: 'danger',
+    5: 'link',
+    6: 'premium',
+};
+-%>
+type: 'button'
+style: '<%- buttonStyle[data.comp.style] %>'<% _%>
+<% if (data.comp.label) { %>
+label: <%= data.comp.label %><% _%>
+<% } %><% _%>
+<% if (data.comp.emoji && (data.comp.emoji.id || data.comp.emoji.name)) { %>
+emoji: <% if (data.comp.emoji.id) { %><% _%>
+<% if (data.comp.emoji.animated) { %><% _%>
+<a:<%= data.comp.emoji.name %>:<%= data.comp.emoji.id %>><% } else { %><:<%= data.comp.emoji.name %>:<%= data.comp.emoji.id %>><% } %>
+<% } else { %><% _%>
+<%= data.comp.emoji.name %><% _%>
+<% } %><% _%>
+<% } %><% _%>
+<% if (data.comp.disabled) { %>
+disabled: true<% _%>
+<% } %><% _%>
+<% if (data.comp.custom_id && data.comp.style !== 5 && data.comp.style !== 6) { %>
+custom-id: <%= data.comp.custom_id %><% _%>
+<% } %><% _%>
+<% if (data.comp.sku_id && data.comp.style === 6) { %>
+sku-id: <%= data.comp.sku_id %><% _%>
+<% } %><% _%>
+<% if (data.comp.url && data.comp.style === 5) { %>
+url: <%= data.comp.url %><% _%>
+<% } %><% _%>

@@ -1,0 +1,19 @@
+
+- label: <%= data.comp.label %><% _%>
+<%_ %><% if (data.comp.value) { %>
+  value: <%= data.comp.value %><% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.description) { %>
+  description: <%= data.comp.description %><% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.default) { %>
+  default: true<% _%>
+<% } -%><% _%>
+<% if (data.comp.emoji && (data.comp.emoji.id || data.comp.emoji.name)) { %>
+  emoji: <% if (data.comp.emoji.id) { %><% _%>
+<% if (data.comp.emoji.animated) { %><% _%>
+<a:<%= data.comp.emoji.name %>:<%= data.comp.emoji.id %>><% } else { %><:<%= data.comp.emoji.name %>:<%= data.comp.emoji.id %>><% } %>
+<% } else { %><% _%>
+<%= data.comp.emoji.name %><% _%>
+<% } %><% _%>
+<% } %><% _%>
