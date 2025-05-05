@@ -1,0 +1,11 @@
+discord.ui.Container(
+<%_ data.comp.components.forEach(function(comp){ _%>
+<%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); -%>,
+<%_ }); _%>
+<% if (data.comp.accent_color) { -%>
+    accent_color=discord.Colour(<%= data.comp.accent_color %>),
+<% } -%>
+<% if (data.comp.spoiler) { -%>
+    spoiler=True,
+<% } -%>
+)<% _%>

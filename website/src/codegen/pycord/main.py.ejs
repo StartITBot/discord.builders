@@ -1,0 +1,9 @@
+import discord
+
+components: list[ = [
+    <%_ data.components.forEach(function(comp){ _%>
+        <%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); %><% if (comp.type !== 1) { %>,<% } %>
+    <%_ }); _%>
+]
+
+view = discord.ui.View(*components)

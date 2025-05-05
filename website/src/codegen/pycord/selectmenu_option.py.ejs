@@ -1,0 +1,13 @@
+discord.SelectOption(
+    label=<%=data.comp.label%>,
+    value=<%=data.comp.value%>,
+<% if (data.comp.description) { -%>
+    description=<%=data.comp.description%>,
+<% } -%>
+<% if (data.comp.emoji) { -%>
+    emoji=<%- include('/pycord/emoji.py.ejs', {emoji: data.comp.emoji}) -%>,
+<% } -%>
+<% if (data.comp.default) { -%>
+    default=True,
+<% } -%>
+)<% _%>

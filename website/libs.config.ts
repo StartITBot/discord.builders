@@ -17,6 +17,12 @@ export const libs: {
         path: '/hikari-python-code-generator',
     },
 
+    pycord: {
+        name: 'Python: py-cord',
+        language: 'python',
+        path: '/pycord-python-code-generator',
+    },
+
     nyxx: {
         name: 'Dart: nyxx',
         language: 'dart',
