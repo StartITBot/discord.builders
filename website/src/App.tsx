@@ -43,6 +43,11 @@ const libs = {
         language: 'python'
     },
 
+    pycord:{
+        name: "Python: py-cord",
+        language: 'python'
+    },
+
     nyxx: {
         name: "Dart: nyxx",
         language: "dart"

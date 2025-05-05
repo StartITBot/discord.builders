@@ -1,0 +1,20 @@
+discord.ui.Select(
+    custom_id=<%=data.comp.custom_id%>,
+<% if (data.comp.disabled) { -%>
+    disabled=<%-data.comp.disabled?'True':'False'%>,
+<% } -%>
+<% if (data.comp.placeholder) { -%>
+    placeholder=<%=data.comp.placeholder%>,
+<% } -%>
+<% if ((data.comp.min_values && data.comp.min_values !== 1) || (data.comp.max_values && data.comp.max_values !== 1)) { -%>
+    min_values=<%=data.comp.min_values || 1%>,
+<% } -%>
+<% if ((data.comp.min_values && data.comp.min_values !== 1) || (data.comp.max_values && data.comp.max_values !== 1)) { -%>
+    max_values=<%=data.comp.max_values || 1%>,
+<% } -%>
+    options=[
+        <%_ data.comp.options.forEach(function(comp){ _%>
+            <%_ %><%- indent(include('/pycord/selectmenu_option.py.ejs', {comp: comp}), 8); %>,
+        <%_ }); _%>
+    ]
+)<% _%>
