@@ -1,0 +1,34 @@
+new Builders.ContainerBuilder()<% _%>
+<% if (data.comp.accent_color) { %>
+    .setAccentColor(<%- data.comp.accent_color %>)<% _%>
+<% } -%>
+<% if (data.comp.spoiler) { %>
+    .setSpoiler(true)<% _%>
+<% } -%>
+<%_ %><% data.comp.components.forEach(function(comp){ -%>
+<% if (comp.type == 1) { %>
+    .addActionRowComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
+<% } else if (comp.type == 13) { %>
+    .addFileComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
+<% } else if (comp.type == 12) { %>
+    .addMediaGalleryComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
+<% } else if (comp.type == 9) { %>
+    .addSectionComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
+<% } else if (comp.type == 10) { %>
+    .addTextDisplayComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
+<% } else if (comp.type == 14) { %>
+    .addSeparatorComponents(
+<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>
+    )<% _%>
+<% } -%>
+<% }); -%>

@@ -1,4 +1,4 @@
-import {Capsule} from "components-sdk";
+import { Capsule, PassProps } from 'components-sdk';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {actions, DisplaySliceManager, RootState} from "./state";
@@ -46,6 +46,11 @@ const libs = {
     nyxx: {
         name: "Dart: nyxx",
         language: "dart"
+    },
+
+    discordjs: {
+        name: "JavaScript: discord.js",
+        language: "javascript"
     }
 } as {
     [name: string] : {
@@ -67,6 +72,14 @@ function App() {
 
     const setFile = useCallback(webhookImplementation.setFile, []);
     const getFile = useCallback(webhookImplementation.getFile, [])
+    const passProps = useMemo(() => ({
+        getFile,
+        setFile,
+        BetterInput,
+        EmojiPicker,
+        ColorPicker,
+        EmojiShow
+    } as PassProps), []);
     useEffect(() => {
         webhookImplementation.clean(state);
         if (currentHash === null) {
@@ -122,8 +135,8 @@ function App() {
     let language = 'json';
 
     if (Object.keys(libComponents).includes(libSelected)) {
-        const mainDart = libComponents[libSelected];
-        data = mainDart({components: state}, undefined, importCallback);
+        const renderer = libComponents[libSelected];
+        data = renderer({components: state}, undefined, importCallback);
         language = libs[libSelected]?.language || 'json';
     } else {
         data = JSON.stringify(state, undefined, 4)
@@ -134,12 +147,7 @@ function App() {
             <Capsule state={state}
                      stateManager={stateManager}
                      stateKey={['data']}
-                     getFile={getFile}
-                     setFile={setFile}
-                     BetterInput={BetterInput}
-                     EmojiPicker={EmojiPicker}
-                     ColorPicker={ColorPicker}
-                     EmojiShow={EmojiShow}
+                     passProps={passProps}
                      className={Styles.preview}
             />
         </ErrorBoundary>
@@ -153,7 +161,7 @@ function App() {
                     <input placeholder={"Webhook link"} type="text" value={webhookUrl}
                            onChange={ev => dispatch(actions.setWebhookUrl(ev.target.value))}/>
                 </div>
-                <button disabled={!parsed_url} onClick={async () => {
+                <button disabled={parsed_url == null} onClick={async () => {
                     const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state))
 
                     const status_code = req.status;

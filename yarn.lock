@@ -1039,17 +1039,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-color@npm:^2.17.12":
-  version: 2.17.12
-  resolution: "@types/react-color@npm:2.17.12"
-  dependencies:
-    "@types/reactcss": "npm:*"
-  peerDependencies:
-    "@types/react": "*"
-  checksum: 10c0/05bff66fcd214c32891b742758485868d4464df7c753e42e0be15b29f2ba01f25ae95dc89adcd320e470e67658e7900e529887ee248daea3268a0f9e13f0bc93
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:^18":
   version: 18.3.6
   resolution: "@types/react-dom@npm:18.3.6"
@@ -1075,15 +1064,6 @@ __metadata:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10c0/65fa867c91357e4c4c646945c8b99044360f8973cb7f928ec4de115fe3207827985d45be236e6fd6c092b09f631c2126ce835c137be30718419e143d73300d8f
-  languageName: node
-  linkType: hard
-
-"@types/reactcss@npm:*":
-  version: 1.2.13
-  resolution: "@types/reactcss@npm:1.2.13"
-  peerDependencies:
-    "@types/react": "*"
-  checksum: 10c0/f1b1e257dd7f02e1b50b2622c05a3fdcdb67045fdbbeab1f6ed7ef91e06f19d8899a3d7bd828c34bd2b243b7b7dd4c35376b947a683f5c0d56ea8a16b482f73d
   languageName: node
   linkType: hard
 
@@ -1551,7 +1531,6 @@ __metadata:
     "@eslint/js": "npm:^9.24.0"
     "@types/node": "npm:^22.14.1"
     "@types/react": "npm:^18"
-    "@types/react-color": "npm:^2.17.12"
     "@types/react-dom": "npm:^18"
     "@vitejs/plugin-react": "npm:^4.4.0"
     eslint: "npm:^9.24.0"
@@ -1561,7 +1540,6 @@ __metadata:
     postcss-nesting: "npm:^13.0.1"
     rc-slider: "npm:^9.7.5"
     react: "npm:^18.2.0"
-    react-color: "npm:^2.19.3"
     react-dom: "npm:^18.2.0"
     react-textarea-autosize: "npm:^8.3.4"
     typescript: "npm:~5.7.2"
@@ -1573,7 +1551,6 @@ __metadata:
     "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     rc-slider: ^9.7.5
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    react-color: ^2.19.3
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-textarea-autosize: ^8.3.4
     use-file-picker: ^2.1.2

@@ -1,0 +1,30 @@
+<%
+const builderConstructor = {
+    3: 'Builders.StringSelectMenuBuilder',
+    5: 'Builders.UserSelectMenuBuilder',
+    6: 'Builders.RoleSelectMenuBuilder',
+    7: 'Builders.MentionableSelectMenuBuilder',
+    8: 'Builders.ChannelSelectMenuBuilder',
+};
+-%><% _%>
+new <%- builderConstructor[data.comp.type] %>()
+    .setCustomId(<%= data.comp.custom_id %>)<% _%>
+<%_ %><% if (data.comp.disabled) { %>
+    .setDisabled(<%- data.comp.disabled ? 'true' : 'false' %>)<% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.placeholder) { %>
+    .setPlaceholder(<%= data.comp.placeholder %>)<% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.min_values && data.comp.min_values !== 1) { %>
+    .setMinValues(<%= data.comp.min_values %>)<% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.max_values && data.comp.max_values !== 1) { %>
+    .setMaxValues(<%= data.comp.max_values %>)<% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.options) { %>
+    .addOptions(
+<%_ %><% data.comp.options.forEach(function(comp){ -%>
+<%- indent(include('/discordjs/selectmenu_option.ts.ejs', {comp: comp}), 8); %>,
+<% }); -%>
+    )<% _%>
+<% } %><% _%>

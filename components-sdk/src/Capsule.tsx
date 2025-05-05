@@ -161,7 +161,8 @@ export function Capsule(props : {
     stateKey: stateKeyType,
     state: Component[],
     className?: string | null,
-} & PassProps) {
+    passProps: PassProps
+} ) {
     const cls = props.className ? ' ' + props.className : '';
 
     return <div className={Styles.preview + cls}>
@@ -170,7 +171,7 @@ export function Capsule(props : {
                 stateKey={props.stateKey}
                 stateManager={props.stateManager}
                 buttonContext={'main'}
-                passProps={props}
+                passProps={props.passProps}
             />
         </div>
     }

@@ -1,41 +1,41 @@
 <% if (data.comp.type == 10) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>TextDisplayComponentBuilder(content: <%= data.comp.content %>)<% _%>
+    <%_ %>TextDisplayComponentBuilder(content: <%= data.comp.content %>)<% _%>
 <% } else if (data.comp.type == 13) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>FileComponentBuilder(
-    <%_ %><%- ' '.repeat(data.indent) %>  file: UnfurledMediaItemBuilder(url: Uri.parse(<%= data.comp.file.url %>)),
-    <%_ %><% if (data.comp.spoiler) { %><%- ' '.repeat(data.indent) %>  isSpoiler: true, <% } -%>
-    <%_ %><%- ' '.repeat(data.indent) %>)<% _%>
+    <%_ %>FileComponentBuilder(
+    <%_ %>  file: UnfurledMediaItemBuilder(url: Uri.parse(<%= data.comp.file.url %>)),
+    <%_ %><% if (data.comp.spoiler) { %>  isSpoiler: true, <% } -%>
+    <%_ %>)<% _%>
 <% } else if (data.comp.type == 14) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>SeparatorComponentBuilder(<% _%>
+    <%_ %>SeparatorComponentBuilder(<% _%>
     <%_ %><% if (data.comp.divider) { %>
-        <%_ %><%- ' '.repeat(data.indent) %>  isDivider: true,
+        <%_ %>  isDivider: true,
     <%_ %><% } -%>
     <%_ %><% if (data.comp.spacing) { %><%- data.comp.divider ? '' : '\n' -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  spacing: <%- data.comp.spacing === 2 ? 'SeparatorSpacingSize.large' : 'SeparatorSpacingSize.small' %>,
+        <%_ %>  spacing: <%- data.comp.spacing === 2 ? 'SeparatorSpacingSize.large' : 'SeparatorSpacingSize.small' %>,
     <%_ %><% } -%>
-    <%_ %><%- data.comp.divider || data.comp.spacing ? ' '.repeat(data.indent) : '' %>)<% _%>
+    <%_ %>)<% _%>
 <% } else if (data.comp.type == 17) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>ContainerComponentBuilder(
+    <%_ %>ContainerComponentBuilder(
     <%_ %><% if (data.comp.accent_color) { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  accentColor: DiscordColor(<%- data.comp.accent_color %>),
+        <%_ %>  accentColor: DiscordColor(<%- data.comp.accent_color %>),
     <%_ %><% } -%>
     <%_ %><% if (data.comp.spoiler) { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  isSpoiler: true,
+        <%_ %>  isSpoiler: true,
     <%_ %><% } -%>
-    <%_ %><%- ' '.repeat(data.indent) %>  components: [
+    <%_ %>  components: [
     <%_ %><% data.comp.components.forEach(comp => { -%>
-      <%_ %><%- include('/nyxx/components.dart.ejs', {comp: comp, indent: data.indent + 4}); %>,
+      <%_ %><%- indent(include('/nyxx/components.dart.ejs', {comp: comp}), 4); %>,
     <%_ %><% }); -%>
-    <%_ %><%- ' '.repeat(data.indent) %>  ],
-    <%_ %><%- ' '.repeat(data.indent) %>)<% _%>
+    <%_ %>  ],
+    <%_ %>)<% _%>
 <% } else if (data.comp.type == 1) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>ActionRowBuilder(
-    <%_ %><%- ' '.repeat(data.indent) %>  components: [
+    <%_ %>ActionRowBuilder(
+    <%_ %>  components: [
     <%_ %><% data.comp.components.forEach(comp => { -%>
-        <%_ %><%- include('/nyxx/components.dart.ejs', {comp: comp, indent: data.indent + 4}); %>,
+        <%_ %><%- indent(include('/nyxx/components.dart.ejs', {comp: comp}), 4); %>,
     <%_ %><% }); -%>
-    <%_ %><%- ' '.repeat(data.indent) %>  ],
-    <%_ %><%- ' '.repeat(data.indent) %>)<% _%>
+    <%_ %>  ],
+    <%_ %>)<% _%>
 <% } else if (data.comp.type == 2) { -%>
 <%
 const constructors = {
@@ -46,95 +46,95 @@ const constructors = {
     5: 'link',
 };
 -%>
-    <%_ %><%- ' '.repeat(data.indent) %>ButtonBuilder.<%- constructors[data.comp.style] %>(
+    <%_ %>ButtonBuilder.<%- constructors[data.comp.style] %>(
         <%_ %><% if (data.comp.url) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>  url: Uri.parse(<%= data.comp.url %>),
+            <%_ %>  url: Uri.parse(<%= data.comp.url %>),
         <%_ %><% } -%>
         <%_ %><% if (data.comp.label) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>  label: <%= data.comp.label %>,
+            <%_ %>  label: <%= data.comp.label %>,
         <%_ %><% } -%>
         <%_ %><% if (data.comp.disabled) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>  isDisabled: true,
+            <%_ %>  isDisabled: true,
         <%_ %><% } -%>
         <%_ %><% if (data.comp.custom_id) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>  customId: <%= data.comp.custom_id %>,
+            <%_ %>  customId: <%= data.comp.custom_id %>,
         <%_ %><% } -%>
         <%_ %><% if (data.comp.emoji) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>  // Emojis are currently unsupported in code generation.
-            <%_ %><%- ' '.repeat(data.indent) %>  // You may use nyxx_extensions to get an instance of TextEmoji and insert it here.
-            <%_ %><%- ' '.repeat(data.indent) %>  // emoji: ....
+            <%_ %>  // Emojis are currently unsupported in code generation.
+            <%_ %>  // You may use nyxx_extensions to get an instance of TextEmoji and insert it here.
+            <%_ %>  // emoji: ....
         <%_ %><% } -%>
-    <%_ %><%- ' '.repeat(data.indent) %>)<% _%>
+    <%_ %>)<% _%>
 <% } else if (data.comp.type == 12) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>MediaGalleryComponentBuilder(
-    <%_ %><%- ' '.repeat(data.indent) %>  items: [
+    <%_ %>MediaGalleryComponentBuilder(
+    <%_ %>  items: [
     <%_ %><% data.comp.items.forEach(item => { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>    MediaGalleryItemBuilder(
-        <%_ %><%- ' '.repeat(data.indent) %>      media: UnfurledMediaItemBuilder(url: Uri.parse(<%= item.media.url %>)),
+        <%_ %>    MediaGalleryItemBuilder(
+        <%_ %>      media: UnfurledMediaItemBuilder(url: Uri.parse(<%= item.media.url %>)),
         <%_ %><% if (item.description) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>      description: <%= item.description %>,
+            <%_ %>      description: <%= item.description %>,
         <%_ %><% } -%>
         <%_ %><% if (item.spoiler) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>      isSpoiler: true,
+            <%_ %>      isSpoiler: true,
         <%_ %><% } -%>
-        <%_ %><%- ' '.repeat(data.indent) %>    ),
+        <%_ %>    ),
     <%_ %><% }); -%>
-    <%_ %><%- ' '.repeat(data.indent) %>  ],
-    <%_ %><%- ' '.repeat(data.indent) %>)<% _%>
+    <%_ %>  ],
+    <%_ %>)<% _%>
 <% } else if (data.comp.type == 9) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>SectionComponentBuilder(
-    <%_ %><%- ' '.repeat(data.indent) %>  accessory: <%- include('/nyxx/components.dart.ejs', {comp: data.comp.accessory, indent: data.indent + 2}).trimStart() %>,
-    <%_ %><%- ' '.repeat(data.indent) %>  components: [
+    <%_ %>SectionComponentBuilder(
+    <%_ %>  accessory: <%- indent(include('/nyxx/components.dart.ejs', {comp: data.comp.accessory}), 2, true) %>,
+    <%_ %>  components: [
     <%_ %><% data.comp.components.forEach(comp => { -%>
-      <%_ %><%- include('/nyxx/components.dart.ejs', {comp: comp, indent: data.indent + 4}); %>,
+      <%_ %><%- indent(include('/nyxx/components.dart.ejs', {comp: comp}), 4); %>,
     <%_ %><% }); -%>
-    <%_ %><%- ' '.repeat(data.indent) %>  ],
-    <%_ %><%- ' '.repeat(data.indent) %>)<% _%>
+    <%_ %>  ],
+    <%_ %>)<% _%>
 <% } else if (data.comp.type == 11) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>ThumbnailComponentBuilder(
-    <%_ %><%- ' '.repeat(data.indent) %>  media: UnfurledMediaItemBuilder(url: Uri.parse(<%= data.comp.media.url %>)),
+    <%_ %>ThumbnailComponentBuilder(
+    <%_ %>  media: UnfurledMediaItemBuilder(url: Uri.parse(<%= data.comp.media.url %>)),
     <%_ %><% if (data.comp.description) { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  description: <%= data.comp.description %>,
+        <%_ %>  description: <%= data.comp.description %>,
     <%_ %><% } -%>
     <%_ %><% if (data.comp.spoiler) { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  isSpoiler: true,
+        <%_ %>  isSpoiler: true,
     <%_ %><% } -%>
-    <%_ %><%- ' '.repeat(data.indent) %>)<% _%>
+    <%_ %>)<% _%>
 <% } else if (data.comp.type == 3) { -%>
-    <%_ %><%- ' '.repeat(data.indent) %>SelectMenuBuilder.stringSelect(
-    <%_ %><%- ' '.repeat(data.indent) %>  customId: <%= data.comp.custom_id %>,
+    <%_ %>SelectMenuBuilder.stringSelect(
+    <%_ %>  customId: <%= data.comp.custom_id %>,
     <%_ %><% if (data.comp.disabled) { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  isDisabled: true,
+        <%_ %>  isDisabled: true,
     <%_ %><% } -%>
     <%_ %><% if (data.comp.placeholder) { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  placeholder: <%= data.comp.placeholder %>,
+        <%_ %>  placeholder: <%= data.comp.placeholder %>,
     <%_ %><% } -%>
     <%_ %><% if ((data.comp.min_values && data.comp.min_values !== 1) || (data.comp.max_values && data.comp.max_values !== 1)) { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  minValues: <%=data.comp.min_values || 1%>,
+        <%_ %>  minValues: <%=data.comp.min_values || 1%>,
     <%_ %><% } -%>
     <%_ %><% if ((data.comp.min_values && data.comp.min_values !== 1) || (data.comp.max_values && data.comp.max_values !== 1)) { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>  maxValues: <%=data.comp.max_values || 1%>,
+        <%_ %>  maxValues: <%=data.comp.max_values || 1%>,
     <%_ %><% } -%>
-    <%_ %><%- ' '.repeat(data.indent) %>  options: [
+    <%_ %>  options: [
     <%_ %><% data.comp.options.forEach(option => { -%>
-        <%_ %><%- ' '.repeat(data.indent) %>    SelectMenuOptionBuilder(
-        <%_ %><%- ' '.repeat(data.indent) %>      label: <%= option.label %>,
-        <%_ %><%- ' '.repeat(data.indent) %>      value: <%= option.value %>,
+        <%_ %>    SelectMenuOptionBuilder(
+        <%_ %>      label: <%= option.label %>,
+        <%_ %>      value: <%= option.value %>,
         <%_ %><% if (option.description) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>      description: <%= option.description %>,
+            <%_ %>      description: <%= option.description %>,
         <%_ %><% } -%>
         <%_ %><% if (option.default) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>      isDefault: true,
+            <%_ %>      isDefault: true,
         <%_ %><% } -%>
         <%_ %><% if (option.emoji) { -%>
-            <%_ %><%- ' '.repeat(data.indent) %>      // Emojis are currently unsupported in code generation.
-            <%_ %><%- ' '.repeat(data.indent) %>      // You may use nyxx_extensions to get an instance of TextEmoji and insert it here.
-            <%_ %><%- ' '.repeat(data.indent) %>      // emoji: ....
+            <%_ %>      // Emojis are currently unsupported in code generation.
+            <%_ %>      // You may use nyxx_extensions to get an instance of TextEmoji and insert it here.
+            <%_ %>      // emoji: ....
         <%_ %><% } -%>
-        <%_ %><%- ' '.repeat(data.indent) %>    ),
+        <%_ %>    ),
     <%_ %><% }); -%>
-    <%_ %><%- ' '.repeat(data.indent) %>  ],
-    <%_ %><%- ' '.repeat(data.indent) %>)<% _%>
+    <%_ %>  ],
+    <%_ %>)<% _%>
 <% } else  { -%>
     <%_ %>#<% _%>
 <% } -%>

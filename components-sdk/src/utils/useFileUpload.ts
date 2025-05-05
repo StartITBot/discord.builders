@@ -34,9 +34,15 @@ export function useFileUpload(
         }
 
         const fileName = state.slice(13);
-        const objectURL = URL.createObjectURL(getFile(fileName));
-        setSrc(objectURL);
-        return () => URL.revokeObjectURL(objectURL)
+        try {
+            const objectURL = URL.createObjectURL(getFile(fileName));
+            setSrc(objectURL);
+            return () => URL.revokeObjectURL(objectURL)
+        } catch (e) {
+            console.error(e);
+            setSrc(ThumbnailIcon);
+        }
+
     }, [state]);
 
     return {
