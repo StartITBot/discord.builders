@@ -16,7 +16,7 @@ export function useHashRouter() {
         }
 
         const getData = setTimeout(() => {
-            const value = btoa(encodeURIComponent(JSON.stringify(state)));
+            const value = btoa(JSON.stringify(state));
             currentHash.current = value;  // infinite loop resolver
             document.location.hash = value;
         }, 600)
@@ -32,7 +32,7 @@ export function useHashRouter() {
 
             let value;
             try {
-                value = JSON.parse(decodeURIComponent(atob(newHash)));
+                value = JSON.parse(atob(newHash));
             } catch (e) {
                 value = [];
             }
