@@ -9,76 +9,19 @@ import Styles from './App.module.css';
 import { webhookImplementation } from './webhook.impl';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ColorPicker } from './ColorPicker';
-import { ClientFunction, IncludeCallback } from 'ejs';
-import { CodeBlock, dracula } from 'react-code-blocks';
+import { useHashRouter } from './useHashRouter';
+import { Codegen } from './Codegen';
 
-const codegenModules: {
-    [name: string]: { default: ClientFunction };
-} = import.meta.globEager('./codegen/**/*.ejs');
-
-const libComponents: {[name: string]: ClientFunction} = {};
-
-for (const key of Object.keys(codegenModules)) {
-    const match = key.match(/^\.\/codegen\/([^/]+)\/main(?:\.[^/]*)?\.ejs$/);
-    if (match) {
-        const group = match[1];
-        libComponents[group] = codegenModules[key].default;
-    }
-}
-
-const importCallback: IncludeCallback = (name, data) => {
-    const mainDart = codegenModules['./codegen' + name]?.default;
-    if (typeof mainDart === "undefined") throw Error(`Component ${name} doesn't exist.`)
-    return mainDart(data, undefined, importCallback);
-};
-
-const libs = {
-    dpp:{
-        name: "C++: DPP",
-        language: "cpp"
-    },
-
-    hikari:{
-        name: "Python: hikari",
-        language: 'python'
-    },
-
-    nyxx: {
-        name: "Dart: nyxx",
-        language: "dart"
-    },
-
-    "discordjs-js": {
-        name: "JavaScript: discord.js",
-        language: "javascript"
-    },
-
-    "discordjs-ts": {
-        name: "TypeScript: discord.js",
-        language: "typescript"
-    },
-
-    itsmybot: {
-        name: "YAML: ItsMyBot",
-        language: "yaml"
-    }
-} as {
-    [name: string] : {
-        name: string,
-        language: string
-    }
-}
 
 webhookImplementation.init();
 
 function App() {
     const dispatch = useDispatch();
     const stateManager = useMemo(() => new DisplaySliceManager(dispatch), [dispatch]);
-    const [libSelected, setLibSelected] = useState<string>('json');
     const state = useSelector((state: RootState) => state.display.data)
     const webhookUrl = useSelector((state: RootState) => state.display.webhookUrl);
     const response = useSelector((state: RootState) => state.display.webhookResponse);
-    const currentHash = useRef<string | null>(null);
+    useHashRouter();
 
     const setFile = useCallback(webhookImplementation.setFile, []);
     const getFile = useCallback(webhookImplementation.getFile, [])
@@ -90,67 +33,18 @@ function App() {
         ColorPicker,
         EmojiShow
     } as PassProps), []);
-    useEffect(() => {
-        webhookImplementation.clean(state);
-        if (currentHash === null) {
-            // ignore state changes, it should be loaded from URL first
-            return;
-        }
-
-        const getData = setTimeout(() => {
-            const value = btoa(encodeURIComponent(JSON.stringify(state)));
-            currentHash.current = value;  // infinite loop resolver
-            document.location.hash = value;
-        }, 600)
-
-        return () => clearTimeout(getData)
-    }, [state]);
-
 
     useEffect(() => {
         const getData = setTimeout(() => localStorage.setItem("discord.builders__webhookToken", webhookUrl), 1000)
         return () => clearTimeout(getData)
     }, [webhookUrl]);
 
-    useEffect(() => {
-        const handleChange = (event: {newURL: string}) => {
-            const newHash = new URL(event.newURL).hash.substring(1);
-            if (newHash === currentHash.current) return;
-            console.log("Loaded state from URL");
-
-            let value;
-            try {
-                value = JSON.parse(decodeURIComponent(atob(newHash)));
-            } catch (e) {
-                value = [];
-            }
-
-            dispatch(actions.setKey({key: ['data'], value}))
-            currentHash.current = event.newURL.substring(1);
-        };
-
-        handleChange({newURL: window.location.toString()})
-        window.addEventListener('hashchange', handleChange);
-        return () => window.removeEventListener('hashchange', handleChange);
-    }, [])
 
     let parsed_url: URL | null = null;
     try {
         parsed_url = new URL(webhookUrl);
         parsed_url.search = '?with_components=true'
-    } catch (e) {
-    }
-
-    let data;
-    let language = 'json';
-
-    if (Object.keys(libComponents).includes(libSelected)) {
-        const renderer = libComponents[libSelected];
-        data = renderer({components: state}, undefined, importCallback);
-        language = libs[libSelected]?.language || 'json';
-    } else {
-        data = JSON.stringify(state, undefined, 4)
-    }
+    } catch (e) {}
 
     const stateKey = useMemo(() => ['data'], [])
 
@@ -192,7 +86,7 @@ function App() {
                 </button>
             </div>
 
-            <p style={{marginTop: '1rem', marginBottom: '4rem'}}>Warning: Non-link buttons and select menus are not allowed when sending message via webhook.</p>
+            <p style={{marginTop: '0.5rem', marginBottom: '2rem', color: 'grey'}}>Warning: Non-link buttons and select menus are not allowed when sending message via webhook.</p>
 
             {!!response && <div className={Styles.data}
                                 style={{
@@ -200,19 +94,8 @@ function App() {
                                     color: '#dd9898'
                                 }}>{JSON.stringify(response, undefined, 4)}</div>}
 
-            <div className={Styles.tabs}>
-                <div className={Styles.tab + ' ' + ('json' === libSelected ? Styles.active : '')} onClick={() => setLibSelected("json")}>JSON</div>
-                {Object.keys(libComponents).map(comp => <div className={Styles.tab + ' ' + (comp === libSelected ? Styles.active : '')} onClick={() => setLibSelected(comp)}>{libs[comp]?.name || comp}</div>)}
-            </div>
 
-            <div className={Styles.data}>
-                <CodeBlock
-                    text={data}
-                    language={language}
-                    showLineNumbers={false}
-                    theme={dracula}
-                />
-            </div>
+            <Codegen state={state} />
         </div>
     </div>
 }
