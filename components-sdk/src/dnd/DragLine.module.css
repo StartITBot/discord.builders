@@ -48,4 +48,7 @@
     img {
         width: 100%;
     }
+    @media (hover: none) and (pointer: coarse) {
+        display: none;
+    }
 }
