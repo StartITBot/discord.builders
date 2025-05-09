@@ -1,0 +1,6 @@
+discord.ui.Section(
+<%_ data.comp.components.forEach(function(comp){ _%>
+<%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); %>,
+<%_ }); _%>
+    accessory=<%- indent(include('/pycord/components.py.ejs', {comp: data.comp.accessory}), 4, true); -%>,
+)<% _%>
