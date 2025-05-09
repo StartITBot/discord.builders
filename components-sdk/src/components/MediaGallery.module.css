@@ -2,7 +2,10 @@
   position: relative;
   cursor: pointer;
   aspect-ratio: 1;
-  & > img {
+  min-height: 0;
+  min-width: 0;
+
+  img[data-image-role='main'] {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -19,17 +22,28 @@
   grid-template-columns: repeat(12, 1fr);
   gap: 1rem;
   grid-auto-flow: row dense;
+  [data-image-role="drag"] {
+    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    min-width: 0;
+  }
 
   &.alone {
     display: block;
     .gallery_item {
       aspect-ratio: unset;
-      & > img {
+      img[data-image-role='main'] {
         width: unset;
         height: unset;
         max-width: 100%;
         max-height: 300px;
         border-radius: 8px;
+      }
+      [data-image-role="drag"] {
+        width: unset;
+        height: unset;
       }
     }
   }

@@ -50,6 +50,7 @@
 .component_remove {
   position: absolute;
   right: -2rem;
+  user-select: none;
   top: 0;
   cursor: pointer;
   display: flex;

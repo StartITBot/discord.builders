@@ -1,6 +1,0 @@
-new Builders.ActionRowBuilder<Builders.MessageActionRowComponentBuilder>()<% _%>
-<% data.comp.components.forEach(function(comp){ %>
-    .addComponents(
-<%- indent(include('/discordjs/components.ts.ejs', {comp: comp}), 8); %>,
-    )<% _%>
-<% }); -%>

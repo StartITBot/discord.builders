@@ -1,16 +1,16 @@
-import Styles from "./Capsule.module.css";
-import Icons from "./icons/Icons.svg";
-import TextDisplayIcon from "./icons/TextDisplay.svg";
-import UploadIcon from "./icons/Upload.svg";
-import ContainerIcon from "./icons/Container.svg";
-import MediaGalleryIcon from "./icons/MediaGallery.svg";
-import SeparatorIcon from "./icons/Separator.svg";
-import ButtonIcon from "./icons/Button.svg";
-import LinkButtonIcon from "./icons/ButtonLink.svg";
-import SelectIcon from "./icons/Select.svg";
-import {default_settings} from "./Capsule";
-import {useCallback, useEffect, useRef, useState} from "react";
-import {Component} from "./utils/componentTypes";
+import Styles from './Capsule.module.css';
+import Icons from './icons/Icons.svg';
+import TextDisplayIcon from './icons/TextDisplay.svg';
+import UploadIcon from './icons/Upload.svg';
+import ContainerIcon from './icons/Container.svg';
+import MediaGalleryIcon from './icons/MediaGallery.svg';
+import SeparatorIcon from './icons/Separator.svg';
+import ButtonIcon from './icons/Button.svg';
+import LinkButtonIcon from './icons/ButtonLink.svg';
+import SelectIcon from './icons/Select.svg';
+import { default_settings } from './Capsule';
+import { CSSProperties, useRef } from 'react';
+import { Component } from './utils/componentTypes';
 import { useStateOpen } from './utils/useStateOpen';
 
 export type capsuleButtonCtx = 'main' | 'container' | 'inline' | 'button-row' | 'frame';
@@ -18,16 +18,17 @@ export type capsuleButtonCtx = 'main' | 'container' | 'inline' | 'button-row' | 
 type props = {
     context: capsuleButtonCtx,
     callback: (data: Component) => any,
-    className?: string
+    className?: string,
+    style?: CSSProperties,
 };
 
-export function CapsuleButton({context, callback, className} : props) {
+export function CapsuleButton({context, callback, className, style} : props) {
     const {open, setOpen, ignoreRef} = useStateOpen(false);
     const cls = className ? " " + className : "";
     const btn_select = useRef<HTMLDivElement>(null);
 
     return (
-        <div className={Styles.large_button + cls} onClick={(ev) => {
+        <div style={style} className={Styles.large_button + cls} onClick={(ev) => {
             setOpen(!(btn_select.current && btn_select.current.contains(ev.target as HTMLElement)));
         }} ref={ignoreRef}>
             <img  className={Styles.large_button_icon} src={Icons} alt=""/>

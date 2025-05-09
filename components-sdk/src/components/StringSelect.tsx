@@ -1,28 +1,36 @@
-import Styles from "./StringSelect.module.css"
-import CapsuleStyles from "../Capsule.module.css"
-import Icons from "../icons/Icons.svg"
-import EditIcon from "../icons/Edit.svg"
-import Emoji from "../icons/Emoji.svg"
-import EmojiActive from "../icons/EmojiActive.svg"
-import Lock from "../icons/Lock.svg"
-import LockActive from "../icons/LockActive.svg"
-import DefaultActive from "../icons/DefaultActive.svg"
-import Default from "../icons/Default.svg"
-import Minimum from "../icons/Minimum.svg"
-import Maximum from "../icons/Maximum.svg"
-import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
-import {ComponentsProps, default_settings} from "../Capsule";
-import {MenuEmoji, MenuLabel} from "./Button";
-import {StringSelectComponent, StringSelectComponentOption} from "../utils/componentTypes";
-import {stateKeyType} from "../polyfills/StateManager";
-import Slider from "rc-slider";
-import TrashIcon from "../icons/Trash.svg";
+import Styles from './StringSelect.module.css';
+import CapsuleStyles from '../Capsule.module.css';
+import Icons from '../icons/Icons.svg';
+import EditIcon from '../icons/Edit.svg';
+import Emoji from '../icons/Emoji.svg';
+import EmojiActive from '../icons/EmojiActive.svg';
+import Lock from '../icons/Lock.svg';
+import LockActive from '../icons/LockActive.svg';
+import DefaultActive from '../icons/DefaultActive.svg';
+import Default from '../icons/Default.svg';
+import Minimum from '../icons/Minimum.svg';
+import Maximum from '../icons/Maximum.svg';
+import { Dispatch, SetStateAction, useMemo, useRef } from 'react';
+import { ComponentsProps, default_settings } from '../Capsule';
+import { MenuEmoji, MenuLabel } from './Button';
+import { StringSelectComponent, StringSelectComponentOption } from '../utils/componentTypes';
+import { stateKeyType } from '../polyfills/StateManager';
+import Slider from 'rc-slider';
+import TrashIcon from '../icons/Trash.svg';
 import { useStateOpen } from '../utils/useStateOpen';
 import DescriptionPen from '../icons/DescriptionPen.svg';
 import DescriptionText from '../icons/DescriptionText.svg';
 import DescriptionTextActive from '../icons/DescriptionTextActive.svg';
+import { DragLines } from '../dnd/DragLine';
+import { DroppableID } from '../dnd/components';
 
-export function StringSelect({state, stateKey, stateManager, passProps} : ComponentsProps & {state: StringSelectComponent}) {
+export function StringSelect({
+    state,
+    stateKey,
+    stateManager,
+    passProps,
+    removeKeyParent = undefined,
+}: ComponentsProps & { state: StringSelectComponent }) {
     // useEffect(() => {
     //     if (state.min_values > state.max_values) {
     //         stateManager.setKey({key: [...stateKey, "max_values"], value: state.min_values})
@@ -46,9 +54,11 @@ export function StringSelect({state, stateKey, stateManager, passProps} : Compon
             {state.options.map((option, index) => <StringSelectOption
                 key={option.value}
                 state={option}
-                stateKey={[...stateKey, "options", index]}
+                stateKey={stateKey}
+                index={index}
                 stateManager={stateManager}
                 passProps={passProps}
+                removeKeyParent={removeKeyParent}
             />)}
 
             <div>
@@ -157,18 +167,21 @@ function GlobalSettingsFirst({state, stateKey, stateManager, setOpen} : {
     </>
 }
 
-function StringSelectOption({state, stateKey, stateManager, passProps} : {
+function StringSelectOption({state, stateKey: stateParent, index, stateManager, passProps, removeKeyParent} : {
     state: StringSelectComponentOption,
     stateKey: ComponentsProps['stateKey'],
+    index: number,
     stateManager: ComponentsProps['stateManager'],
-    passProps: ComponentsProps['passProps']
+    passProps: ComponentsProps['passProps'],
+    removeKeyParent: ComponentsProps['removeKeyParent']
 }) {
     const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
+    const stateKey = useMemo(() => [...stateParent, 'options', index], [...stateParent, 'options', index]);
     const btn_select = useRef<HTMLDivElement>(null);
     const Comp = passProps.EmojiShow;
 
     return (
-        <div className={Styles.select_option + (open ? " " + Styles.open : "") + (state.default ? " " + Styles.blue : "") + (state.disabled ? " " + Styles.disabled : "")} onClick={(ev) => {
+        <DragLines draggable={true} removeKeyParent={removeKeyParent} droppableId={DroppableID.STRING_SELECT} data={state} stateKey={stateKey}><div className={Styles.select_option + (open ? " " + Styles.open : "") + (state.default ? " " + Styles.blue : "") + (state.disabled ? " " + Styles.disabled : "")} onClick={(ev) => {
             if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
             setOpen(1)
         }} ref={ignoreRef}>
@@ -179,20 +192,21 @@ function StringSelectOption({state, stateKey, stateManager, passProps} : {
                 {state.label} {!!state.description && <span className={Styles.desc}>&bull; {state.description}</span>}
             </div>
             { !!open && <div className={CapsuleStyles.large_button_ctx+ ' ' + CapsuleStyles.noright} ref={btn_select}>
-                {open === 1 && <MenuFirst state={state} stateKey={stateKey} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 1 && <MenuFirst state={state} stateKey={stateKey} stateManager={stateManager} setOpen={setOpen} removeKeyParent={removeKeyParent}/>}
                 {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager} passProps={passProps}/>}
                 {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
                 {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.description || ""} nullable={true} stateKey={[...stateKey, "description"]} stateManager={stateManager} setOpen={setOpen}/>}
             </div>}
-        </div>
+        </div></DragLines>
     )
 }
 
-function MenuFirst({state, stateKey, stateManager, setOpen} : {
+function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent} : {
     state: StringSelectComponentOption,
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
     setOpen: Dispatch<SetStateAction<number>>,
+    removeKeyParent?: stateKeyType,
 }) {
 
     return <>
@@ -249,7 +263,7 @@ function MenuFirst({state, stateKey, stateManager, setOpen} : {
             <div className={CapsuleStyles.large_button_ctx_item_text}>Clear description</div>
         </div>}
         <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
-            stateManager.deleteKey({key: stateKey});
+            stateManager.deleteKey({key: stateKey, removeKeyParent});
         }}>
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={TrashIcon} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Delete</div>

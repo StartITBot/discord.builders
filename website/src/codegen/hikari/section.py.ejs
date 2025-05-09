@@ -1,6 +1,6 @@
 hikari.impl.SectionComponentBuilder(
     accessory=<%- indent(include('/hikari/components.py.ejs', {comp: data.comp.accessory}), 4, true); -%>,
-    items=[
+    components=[
         <%_ data.comp.components.forEach(function(comp){ _%>
             <%_ %><%- indent(include('/hikari/components.py.ejs', {comp: comp}), 8); %>,
         <%_ }); _%>

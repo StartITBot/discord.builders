@@ -3,6 +3,17 @@
   grid-template-columns: 1fr 1fr;
   min-height: 100vh;
 
+  .badges {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    img {
+      border-radius: 4px;
+    }
+  }
+
   .preview {
     border-radius: 0;
     min-height: 100vh;
@@ -50,7 +61,6 @@
     .input_pair {
       display: grid;
       grid-template-columns: 1fr auto;
-      margin-bottom: 2rem;
 
       input {
         padding: 0.8rem 1.6rem;

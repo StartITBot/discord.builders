@@ -1,33 +1,36 @@
-import Styles from "./Button.module.css";
-import CapsuleStyles from "../Capsule.module.css";
+import Styles from './Button.module.css';
+import CapsuleStyles from '../Capsule.module.css';
 import {
-    Dispatch, forwardRef,
+    Dispatch,
     Fragment,
-    MutableRefObject, RefObject,
+    RefObject,
     SetStateAction,
-    useCallback,
-    useEffect, useImperativeHandle,
+    useEffect,
+    useImperativeHandle,
     useLayoutEffect,
     useRef,
-    useState
+    useState,
 } from 'react';
-import ColorBlue from "../icons/ColorBlue.svg";
-import ColorGrey from "../icons/ColorGrey.svg";
-import ColorGreen from "../icons/ColorGreen.svg";
-import ColorRed from "../icons/ColorRed.svg";
-import Icons from "../icons/Icons.svg";
-import {ButtonComponent, ButtonStyle, EmojiObject} from "../utils/componentTypes";
-import {ComponentsProps} from "../Capsule";
-import {stateKeyType} from "../polyfills/StateManager";
-import TrashIcon from "../icons/Trash.svg";
+import ColorBlue from '../icons/ColorBlue.svg';
+import ColorGrey from '../icons/ColorGrey.svg';
+import ColorGreen from '../icons/ColorGreen.svg';
+import ColorRed from '../icons/ColorRed.svg';
+import { ButtonComponent, ButtonStyle, EmojiObject } from '../utils/componentTypes';
+import { ComponentsProps } from '../Capsule';
+import { stateKeyType } from '../polyfills/StateManager';
+import TrashIcon from '../icons/Trash.svg';
 import { useStateOpen } from '../utils/useStateOpen';
-import TimesSolid from "../icons/times-solid.svg"
-import Emoji from "../icons/Emoji.svg"
-import EmojiActive from "../icons/EmojiActive.svg"
+import TimesSolid from '../icons/times-solid.svg';
+import Emoji from '../icons/Emoji.svg';
+import EmojiActive from '../icons/EmojiActive.svg';
 import LockActive from '../icons/LockActive.svg';
 import Lock from '../icons/Lock.svg';
 import Url from '../icons/Url.svg';
 import DescriptionPen from '../icons/DescriptionPen.svg';
+import { DragLines } from '../dnd/DragLine';
+import { ClosestType } from '../dnd/types';
+import { DroppableID } from '../dnd/components';
+
 /*
 
     type: 2,
@@ -67,7 +70,7 @@ function getColor(style: ButtonStyle, disabled: boolean) {
 
 
 export function Button(
-    {state, stateKey, stateManager, removeKeyParent = undefined, passProps} :
+    {state, stateKey, stateManager, removeKeyParent = undefined, passProps, droppableId=undefined, dragKeyToDeleteOverwrite = undefined} :
     ComponentsProps & {state: ButtonComponent}
 ) {
     const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
@@ -85,7 +88,16 @@ export function Button(
     // LINK BUTTON END
 
     return (
-        <div
+        <DragLines
+            droppableId={typeof stateKey[stateKey.length - 1] === "number" ? DroppableID.BUTTON : (droppableId ?? null)}
+            dragDisabled={!!open}
+            draggable={true}
+            defaultType={ClosestType.LEFT}
+            data={state}
+            stateKey={stateKey}
+            removeKeyParent={removeKeyParent}
+            dragKeyToDeleteOverwrite={dragKeyToDeleteOverwrite}
+        ><div
             className={CapsuleStyles.large_button  + ' ' + getColor(state.style, state.disabled)}
             onClick={(ev) => {
                 if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
@@ -98,7 +110,7 @@ export function Button(
                 <Comp passProps={passProps} emoji={state.emoji}/>
             </div>}
             {/**/}
-            {state.style === 5 ? <>
+            {state.style === ButtonStyle.URL ? <>
                 <div className={CapsuleStyles.text + ' ' + Styles.link_btn}>
                     <div className={Styles.text} ref={textRef}>{state.label}</div>
                     <div className={Styles.link} style={{width: textWidth}}>{(state.url || "").replace("https://", "").replace("http://", "")}</div>
@@ -113,7 +125,7 @@ export function Button(
                 {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
                 {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.url || ""} stateKey={[...stateKey, 'url']} stateManager={stateManager} setOpen={setOpen}/>}
             </div>}
-        </div>
+        </div></DragLines>
     )
 }
 
@@ -125,27 +137,27 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent} : {
     removeKeyParent?: stateKeyType,
 }) {
     return <>
-        {state.style !== 5 && <Fragment>
+        {state.style !== ButtonStyle.URL && <Fragment>
             <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
-                stateManager.setKey({key: [...stateKey, "style"], value: 1})
+                stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.BLUE})
             }}>
                 <div className={CapsuleStyles.large_button_ctx_item_img}><img src={ColorBlue} alt=""/></div>
                 <div className={CapsuleStyles.large_button_ctx_item_text}>Set as Main action</div>
             </div>
             <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
-                stateManager.setKey({key: [...stateKey, "style"], value: 2})
+                stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.GREY})
             }}>
                 <div className={CapsuleStyles.large_button_ctx_item_img}><img src={ColorGrey} alt=""/></div>
                 <div className={CapsuleStyles.large_button_ctx_item_text}>Set as Secondary action</div>
             </div>
             <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
-                stateManager.setKey({key: [...stateKey, "style"], value: 3})
+                stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.GREEN})
             }}>
                 <div className={CapsuleStyles.large_button_ctx_item_img}><img src={ColorGreen} alt=""/></div>
                 <div className={CapsuleStyles.large_button_ctx_item_text}>Set as Confirmation</div>
             </div>
             <div className={CapsuleStyles.large_button_ctx_item} onClick={() => {
-                stateManager.setKey({key: [...stateKey, "style"], value: 4})
+                stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.RED})
             }}>
                 <div className={CapsuleStyles.large_button_ctx_item_img}><img src={ColorRed} alt=""/></div>
                 <div className={CapsuleStyles.large_button_ctx_item_text}>Set as Destructive</div>
@@ -178,7 +190,7 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent} : {
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionPen} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>Change label</div>
         </div>
-        {state.style === 5 && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
+        {state.style === ButtonStyle.URL && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             setOpen(4);
             ev.stopPropagation();
         }}>

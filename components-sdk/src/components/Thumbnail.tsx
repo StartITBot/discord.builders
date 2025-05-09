@@ -1,45 +1,100 @@
-import Styles from "./Thumbnail.module.css";
-import ThumbnailIcon from "../icons/Thumbnail.svg";
-import TrashIcon from "../icons/Trash.svg";
-import UploadImage from "../icons/UploadImage.svg";
-import Url from "../icons/Url.svg";
-import AddDescription from "../icons/AddDescription.svg";
-import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
-import CapsuleStyles from "../Capsule.module.css";
-import {MenuLabel} from "./Button";
-import Icons from "../icons/Icons.svg";
-import {ComponentsProps, default_settings} from "../Capsule";
-import {MediaGalleryItem, ThumbnailComponent} from "../utils/componentTypes";
-import {stateKeyType} from "../polyfills/StateManager";
-import {useFileUpload} from "../utils/useFileUpload";
-import SpoilerActiveIcon from "../icons/SpoilerActive.svg";
-import SpoilerIcon from "../icons/Spoiler.svg";
+import Styles from './Thumbnail.module.css';
+import ThumbnailIcon from '../icons/Thumbnail.svg';
+import TrashIcon from '../icons/Trash.svg';
+import UploadImage from '../icons/UploadImage.svg';
+import Url from '../icons/Url.svg';
+import AddDescription from '../icons/AddDescription.svg';
+import { Dispatch, SetStateAction, useRef } from 'react';
+import CapsuleStyles from '../Capsule.module.css';
+import { MenuLabel } from './Button';
+import { ComponentsProps, default_settings } from '../Capsule';
+import { MediaGalleryItem, ThumbnailComponent } from '../utils/componentTypes';
+import { stateKeyType } from '../polyfills/StateManager';
+import { useFileUpload } from '../utils/useFileUpload';
+import SpoilerActiveIcon from '../icons/SpoilerActive.svg';
+import SpoilerIcon from '../icons/Spoiler.svg';
 import { useStateOpen } from '../utils/useStateOpen';
+import { ClosestType } from '../dnd/types';
+import { DragLines } from '../dnd/DragLine';
 
-
-export function Thumbnail({state, stateKey, stateManager, passProps, removeKeyParent = undefined, className=undefined} : Omit<ComponentsProps, 'state'> & {state: MediaGalleryItem | ThumbnailComponent, className?: string}) {
-    const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
+export function Thumbnail({
+    state,
+    stateKey,
+    stateManager,
+    passProps,
+    removeKeyParent = undefined,
+    className = undefined,
+    droppableId = undefined,
+    dragKeyToDeleteOverwrite = undefined,
+}: Omit<ComponentsProps, 'state'> & { state: MediaGalleryItem | ThumbnailComponent; className?: string }) {
+    const { open, setOpen, ignoreRef, closeLockRef } = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
 
-    const {src, setSrc, openFileSelector} = useFileUpload(
+    const { src, setSrc, openFileSelector } = useFileUpload(
         state.media.url,
-        [...stateKey, "media", "url"],
-        passProps?.getFile, passProps?.setFile, stateManager
+        [...stateKey, 'media', 'url'],
+        passProps?.getFile,
+        passProps?.setFile,
+        stateManager
     );
 
-    return <div className={(className || Styles.thumbnail) + ' ' + (state.spoiler ? Styles.spoiler : '')}
-    onClick={(ev) => {
-        if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
-        setOpen(1)
-    }} ref={ignoreRef}>
-        <img src={src || ThumbnailIcon} alt=""/>
-        {!!open && <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
-            {open === 1 && <MenuFirst state={state} stateKey={stateKey} stateManager={stateManager} setOpen={setOpen} removeKeyParent={removeKeyParent} openFileSelector={openFileSelector}/>}
-            {open === 2 && <MenuLabel closeLockRef={closeLockRef} state={state.media.url} stateKey={[...stateKey, "media", "url"]} stateManager={stateManager} setOpen={setOpen}/>}
-            {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.description || ""} stateKey={[...stateKey, "description"]} stateManager={stateManager} nullable={true} setOpen={setOpen}/>}
-        </div>}
-
-    </div>
+    return (
+        <div
+            className={(className || Styles.thumbnail)}
+            onClick={(ev) => {
+                if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
+                setOpen(1);
+            }}
+            ref={ignoreRef}
+        >
+            <DragLines
+                droppableId={droppableId ?? null}
+                dragDisabled={!!open}
+                draggable={true}
+                defaultType={ClosestType.LEFT}
+                data={state}
+                stateKey={stateKey}
+                removeKeyParent={removeKeyParent}
+                dragKeyToDeleteOverwrite={dragKeyToDeleteOverwrite}
+                className={state.spoiler ? Styles.spoiler : ''}
+            >
+                <img src={src || ThumbnailIcon} data-image-role="main" alt="" />
+            </DragLines>
+            {!!open && (
+                <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
+                    {open === 1 && (
+                        <MenuFirst
+                            state={state}
+                            stateKey={stateKey}
+                            stateManager={stateManager}
+                            setOpen={setOpen}
+                            removeKeyParent={removeKeyParent}
+                            openFileSelector={openFileSelector}
+                        />
+                    )}
+                    {open === 2 && (
+                        <MenuLabel
+                            closeLockRef={closeLockRef}
+                            state={state.media.url}
+                            stateKey={[...stateKey, 'media', 'url']}
+                            stateManager={stateManager}
+                            setOpen={setOpen}
+                        />
+                    )}
+                    {open === 3 && (
+                        <MenuLabel
+                            closeLockRef={closeLockRef}
+                            state={state.description || ''}
+                            stateKey={[...stateKey, 'description']}
+                            stateManager={stateManager}
+                            nullable={true}
+                            setOpen={setOpen}
+                        />
+                    )}
+                </div>
+            )}
+        </div>
+    );
 }
 
 

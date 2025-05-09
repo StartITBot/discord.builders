@@ -1,0 +1,24 @@
+<% if (data.comp.type == 10) { -%>
+new TextDisplayBuilder().setContent(<%= data.comp.content %>)<% _%>
+<% } else if (data.comp.type == 13) { -%>
+new FileBuilder().setURL(<%= data.comp.file.url %>)<% _%>
+<%_ %><% if (data.comp.spoiler) { %>.setSpoiler(true)<% } %><% _%>
+<% } else if (data.comp.type == 14) { -%>
+<%- include('/discordjs-js/separator.js.ejs', {comp: data.comp}); -%>
+<% } else if (data.comp.type == 17) { -%>
+<%- include('/discordjs-ts/container.ts.ejs', {comp: data.comp}); -%>
+<% } else if (data.comp.type == 1) { -%>
+<%- include('/discordjs-ts/actionrow.ts.ejs', {comp: data.comp}); -%>
+<% } else if (data.comp.type == 2) { -%>
+<%- include('/discordjs-js/button.js.ejs', {comp: data.comp}); -%>
+<% } else if (data.comp.type == 12) { -%>
+<%- include('/discordjs-js/mediagallery.js.ejs', {comp: data.comp}); -%>
+<% } else if (data.comp.type == 9) { -%>
+<%- include('/discordjs-js/section.js.ejs', {comp: data.comp}); -%>
+<% } else if (data.comp.type == 11) { -%>
+<%- include('/discordjs-js/thumbnail.js.ejs', {comp: data.comp}); -%>
+<% } else if (data.comp.type == 3) { -%>
+<%- include('/discordjs-js/selectmenu.js.ejs', {comp: data.comp}); -%>
+<% } else  { -%>
+// TODO: Implement <%= data.comp.type %><% _%>
+<% } -%>

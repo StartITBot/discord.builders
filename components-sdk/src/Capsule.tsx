@@ -1,41 +1,46 @@
-import Styles from './Capsule.module.css'
-import {TextDisplay} from "./components/TextDisplay";
-import {Thumbnail} from "./components/Thumbnail";
-import {MediaGallery} from "./components/MediaGallery";
-import {Separator} from "./components/Separator";
-import {Section} from "./components/Section";
-import {Container} from "./components/Container";
-import {Button} from "./components/Button";
-import {ActionRow} from "./components/ActionRow";
-import {StringSelect} from "./components/StringSelect";
-import {File} from "./components/File"
-import {CapsuleInner} from "./CapsuleInner";
-import {generateRandomAnimal, randomSentence, uuidv4} from "./utils/randomGen";
-import {stateKeyType, StateManager} from "./polyfills/StateManager";
+import Styles from './Capsule.module.css';
+import { TextDisplay } from './components/TextDisplay';
+import { Thumbnail } from './components/Thumbnail';
+import { MediaGallery } from './components/MediaGallery';
+import { Separator } from './components/Separator';
+import { Section } from './components/Section';
+import { Container } from './components/Container';
+import { Button } from './components/Button';
+import { ActionRow } from './components/ActionRow';
+import { StringSelect } from './components/StringSelect';
+import { File } from './components/File';
+import { CapsuleInner } from './CapsuleInner';
+import { generateRandomAnimal, randomSentence, uuidv4 } from './utils/randomGen';
+import { stateKeyType, StateManager } from './polyfills/StateManager';
 import {
     ActionRowComponent,
     ButtonComponent,
+    ButtonStyle,
     Component,
-    ContainerComponent, FileComponent,
+    ComponentType,
+    ContainerComponent,
+    FileComponent,
     MediaGalleryComponent,
     MediaGalleryItem,
     PassProps,
     SeparatorComponent,
+    SeparatorSpacingSize,
     StringSelectComponent,
     TextDisplayComponent,
     ThumbnailComponent,
-} from "./utils/componentTypes";
+} from './utils/componentTypes';
 
-export const SPACING_SMALL = 1;
-export const SPACING_LARGE = 2;
+import { DragContextProvider } from './dnd/DragContext';
+import { DroppableID } from './dnd/components';
+import { KeyToDeleteType } from './dnd/types';
 
 const _Button = {
     type: 2,
-    style: 2,
+    style: ButtonStyle.GREY,
     label: '',
     emoji: null,
     disabled: false,
-} as ButtonComponent
+} as ButtonComponent;
 
 const _Image = {
     media: {
@@ -76,7 +81,7 @@ export const default_settings = {
         type: 1,
         components: [{
             ..._Button,
-            style: 5,
+            style: ButtonStyle.URL,
             url: 'https://google.com',
             label: generateRandomAnimal()
         }]
@@ -109,7 +114,7 @@ export const default_settings = {
     Separator: {
         type: 14,
         divider: true,
-        spacing: SPACING_SMALL
+        spacing: SeparatorSpacingSize.SMALL
     },
     Container: {
         type: 17,
@@ -135,6 +140,8 @@ export type ComponentsProps = {
     passProps: PassProps,
     stateManager: StateManager,
     removeKeyParent?: stateKeyType,
+    dragKeyToDeleteOverwrite?: Omit<KeyToDeleteType, 'sessionId'>, // Available only for Section accessory
+    droppableId?: DroppableID, // Available only for Section accessory
 }
 
 export const COMPONENTS = {
@@ -153,7 +160,7 @@ export const COMPONENTS = {
 }
 
 export const SECTIONABLE = [
-    10 // TextDisplay,
+    ComponentType.TEXT_DISPLAY
 ]
 
 export function Capsule(props : {
@@ -166,12 +173,15 @@ export function Capsule(props : {
     const cls = props.className ? ' ' + props.className : '';
 
     return <div className={Styles.preview + cls}>
+        <DragContextProvider stateManager={props.stateManager}>
             <CapsuleInner
                 state={props.state}
                 stateKey={props.stateKey}
                 stateManager={props.stateManager}
                 buttonContext={'main'}
                 passProps={props.passProps}
+                droppableId={DroppableID.TOP_LEVEL}
             />
-        </div>
-    }
+        </DragContextProvider>
+    </div>
+}

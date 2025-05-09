@@ -3,5 +3,9 @@
   grid-template-columns: 1fr min-content;
   gap: 1rem;
 
+  .right {
+    position: relative;
+  }
+
 }
 

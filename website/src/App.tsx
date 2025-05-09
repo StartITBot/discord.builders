@@ -1,20 +1,20 @@
 import { Capsule, PassProps } from 'components-sdk';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {actions, DisplaySliceManager, RootState} from "./state";
-import {BetterInput} from "./BetterInput";
-import {EmojiPicker} from "./EmojiPicker";
-import {EmojiShow} from "./EmojiShow";
-import Styles from './App.module.css'
-import {webhookImplementation} from "./webhook.impl";
-import {ErrorBoundary} from "react-error-boundary";
+import { useDispatch, useSelector } from 'react-redux';
+import { actions, DisplaySliceManager, RootState } from './state';
+import { BetterInput } from './BetterInput';
+import { EmojiPicker } from './EmojiPicker';
+import { EmojiShow } from './EmojiShow';
+import Styles from './App.module.css';
+import { webhookImplementation } from './webhook.impl';
+import { ErrorBoundary } from 'react-error-boundary';
 import { ColorPicker } from './ColorPicker';
 import { ClientFunction, IncludeCallback } from 'ejs';
 import { CodeBlock, dracula } from 'react-code-blocks';
 
 const codegenModules: {
-    [name: string]: {default: ClientFunction}
-} = import.meta.globEager('./codegen/**/*.ejs')
+    [name: string]: { default: ClientFunction };
+} = import.meta.globEager('./codegen/**/*.ejs');
 
 const libComponents: {[name: string]: ClientFunction} = {};
 
@@ -48,9 +48,14 @@ const libs = {
         language: "dart"
     },
 
-    discordjs: {
+    "discordjs-js": {
         name: "JavaScript: discord.js",
         language: "javascript"
+    },
+
+    "discordjs-ts": {
+        name: "TypeScript: discord.js",
+        language: "typescript"
     },
 
     itsmybot: {
@@ -147,19 +152,27 @@ function App() {
         data = JSON.stringify(state, undefined, 4)
     }
 
+    const stateKey = useMemo(() => ['data'], [])
+
     return <div className={Styles.app}>
         <ErrorBoundary fallback={<></>}>
             <Capsule state={state}
                      stateManager={stateManager}
-                     stateKey={['data']}
+                     stateKey={stateKey}
                      passProps={passProps}
                      className={Styles.preview}
             />
         </ErrorBoundary>
         <div className={Styles.json}>
-            <h1>Message builder</h1>
-            <p style={{marginBottom: '2rem', marginTop: '1rem'}}>Warning: Non-link buttons and select menus are not
-                allowed when sending message via webhook.</p>
+            <h1>discord.builders — Best webhook tool for Discord</h1>
+            <a href="https://github.com/StartITBot/discord.builders" target="_blank"><div className={Styles.badges}>
+                <img alt="Star on GitHub"
+                     src="https://img.shields.io/github/stars/StartITBot/discord.builders?style=for-the-badge&logo=github&label=Star+on+GitHub&color=007ec6" />
+                <img alt="GitHub contributors"
+                     src="https://img.shields.io/github/contributors/StartITBot/discord.builders?style=for-the-badge&color=248045" />
+                <img alt="GitHub commits"
+                     src="https://img.shields.io/github/commit-activity/t/StartITBot/discord.builders?style=for-the-badge&color=248045" />
+            </div></a>
 
             <div className={Styles.input_pair}>
                 <div className={Styles.input}>
@@ -178,6 +191,8 @@ function App() {
                     Send
                 </button>
             </div>
+
+            <p style={{marginTop: '1rem', marginBottom: '4rem'}}>Warning: Non-link buttons and select menus are not allowed when sending message via webhook.</p>
 
             {!!response && <div className={Styles.data}
                                 style={{

@@ -1,0 +1,51 @@
+.draglines {
+    position: relative;
+    user-select: none;
+}
+
+.dragline, .dragline_hor, .dragline_cen {
+    position: absolute;
+    border-radius: 100px;
+    background: #86c232;
+}
+
+.dragline {
+    left: 0;
+    right: 0;
+    height: 5px;
+}
+
+.dragline_hor {
+    top: 0;
+    bottom: 0;
+    width: 5px;
+}
+
+.dragline_cen {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 8px;
+    background: rgba(246, 86, 86, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* for thumbnail's spoiler */
+    img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.draghandler {
+    position: absolute;
+    left: -12px;
+    top: 0;
+    width: 8px;
+    height: 13px;
+    cursor: grab;
+    img {
+        width: 100%;
+    }
+}

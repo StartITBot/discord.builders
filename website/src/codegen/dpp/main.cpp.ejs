@@ -13,7 +13,43 @@ int main() {
             // This method allows you to add arbitrary JSON for components.
             // It is ideal for pre-generated content such as this. If you need to change
             // components on the fly, please see https://dpp.dev/classdpp_1_1component.html
-            .add_json_components("<%- JSON.stringify(data.components).replace(/[\n"\&\r\t\b\f]/g, '\\$&') %>");
+            .add_json_components(json::parse(<%- (() => {
+                function escapeString(s) {
+                    return s.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+                }
+
+                function toNlohmannJson(value, indent = 6) {
+                    const pad = '  '.repeat(indent);
+                    const padNext = '  '.repeat(indent + 1);
+
+                    if (value === null) return undefined;
+                    if (typeof value === 'string') return `"${escapeString(value)}"`;
+                    if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+
+                    if (Array.isArray(value)) {
+                        if (value.length === 0) return '{}';
+                        return '{\n' + value.map(v => {
+                            const res = toNlohmannJson(v, indent + 1);
+                            return res !== undefined ? `${padNext}${res}` : undefined;
+                        }).filter(v => v !== undefined).join(',\n') + `\n${pad}}`; // Excluding null values
+                    }
+
+                    if (typeof value === 'object') {
+                        const entries = Object.entries(value);
+                        if (entries.length === 0) return '{}';
+                            return '{\n' + entries
+                            .map(([k, v]) => {
+                               const res = toNlohmannJson(v, indent + 1);
+                               return res !== undefined ? `${padNext}{"${escapeString(k)}", ${res}}` : undefined;
+                            })
+                      .filter(v => v !== undefined)
+                      .join(',\n') + `\n${pad}}`; 
+                    }
+                    return 'nullptr'; // fallback
+                }
+
+                return toNlohmannJson(data.components);
+              })() %>).dump(-1, ' ', false, json::error_handler_t::ignore));
         bot.message_create(SOME_CHANNEL_ID, m);
     });
     
