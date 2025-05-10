@@ -38,7 +38,7 @@ export function useHashRouter() {
 
             let value;
             try {
-                value = JSON.parse(atob(newHash));
+				value = JSON.parse(decodeURIComponent(atob(newHash)));
             } catch (e) {
                 value = [];
             }
