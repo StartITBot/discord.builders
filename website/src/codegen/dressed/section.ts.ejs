@@ -1,0 +1,10 @@
+<%
+const componentLines = `[\n${data.comp.components.map(comp =>
+  indent(include('/dressed/section_textdisplay.ts.ejs', { comp }), 8)
+).join(',\n')}\n]`;
+
+const accessory = include('/dressed/components.ts.ejs', { comp: data.comp.accessory });
+%>Section(
+<%- indent(componentLines, 8) %>,
+<%- indent(accessory, 8) %>
+)

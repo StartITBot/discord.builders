@@ -1,0 +1,1 @@
+MediaGallery(<% data.comp.items.forEach(function(comp, index) { -%><%- include('/dressed/mediagallery_item.ts.ejs', { comp }) %><%- index !== data.comp.items.length - 1 ? ', ' : '' %><% }); -%>)

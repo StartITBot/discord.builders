@@ -1,0 +1,9 @@
+<%
+  const props = [];
+  if (data.comp.divider === false) {
+    props.push(`divider: false`);
+  }
+  if (data.comp.spacing === 2) {
+    props.push(`spacing: Large`);
+  }
+%>Separator(<%- props.length ? `{ ${props.join(', ')} }` : '' %>)

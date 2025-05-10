@@ -1,0 +1,42 @@
+<%
+  const buttonStyle = {
+    1: '"Primary"',
+    2: '"Secondary"',
+    3: '"Success"',
+    4: '"Danger"',
+  };
+
+  const props = [];
+
+  if (data.comp.style < 5) {
+    props.push(`style: ${buttonStyle[data.comp.style]}`);
+  }
+
+  if (data.comp.label) {
+    props.push(`label: "${data.comp.label}"`);
+  }
+
+  if (data.comp.emoji && (data.comp.emoji.id || data.comp.emoji.name)) {
+    const emojiParts = [];
+    if (data.comp.emoji.id) emojiParts.push(`id: "${data.comp.emoji.id}"`);
+    if (data.comp.emoji.name) emojiParts.push(`name: "${data.comp.emoji.name}"`);
+    if (data.comp.emoji.animated) emojiParts.push(`animated: true`);
+    props.push(`emoji: { ${emojiParts.join(', ')} }`);
+  }
+
+  if (data.comp.disabled) {
+    props.push(`disabled: true`);
+  }
+
+  if (data.comp.style === 6 && data.comp.sku_id) {
+    props.push(`sku_id: "${data.comp.sku_id}"`);
+  } else if (data.comp.style === 5 && data.comp.url) {
+    props.push(`url: "${data.comp.url}"`);
+  } else if (data.comp.custom_id) {
+    props.push(`custom_id: "${data.comp.custom_id}"`);
+  }
+%>Button({
+<% props.forEach(function(prop){-%>
+<%- indent(prop, 8); %>,
+<% }); -%>
+})

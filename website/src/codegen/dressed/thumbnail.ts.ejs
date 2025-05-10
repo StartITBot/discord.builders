@@ -1,0 +1,5 @@
+<%
+const args = [];
+if (data.comp.description) args.push(`description: "${data.comp.description}"`);
+if (data.comp.spoiler) args.push(`spoiler: true`);
+%>Thumbnail(<%= data.comp.media.url %><% if (args.length) { %>, { <%- args.join(', ') %> }<% } %>)

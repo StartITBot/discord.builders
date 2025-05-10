@@ -35,6 +35,12 @@ export const libs: {
         path: '/discordjs-typescript-code-generator',
     },
 
+    dressed: {
+        name: 'TypeScript: dressed',
+        language: 'typescript',
+        path: '/dressed-code-generator',
+    },
+
     itsmybot: {
         name: 'YAML: ItsMyBot',
         language: 'yaml',

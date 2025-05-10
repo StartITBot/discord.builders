@@ -1,0 +1,44 @@
+<%
+  const menuType = {
+    3: 'String',
+    5: 'User',
+    6: 'Role',
+    7: 'Mentionable',
+    8: 'Channel',
+  };
+
+  const props = [];
+
+  props.push(`type: "${menuType[data.comp.type]}"`)
+
+  if (data.comp.custom_id) {
+    props.push(`custom_id: "${data.comp.custom_id}"`);
+  }
+
+  if (data.comp.disabled) {
+    props.push(`disabled: true`);
+  }
+
+  if (data.comp.placeholder) {
+    props.push(`placeholder: "${data.comp.placeholder}"`);
+  }
+
+  if (data.comp.min_values && data.comp.min_values !== 1) {
+    props.push(`min_values: ${data.comp.min_values}`);
+  }
+
+  if (data.comp.max_values && data.comp.max_values !== 1) {
+    props.push(`max_values: ${data.comp.max_values}`);
+  }
+
+  if (data.comp.options && data.comp.options.length > 0) {
+    const renderedOptions = data.comp.options.map(option =>
+      indent(include('/dressed/selectmenu_option.ts.ejs', { comp: option }), 8)
+    ).join(',\n');
+    props.push(`options: [\n${renderedOptions}\n]`);
+  }
+%>SelectMenu({
+<% props.forEach(function(prop){-%>
+<%- indent(prop, 8); %>,
+<% }); -%>
+})
