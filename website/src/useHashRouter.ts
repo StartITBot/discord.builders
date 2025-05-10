@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { webhookImplementation } from './webhook.impl';
 
 function asciiJSONStringify(obj: any): string {
-	return JSON.stringify(obj).replace(/[\u00FF-\uFFFF]/g, function(chr) {
-		return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).slice(-4)
-	})
+    return JSON.stringify(obj).replace(/[\u00FF-\uFFFF]/g, function(chr) {
+        return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).slice(-4)
+    })
 }
 
 export function useHashRouter() {
@@ -38,7 +38,7 @@ export function useHashRouter() {
 
             let value;
             try {
-				value = JSON.parse(decodeURIComponent(atob(newHash)));
+                value = JSON.parse(decodeURIComponent(atob(newHash)));
             } catch (e) {
                 value = [];
             }
