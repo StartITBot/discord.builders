@@ -2,7 +2,7 @@ import { CodeBlock, dracula } from 'react-code-blocks';
 import Styles from './App.module.css';
 import Select, { Props } from 'react-select';
 import { select_styles } from './Select';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { libs } from '../libs.config';
 import { ClientFunction, IncludeCallback } from 'ejs';
 import { RootState } from './state';
@@ -34,8 +34,15 @@ type selectOption = {
     value: string;
 }
 
-export function Codegen({state} : {state: Component[]}) {
-    const [libSelected, setLibSelected] = useState<string>('json');
+export function Codegen({state, page, setPage} : {
+    state: Component[],
+    page: string,
+    setPage: (page: string) => void
+}) {
+
+    // In this scope of code null === JSON, this may change in the future
+    const libSelected = page === '200.home' ? 'json' : page;
+    const setLibSelected = (lib: string) => setPage(lib === 'json' ? '200.home' : lib);
 
     const selectOptions: selectOption[] = [
         {

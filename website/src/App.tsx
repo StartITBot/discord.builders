@@ -11,6 +11,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { ColorPicker } from './ColorPicker';
 import { useHashRouter } from './useHashRouter';
 import { Codegen } from './Codegen';
+import { useRouter } from './useRouter';
 
 
 webhookImplementation.init();
@@ -21,6 +22,7 @@ function App() {
     const state = useSelector((state: RootState) => state.display.data)
     const webhookUrl = useSelector((state: RootState) => state.display.webhookUrl);
     const response = useSelector((state: RootState) => state.display.webhookResponse);
+    const [page, setPage] = useRouter();
     useHashRouter();
 
     const setFile = useCallback(webhookImplementation.setFile, []);
@@ -47,6 +49,8 @@ function App() {
     } catch (e) {}
 
     const stateKey = useMemo(() => ['data'], [])
+
+    if (page === '404.not-found') return <div className={Styles.not_found}><h1>404 — Page not found</h1><p>Check the URL and try again or go back to <a href="/">home</a></p></div>
 
     return <div className={Styles.app}>
         <ErrorBoundary fallback={<></>}>
@@ -95,7 +99,7 @@ function App() {
                                 }}>{JSON.stringify(response, undefined, 4)}</div>}
 
 
-            <Codegen state={state} />
+            <Codegen state={state} page={page} setPage={setPage} />
         </div>
     </div>
 }

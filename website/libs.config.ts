@@ -1,37 +1,43 @@
-
-export const libs = {
-    dpp:{
-        name: "C++: DPP",
-        language: "cpp"
+export const libs: {
+    [name: string]: {
+        name: string;
+        language: string;
+        path: string;
+    }
+} = {
+    dpp: {
+        name: 'C++: DPP',
+        language: 'cpp',
+        path: '/dpp-code-generator',
     },
 
-    hikari:{
-        name: "Python: hikari",
-        language: 'python'
+    hikari: {
+        name: 'Python: hikari',
+        language: 'python',
+        path: '/hikari-python-code-generator',
     },
 
     nyxx: {
-        name: "Dart: nyxx",
-        language: "dart"
+        name: 'Dart: nyxx',
+        language: 'dart',
+        path: '/nyxx-dart-code-generator',
     },
 
-    "discordjs-js": {
-        name: "JavaScript: discord.js",
-        language: "javascript"
+    'discordjs-js': {
+        name: 'JavaScript: discord.js',
+        language: 'javascript',
+        path: '/discordjs-javascript-code-generator',
     },
 
-    "discordjs-ts": {
-        name: "TypeScript: discord.js",
-        language: "typescript"
+    'discordjs-ts': {
+        name: 'TypeScript: discord.js',
+        language: 'typescript',
+        path: '/discordjs-typescript-code-generator',
     },
 
     itsmybot: {
-        name: "YAML: ItsMyBot",
-        language: "yaml"
-    }
-} as {
-    [name: string] : {
-        name: string,
-        language: string
-    }
-}
+        name: 'YAML: ItsMyBot',
+        language: 'yaml',
+        path: '/itsmybot-code-generator',
+    },
+};

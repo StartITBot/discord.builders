@@ -1,3 +1,25 @@
+.not_found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #fff;
+
+    h1 {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: #fff;
+    }
+
+    p {
+        font-size: 1.5rem;
+        text-align: center;
+        color: #fff;
+    }
+}
+
 .app {
   display: grid;
   grid-template-columns: 1fr 1fr;
