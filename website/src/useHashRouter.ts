@@ -3,6 +3,12 @@ import { actions, RootState } from './state';
 import { useDispatch, useSelector } from 'react-redux';
 import { webhookImplementation } from './webhook.impl';
 
+function asciiJSONStringify(obj: any): string {
+	return JSON.stringify(obj).replace(/[\u00FF-\uFFFF]/g, function(chr) {
+		return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).slice(-4)
+	})
+}
+
 export function useHashRouter() {
     const dispatch = useDispatch();
     const currentHash = useRef<string | null>(null);
@@ -16,7 +22,7 @@ export function useHashRouter() {
         }
 
         const getData = setTimeout(() => {
-            const value = btoa(JSON.stringify(state));
+            const value = btoa(asciiJSONStringify(state));
             currentHash.current = value;  // infinite loop resolver
             document.location.hash = value;
         }, 600)
