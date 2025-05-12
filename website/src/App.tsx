@@ -45,10 +45,18 @@ function App() {
     let parsed_url: URL | null = null;
     try {
         parsed_url = new URL(webhookUrl);
+
+        if (parsed_url.pathname.startsWith('/api/webhooks/') && parsed_url.hostname === 'discord.com') {
+            parsed_url.protocol = 'https:';
+            parsed_url.pathname = '/api/v10/webhooks/' + parsed_url.pathname.slice('/api/webhooks/'.length);
+        }
+
         parsed_url.search = '?with_components=true'
     } catch (e) {}
 
     const stateKey = useMemo(() => ['data'], [])
+
+    const errors = useMemo(() => webhookImplementation.getErrors(response), [response]);
 
     if (page === '404.not-found') return <div className={Styles.not_found}><h1>404 — Page not found</h1><p>Check the URL and try again or go back to <a href="/">home</a></p></div>
 
@@ -59,6 +67,7 @@ function App() {
                      stateKey={stateKey}
                      passProps={passProps}
                      className={Styles.preview}
+                     errors={errors}
             />
         </ErrorBoundary>
         <div className={Styles.json}>

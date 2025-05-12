@@ -75,6 +75,7 @@
     }
 
     .data {
+      font-family: monospace;
       white-space: pre-wrap;
       line-height: 100%;
     }

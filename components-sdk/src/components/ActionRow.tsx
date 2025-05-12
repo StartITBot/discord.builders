@@ -1,7 +1,12 @@
 import { COMPONENTS, ComponentsProps } from '../Capsule';
 import Styles from './ActionRow.module.css';
 import { CapsuleButton } from '../CapsuleButton';
-import { ActionRowComponent, ActionRowPossible, ButtonComponent, Component } from '../utils/componentTypes';
+import {
+    ActionRowComponent,
+    ActionRowPossible,
+    ButtonComponent,
+    ComponentType,
+} from '../utils/componentTypes';
 import { useMemo } from 'react';
 
 export function ActionRow({
@@ -10,10 +15,11 @@ export function ActionRow({
     stateManager,
     passProps,
 }: ComponentsProps & { state: ActionRowComponent<ActionRowPossible> }) {
-    const selectButton = (state?.components || []).find((component) => component.type === 3);
+    const isStringSelect = (state?.components || []).find((component) => component.type === ComponentType.STRING_SELECT);
+    const noComponents = state?.components?.length || 0;
 
     return (
-        <div className={selectButton ? '' : Styles.action_row}>
+        <div className={isStringSelect ? '' : Styles.action_row}>
             {(state?.components || []).map((component, index) => (
                 <ActionRowInner
                     key={index}
@@ -26,7 +32,7 @@ export function ActionRow({
                 />
             ))}
 
-            {!selectButton && (
+            {(!isStringSelect && noComponents < 5) && (
                 <CapsuleButton
                     context={'button-row'}
                     callback={(val) =>
