@@ -58,12 +58,13 @@ export const webhookImplementation = {
         }
     },
 
-    prepareRequest(state: Component[]): RequestInit {
+    prepareRequest(state: Component[], thread_name?: string): RequestInit {
         const files = this.scrapFiles(state);
 
         const data = JSON.stringify({
             components: state,
-            flags: 32768
+            flags: 32768,
+            thread_name,
         });
 
         if (!files.length) return {method: "POST", body: data, headers: {"Content-Type": "application/json"}}

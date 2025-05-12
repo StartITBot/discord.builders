@@ -150,7 +150,21 @@ export const displaySlice = createSlice({
             state.webhookUrl = action.payload
         },
 
-        setWebhookResponse(state, action: PayloadAction<object>) {
+        setThreadId(state, action: PayloadAction<string>) {
+            try {
+                const parsed_url = new URL(state.webhookUrl);
+                const parsed_query = new URLSearchParams(parsed_url.search);
+                if (!action.payload) {
+                    parsed_query.delete('thread_id');
+                } else {
+                    parsed_query.set('thread_id', action.payload);
+                }
+                parsed_url.search = parsed_query.toString();
+                state.webhookUrl = parsed_url.toString();
+            } catch (e) {}
+        },
+
+        setWebhookResponse(state, action: PayloadAction<object | null>) {
             state.webhookResponse = action.payload
         }
     }
