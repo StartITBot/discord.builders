@@ -181,7 +181,7 @@ function StringSelectOption({state, stateKey: stateParent, index, stateManager, 
     const Comp = passProps.EmojiShow;
 
     return (
-        <DragLines draggable={true} removeKeyParent={removeKeyParent} droppableId={DroppableID.STRING_SELECT} data={state} stateKey={stateKey}><div className={Styles.select_option + (open ? " " + Styles.open : "") + (state.default ? " " + Styles.blue : "") + (state.disabled ? " " + Styles.disabled : "")} onClick={(ev) => {
+        <DragLines draggable={true} removeKeyParent={removeKeyParent} droppableId={DroppableID.STRING_SELECT} data={state} stateKey={stateKey} dragDisabled={!!open}><div className={Styles.select_option + (open ? " " + Styles.open : "") + (state.default ? " " + Styles.blue : "") + (state.disabled ? " " + Styles.disabled : "")} onClick={(ev) => {
             if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
             setOpen(1)
         }} ref={ignoreRef}>
