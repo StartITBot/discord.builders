@@ -142,6 +142,7 @@ export type ComponentsProps = {
     removeKeyParent?: stateKeyType,
     dragKeyToDeleteOverwrite?: Omit<KeyToDeleteType, 'sessionId'>, // Available only for Section accessory
     droppableId?: DroppableID, // Available only for Section accessory
+    errors?: Record<string, any> | null
 }
 
 export const COMPONENTS = {
@@ -168,7 +169,8 @@ export function Capsule(props : {
     stateKey: stateKeyType,
     state: Component[],
     className?: string | null,
-    passProps: PassProps
+    passProps: PassProps,
+    errors: Record<string, any> | null,
 } ) {
     const cls = props.className ? ' ' + props.className : '';
 
@@ -181,6 +183,7 @@ export function Capsule(props : {
                 buttonContext={'main'}
                 passProps={props.passProps}
                 droppableId={DroppableID.TOP_LEVEL}
+                errors={props.errors}
             />
         </DragContextProvider>
     </div>

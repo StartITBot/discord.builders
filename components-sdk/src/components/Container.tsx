@@ -10,12 +10,14 @@ import { ContainerComponent } from '../utils/componentTypes';
 import { useStateOpen } from '../utils/useStateOpen';
 import { DroppableID } from '../dnd/components';
 import { useMemo } from 'react';
+import { flattenErrorsWithoutComponents, hasErrorsWithoutComponents } from '../errors';
 
 export function Container({
     state,
     stateKey,
     stateManager,
     passProps,
+    errors
 }: ComponentsProps & { state: ContainerComponent }) {
     const ColorPicker = passProps.ColorPicker;
 
@@ -27,6 +29,8 @@ export function Container({
             .padStart(6, '0');
     const { open: pickerOpen, setOpen: setPickerOpen, ignoreRef: picker } = useStateOpen(false);
     const stateKeyComponents = useMemo(() => [...stateKey, 'components'], [...stateKey]);
+
+    const hasErrors = errors ? hasErrorsWithoutComponents(errors) : false;
 
     return (
         <div className={Styles.embed + ' ' + (state.spoiler ? Styles.spoiler : '')}>
@@ -42,6 +46,7 @@ export function Container({
                 droppableId={DroppableID.CONTAINER}
                 // buttonClassName={CapsuleStyles.inline}
                 passProps={passProps}
+                errors={errors ? errors.components : null}
             />
             <div className={CapsuleStyles.large_button + ' ' + CapsuleStyles.small} onClick={() => setPickerOpen(true)}>
                 {pickerOpen && (
@@ -74,6 +79,10 @@ export function Container({
                     src={state.spoiler ? SpoilerActiveIcon : SpoilerIcon}
                     alt=""
                 />
+            </div>
+
+            <div>
+                {hasErrors && flattenErrorsWithoutComponents(errors!).map((error, i) => <div key={i} className={CapsuleStyles.error}><b>Error:</b> {error}</div>)}
             </div>
         </div>
     );

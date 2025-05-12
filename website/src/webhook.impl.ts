@@ -75,6 +75,19 @@ export const webhookImplementation = {
             form.append(`files[${idx}]`, blob, filename);
         })
         return {method: "POST", body: form, headers: {}}
+    },
+
+    getErrors(response: unknown) {
+        if (response === null || typeof response !== 'object') return null;
+        if (!("errors" in response)) return null;
+        const responseErrors = response.errors;
+        if (responseErrors === null || typeof responseErrors !== 'object') return null;
+        if (!("components" in responseErrors)) return null;
+        const components = responseErrors.components;
+        if (components === null || typeof components !== 'object') return null;
+        if (Array.isArray(components)) return null;
+
+        return components as Record<string, any>;
     }
 
 }
