@@ -64,6 +64,10 @@
     font-size: 12px;
     padding: 0 1.6rem;
     white-space: nowrap;
+    &.invalid {
+      border-color: #F69083;
+      color: #F69083;
+    }
   }
 
   &:hover, &.open {

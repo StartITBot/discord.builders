@@ -82,6 +82,7 @@ function GlobalSettings({state, stateKey, stateManager} : {
 }) {
     const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
+    const isInvalid = state.min_values > state.max_values;
 
     return <div className={Styles.select_option + ' ' + Styles.select_default + (open ? " " + Styles.open :  "")} onClick={(ev) => {
         if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
@@ -90,7 +91,7 @@ function GlobalSettings({state, stateKey, stateManager} : {
         <div className={Styles.icon}><img src={EditIcon} alt="(Edit)"/></div>
         <div className={Styles.with_badge}>
             <div className={Styles.text}>{state.placeholder || "Global settings"}</div>
-            <div className={Styles.badge}>{state.min_values === state.max_values ? state.min_values : `${state.min_values} – ${state.max_values}` }</div>
+            <div className={Styles.badge + ' ' + (isInvalid?Styles.invalid:'')}>{isInvalid && "INVALID:"} {state.min_values === state.max_values ? state.min_values : `${state.min_values} – ${state.max_values}` }</div>
         </div>
         { !!open && <div className={CapsuleStyles.large_button_ctx+ ' ' + CapsuleStyles.noright} ref={btn_select}>
             {open === 1 && <GlobalSettingsFirst state={state} stateKey={stateKey} stateManager={stateManager} setOpen={setOpen}/>}
