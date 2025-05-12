@@ -38,7 +38,7 @@ export const libs: {
     dressed: {
         name: 'TypeScript: dressed',
         language: 'typescript',
-        path: '/dressed-code-generator',
+        path: '/dressed-typescript-code-generator',
     },
 
     itsmybot: {
