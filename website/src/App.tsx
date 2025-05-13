@@ -37,7 +37,6 @@ function App() {
     const [page, setPage] = useRouter();
     const [postTitle, setPostTitle] = useState<string>("");
     useHashRouter();
-    console.log(state)
 
     const setFile = useCallback(webhookImplementation.setFile, []);
     const getFile = useCallback(webhookImplementation.getFile, [])
