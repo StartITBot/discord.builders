@@ -32,6 +32,7 @@ function App() {
     const stateManager = useMemo(() => new DisplaySliceManager(dispatch), [dispatch]);
     const state = useSelector((state: RootState) => state.display.data)
     const webhookUrl = useSelector((state: RootState) => state.display.webhookUrl);
+    const messageLink = useSelector((state: RootState) => state.display.messageUrl);
     const response = useSelector((state: RootState) => state.display.webhookResponse);
     const [page, setPage] = useRouter();
     const [postTitle, setPostTitle] = useState<string>("");
@@ -53,6 +54,22 @@ function App() {
         return () => clearTimeout(getData)
     }, [webhookUrl]);
 
+    useEffect(() => {
+        const getData = setTimeout(() => localStorage.setItem("discord.builders__messageLink", messageLink), 1000)
+        return () => clearTimeout(getData)
+    }, [messageLink]);
+
+    let parsed_msg_url: URL | null = null;
+    try {
+        parsed_msg_url = new URL(messageLink);
+
+        if (parsed_msg_url.pathname.startsWith('/channels/') && parsed_msg_url.hostname === 'discord.com') {
+            parsed_msg_url.protocol = 'https:';
+        }
+
+        const parsed_query = new URLSearchParams(parsed_msg_url.search);
+        parsed_msg_url.search = parsed_query.toString();
+    } catch (e) {}
 
     let parsed_url: URL | null = null;
     try {
@@ -61,6 +78,9 @@ function App() {
         if (parsed_url.pathname.startsWith('/api/webhooks/') && parsed_url.hostname === 'discord.com') {
             parsed_url.protocol = 'https:';
             parsed_url.pathname = '/api/v10/webhooks/' + parsed_url.pathname.slice('/api/webhooks/'.length);
+            if (parsed_msg_url != null) {
+                parsed_url.pathname += '/messages/'+parsed_msg_url.pathname.split('/').pop();
+            }
         }
 
         const parsed_query = new URLSearchParams(parsed_url.search);
@@ -75,7 +95,10 @@ function App() {
     const threadId = useMemo(() => getThreadId(webhookUrl), [webhookUrl]);
 
     const sendMessage = async () => {
-        const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state))
+        var method_req;
+        if (parsed_msg_url != null) {method_req = "PATCH"}
+        else {method_req = "POST"}
+        const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state, method_req))
 
         const status_code = req.status;
         if (status_code === 204) return dispatch(actions.setWebhookResponse({"status": "204 Success"}));
@@ -95,7 +118,7 @@ function App() {
         if (!postTitle) return;
         dialog.current?.close();
 
-        const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state, postTitle))
+        const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state, "POST", postTitle))
 
         const status_code = req.status;
         if (status_code === 204) return dispatch(actions.setWebhookResponse({"status": "204 Success"}));
@@ -135,7 +158,7 @@ function App() {
                            onChange={ev => dispatch(actions.setWebhookUrl(ev.target.value))}/>
                 </div>
                 <button className={Styles.button} disabled={parsed_url == null} onClick={sendMessage}>
-                    Send
+                    {((parsed_msg_url == null) ? 'Send' : 'Edit')}
                 </button>
             </div>
 
@@ -144,6 +167,20 @@ function App() {
             <div style={{marginBottom: '2rem'}}>
                 <p style={{marginBottom: '0.5rem'}}>Thread ID</p>
                 <input className={Styles.input} type="text" value={threadId || ""} onChange={ev => dispatch(actions.setThreadId(ev.target.value))} placeholder={"Optional. If you want to send the message to a thread, put the thread ID here."}/>
+            </div>
+
+            <div style={{marginBottom: '2rem'}}>
+                <p style={{marginBottom: '0.5rem'}}>Message Link</p>
+                <div className={Styles.input_pair}>
+                    <div>
+                        <input className={Styles.input} placeholder={"Optional. If you want to edit a message"} type="text" value={messageLink}
+                            onChange={ev => dispatch(actions.setMessageLink(ev.target.value))}/>
+                    </div>
+                    <button className={Styles.button} disabled={parsed_msg_url == null || parsed_url == null} onClick={sendMessage}>
+                        Load
+                    </button>
+                </div>
+                <p style={{marginTop: '0.5rem', marginBottom: '2rem', color: 'grey'}}>Warning: The message must to be sent by the webhook that edits it.</p>
             </div>
 
             <dialog ref={dialog} className={Styles.dialog}>

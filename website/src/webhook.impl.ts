@@ -58,7 +58,7 @@ export const webhookImplementation = {
         }
     },
 
-    prepareRequest(state: Component[], thread_name?: string): RequestInit {
+    prepareRequest(state: Component[], method_req?: string, thread_name?: string): RequestInit {
         const files = this.scrapFiles(state);
 
         const data = JSON.stringify({
@@ -67,7 +67,7 @@ export const webhookImplementation = {
             thread_name,
         });
 
-        if (!files.length) return {method: "POST", body: data, headers: {"Content-Type": "application/json"}}
+        if (!files.length) return {method: method_req, body: data, headers: {"Content-Type": "application/json"}}
 
         const form = new FormData();
         form.append('payload_json', data);
@@ -75,7 +75,7 @@ export const webhookImplementation = {
             const blob = window.uploadedFiles[filename];
             form.append(`files[${idx}]`, blob, filename);
         })
-        return {method: "POST", body: form, headers: {}}
+        return {method: method_req, body: form, headers: {}}
     },
 
     getErrors(response: unknown) {

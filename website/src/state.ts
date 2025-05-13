@@ -52,7 +52,8 @@ export const displaySlice = createSlice({
     initialState: () => ({
         data: [] as Component[],
         webhookUrl: localStorage.getItem("discord.builders__webhookToken") || "", // Toolkit run this function so type is string
-        webhookResponse: null as object | null
+        webhookResponse: null as object | null,
+        messageUrl: localStorage.getItem("discord.builders__messageLink") || "" // Toolkit run this function so type is string
     }),
     reducers: {
         wrapKey(state, action: PayloadAction<wrapKeyType<any>>) {
@@ -148,6 +149,10 @@ export const displaySlice = createSlice({
 
         setWebhookUrl(state, action: PayloadAction<string>) {
             state.webhookUrl = action.payload
+        },
+
+        setMessageLink(state, action: PayloadAction<string>) {
+            state.messageUrl = action.payload
         },
 
         setThreadId(state, action: PayloadAction<string>) {
