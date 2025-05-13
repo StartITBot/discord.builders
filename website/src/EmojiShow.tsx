@@ -8,15 +8,21 @@ export const EmojiShow: EmojiShowType = ({emoji}) => {
         return getEmojiDataFromNative(emoji, 'twitter', data)
     }, [])
 
-    if (emoji.id !== null) return <img alt={`Discord emoji: ${emoji.name}`}
-         src={`https://cdn.discordapp.com/emojis/${emoji.id}`}
-         width={19}
-         height={19}
-    />
+    console.log(emoji)
+    if (typeof(emoji) == "undefined"){
+        return null
+    }
+    else {
+        if (emoji.id !== null && typeof(emoji.id) !== "undefined") return <img alt={`Discord emoji${emoji.name}`}
+            src={`https://cdn.discordapp.com/emojis/${emoji.id}`}
+            width={19}
+            height={19}
+        />
 
-    return <Emoji
-        set={'twitter'}
-        emoji={getEmojiData(emoji.name)}
-        size={19}
-    />
+        return <Emoji
+            set={'twitter'}
+            emoji={getEmojiData(emoji.name)}
+            size={19}
+        />
+    }
 }

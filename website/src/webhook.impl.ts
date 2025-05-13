@@ -67,7 +67,7 @@ export const webhookImplementation = {
             thread_name,
         });
 
-        if (!files.length) return {method: method_req, body: data, headers: {"Content-Type": "application/json"}}
+        if (!files.length) return {method: method_req, body: ((method_req == "GET") ? null : data), headers: {"Content-Type": "application/json"}}
 
         const form = new FormData();
         form.append('payload_json', data);

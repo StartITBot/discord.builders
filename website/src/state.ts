@@ -155,6 +155,10 @@ export const displaySlice = createSlice({
             state.messageUrl = action.payload
         },
 
+        setComponentsData(state, action: PayloadAction<Array>) {
+            state.data = action.payload
+        },
+
         setThreadId(state, action: PayloadAction<string>) {
             try {
                 const parsed_url = new URL(state.webhookUrl);

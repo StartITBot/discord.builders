@@ -102,6 +102,29 @@ function App() {
 
         const status_code = req.status;
         if (status_code === 204) return dispatch(actions.setWebhookResponse({"status": "204 Success"}));
+        else if (status_code === 200) return dispatch(actions.setWebhookResponse({"status": "200 Success"}));
+
+        const error_data = await req.json();
+
+        if (error_data?.code === 220001 && dialog.current !== null) {
+            dialog.current.showModal();
+            dispatch(actions.setWebhookResponse(null))
+            return;
+        }
+
+        dispatch(actions.setWebhookResponse(error_data))
+    }
+
+    const getMessage = async () => {
+        const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state, "GET"))
+
+        const status_code = req.status;
+        if (status_code === 204) return dispatch(actions.setWebhookResponse({"status": "204 Success"}))
+        else if (status_code === 200) {
+            let loaded_data = await req.json()
+            dispatch(actions.setComponentsData(loaded_data["components"]))
+            return dispatch(actions.setWebhookResponse({"status": "200 Success"}))
+        }
 
         const error_data = await req.json();
 
@@ -176,11 +199,11 @@ function App() {
                         <input className={Styles.input} placeholder={"Optional. If you want to edit a message"} type="text" value={messageLink}
                             onChange={ev => dispatch(actions.setMessageLink(ev.target.value))}/>
                     </div>
-                    <button className={Styles.button} disabled={parsed_msg_url == null || parsed_url == null} onClick={sendMessage}>
+                    <button className={Styles.button} disabled={parsed_msg_url == null || parsed_url == null} onClick={getMessage}>
                         Load
                     </button>
                 </div>
-                <p style={{marginTop: '0.5rem', marginBottom: '2rem', color: 'grey'}}>Warning: The message must to be sent by the webhook that edits it.</p>
+                <p style={{marginTop: '0.5rem', marginBottom: '2rem', color: 'grey'}}>Warning: The message must to be sent by the webhook that edits it and uploading a image or a file doesnt work with editing.</p>
             </div>
 
             <dialog ref={dialog} className={Styles.dialog}>
