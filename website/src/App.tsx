@@ -60,7 +60,7 @@ function App() {
     }, [messageLink]);
 
     useEffect(() => {
-        document.querySelectorAll('._emoji_c7tgn_78').forEach(e => (e.childElementCount == 0) ? e.remove() : null);
+        document.querySelectorAll('._emoji_c7tgn_78').forEach(e => (e.childElementCount == 0) ? e.style.display = "none" : e.style.display = "");
     });
 
     let parsed_msg_url: URL | null = null;
