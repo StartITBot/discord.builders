@@ -37,6 +37,7 @@ function App() {
     const [page, setPage] = useRouter();
     const [postTitle, setPostTitle] = useState<string>("");
     useHashRouter();
+    console.log(state)
 
     const setFile = useCallback(webhookImplementation.setFile, []);
     const getFile = useCallback(webhookImplementation.getFile, [])
@@ -122,7 +123,14 @@ function App() {
         if (status_code === 204) return dispatch(actions.setWebhookResponse({"status": "204 Success"}))
         else if (status_code === 200) {
             let loaded_data = await req.json()
-            dispatch(actions.setComponentsData(loaded_data["components"]))
+            dispatch(actions.setComponentsData([]))
+            for (const comp of loaded_data["components"]){
+                let data_to_add = comp
+                if ("id" in data_to_add){
+                    delete data_to_add.id;
+                }
+                dispatch(actions.appendKey({"key":["data"],"value":data_to_add}))
+            }
             return dispatch(actions.setWebhookResponse({"status": "200 Success"}))
         }
 
@@ -160,7 +168,7 @@ function App() {
                      stateManager={stateManager}
                      stateKey={stateKey}
                      passProps={passProps}
-                     className={Styles.preview}
+                     className={Styles.input}
                      errors={errors}
             />
         </ErrorBoundary>
