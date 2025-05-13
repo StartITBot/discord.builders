@@ -10,7 +10,11 @@ async function encodeState(state: any): Promise<string> {
     const compressedReadableStream = stream.pipeThrough(new CompressionStream('gzip'));
 
     const buffer = await new Response(compressedReadableStream).arrayBuffer();
-    return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+
+    return btoa(
+        new Uint8Array(buffer)
+            .reduce((data, byte) => data + String.fromCharCode(byte), '')
+    );
 }
 
 async function decodeState(data: string) {
