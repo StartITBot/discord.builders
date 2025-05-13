@@ -28,6 +28,25 @@ cd website && yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## 📦 Building
+
+
+First, you need to have the steps above done:
+
+Build the website library:
+
+```bash
+cd website && yarn build
+```
+
+Run the build server of the website:
+
+```bash
+serve dist
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
 ## ⚠️ Commercial use
 
 Although the `website/` project is licensed under the permissive MIT License, it depends on the `components-sdk/` package, which is **licensed under the PolyForm Noncommercial License 1.0.0**. 
