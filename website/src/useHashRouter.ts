@@ -58,7 +58,7 @@ export function useHashRouter() {
             if (newHash === currentHash.current) return;
             console.log("Loaded state from URL");
 
-            if (atob(newHash).startsWith("[")) {
+            if (atob(newHash).startsWith(encodeURIComponent("["))) {
                 // Old deserialization logic (raw JSON)
                 console.log("Deserializing old payload")
                 const value = JSON.parse(decodeURIComponent(atob(newHash)));
