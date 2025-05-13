@@ -59,6 +59,10 @@ function App() {
         return () => clearTimeout(getData)
     }, [messageLink]);
 
+    useEffect(() => {
+        document.querySelectorAll('._emoji_c7tgn_78').forEach(e => (e.childElementCount == 0) ? e.remove() : null);
+    });
+
     let parsed_msg_url: URL | null = null;
     try {
         parsed_msg_url = new URL(messageLink);
