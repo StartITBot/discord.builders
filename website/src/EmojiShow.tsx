@@ -8,7 +8,6 @@ export const EmojiShow: EmojiShowType = ({emoji}) => {
         return getEmojiDataFromNative(emoji, 'twitter', data)
     }, [])
 
-    console.log(emoji)
     if (typeof(emoji) == "undefined"){
         return null
     }
