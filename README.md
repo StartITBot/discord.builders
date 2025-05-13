@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## 📦 Building
 
 
-First, you need to have the steps above done:
+First, you need to have the steps above done
 
 Build the website library:
 
