@@ -26,6 +26,13 @@ Run the development server of the website:
 cd website && yarn dev
 ```
 
+If icons from components-sdk are not loading for you
+Comment this alias in website/vite.config.ts
+
+```bash
+{find: /^components-sdk.*$/, replacement: resolve(__dirname, '../components-sdk/src')},
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## 📦 Building
