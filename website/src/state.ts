@@ -53,7 +53,9 @@ export const displaySlice = createSlice({
         data: [] as Component[],
         webhookUrl: localStorage.getItem("discord.builders__webhookToken") || "", // Toolkit run this function so type is string
         webhookResponse: null as object | null,
-        messageUrl: localStorage.getItem("discord.builders__messageLink") || "" // Toolkit run this function so type is string
+        messageUrl: localStorage.getItem("discord.builders__messageLink") || "", // Toolkit run this function so type is string
+        setusername: "",
+        setavatar: "",
     }),
     reducers: {
         wrapKey(state, action: PayloadAction<wrapKeyType<any>>) {
@@ -153,6 +155,14 @@ export const displaySlice = createSlice({
 
         setMessageLink(state, action: PayloadAction<string>) {
             state.messageUrl = action.payload
+        },
+
+        setUsernameData(state, action: PayloadAction<string>) {
+            state.setusername = action.payload
+        },
+
+        setAvatarData(state, action: PayloadAction<string>) {
+            state.setavatar = action.payload
         },
 
         setComponentsData(state, action: PayloadAction<Array>) {

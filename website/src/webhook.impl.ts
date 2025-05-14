@@ -58,13 +58,16 @@ export const webhookImplementation = {
         }
     },
 
-    prepareRequest(state: Component[], method_req?: string, thread_name?: string): RequestInit {
+    prepareRequest(state: Component[], method_req?: string, thread_name?: string, username?: string, avatar_url?: string): RequestInit {
         const files = this.scrapFiles(state);
 
         const data = JSON.stringify({
             components: state,
             flags: 32768,
             thread_name,
+            username,
+            avatar_url,
+
         });
 
         if (!files.length) return {method: method_req, body: ((method_req == "GET") ? null : data), headers: {"Content-Type": "application/json"}}

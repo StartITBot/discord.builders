@@ -34,6 +34,8 @@ function App() {
     const webhookUrl = useSelector((state: RootState) => state.display.webhookUrl);
     const messageLink = useSelector((state: RootState) => state.display.messageUrl);
     const response = useSelector((state: RootState) => state.display.webhookResponse);
+    const username = useSelector((state: RootState) => state.display.setusername);
+    const avatar = useSelector((state: RootState) => state.display.setavatar);
     const [page, setPage] = useRouter();
     const [postTitle, setPostTitle] = useState<string>("");
     useHashRouter();
@@ -100,9 +102,22 @@ function App() {
 
     const sendMessage = async () => {
         var method_req;
+        let username_in = undefined;
+        let avatarurl_in = undefined;
         if (parsed_msg_url != null) {method_req = "PATCH"}
-        else {method_req = "POST"}
-        const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state, method_req))
+        else {
+            method_req = "POST";
+            if (username != "") username_in = username;
+            if (avatar != "") avatarurl_in = avatar;
+        }
+        const req = await fetch(String(parsed_url), webhookImplementation.prepareRequest(state, method_req, ...Array(1), username_in, avatarurl_in))
+
+        if (username == "" || avatar == ""){
+            const req_2 = await fetch(String(webhookUrl), webhookImplementation.prepareRequest(state, "GET"))
+            let data_2 = await req_2.json()
+            if (username == "") dispatch(actions.setUsernameData(data_2["name"]))
+            if (avatar == "") dispatch(actions.setAvatarData("https://cdn.discordapp.com/avatars/"+data_2["id"]+"/"+data_2["avatar"]+".png"))
+        }
 
         const status_code = req.status;
         if (status_code === 204) return dispatch(actions.setWebhookResponse({"status": "204 Success"}));
@@ -134,6 +149,9 @@ function App() {
                 }
                 dispatch(actions.appendKey({"key":["data"],"value":data_to_add}))
             }
+            dispatch(actions.setUsernameData(loaded_data["author"]["username"]))
+            dispatch(actions.setAvatarData("https://cdn.discordapp.com/avatars/"+loaded_data["author"]["id"]+"/"+loaded_data["author"]["avatar"]+".png"))
+
             return dispatch(actions.setWebhookResponse({"status": "200 Success"}))
         }
 
@@ -215,6 +233,18 @@ function App() {
                     </button>
                 </div>
                 <p style={{marginTop: '0.5rem', marginBottom: '2rem', color: 'grey'}}>Warning: The message must to be sent by the webhook that edits it and uploading a image or a file doesnt work with editing.</p>
+            </div>
+
+            <div style={{marginBottom: '2rem'}}>
+                <div className={Styles.input_pair}>
+                    <div>
+                        <p style={{marginBottom: '0.5rem'}}>Username</p>
+                        <input className={Styles.input} type="text" disabled={parsed_msg_url != null} value={username || ""} onChange={ev => dispatch(actions.setUsernameData(ev.target.value))} placeholder={((parsed_msg_url == null) ? 'Optional. If you want to change the username of the message.' : 'Cannot Change username in edit mode.')}/>
+                        <p style={{marginBottom: '0.5rem', marginTop: '0px'}}>Avatar Url</p>
+                        <input className={Styles.input} type="text" disabled={parsed_msg_url != null} value={avatar || ""} onChange={ev => dispatch(actions.setAvatarData(ev.target.value))} placeholder={((parsed_msg_url == null) ? 'Optional. If you want to change the avatar of the message.' : 'Cannot Change avatar in edit mode.')}/>
+                    </div>
+                </div>
+                <p style={{marginTop: '0.5rem', marginBottom: '2rem', color: 'grey'}}>Warning: cant change name or profile when editing.</p>
             </div>
 
             <dialog ref={dialog} className={Styles.dialog}>
