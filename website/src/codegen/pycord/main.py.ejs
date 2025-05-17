@@ -1,9 +1,18 @@
 import discord
 
-components: list[discord.ui.Item[discord.ui.View]] = [
-    <%_ data.components.forEach(function(comp){ _%>
-        <%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); %><% if (comp.type !== 1) { %>,<% } %>
-    <%_ }); _%>
-]
+bot = discord.Bot()
 
-view = discord.ui.View(*components)
+@bot.slash_command()
+async def send_components(ctx: discord.ApplicationContext) -> None:
+    components: list[discord.ui.Item[discord.ui.View]] = [
+        <%_ data.components.forEach(function(comp){ _%>
+            <%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); %><% if (comp.type !== 1) { %>,<% } %>
+        <%_ }); _%>
+    ]
+
+    view = discord.ui.View(*components)
+
+    await ctx.respond("Here are some components:", view=view, ephemeral=True)
+
+
+bot.run(TOKEN)
