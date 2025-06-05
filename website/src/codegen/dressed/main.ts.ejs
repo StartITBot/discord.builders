@@ -23,6 +23,6 @@ import { <%- [...neededImports(data.components)].join(", ") %> } from "dressed";
 
 const components = [
 <% data.components.forEach(function(comp){ -%>
-<%_ %><%- indent(include('/dressed/components.ts.ejs', {comp: comp}), 8); %>,
+<%_ %><%- indent(include('/dressed/components.ts.ejs', {comp: comp}), 4); %>,
 <% }); -%>
 ];

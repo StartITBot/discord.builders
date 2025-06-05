@@ -33,12 +33,12 @@
 
   if (data.comp.options && data.comp.options.length > 0) {
     const renderedOptions = data.comp.options.map(option =>
-      indent(include('/dressed/selectmenu_option.ts.ejs', { comp: option }), 8)
+      indent(include('/dressed/selectmenu_option.ts.ejs', { comp: option }), 4)
     ).join(',\n');
     props.push(`options: [\n${renderedOptions}\n]`);
   }
 %>SelectMenu({
 <% props.forEach(function(prop){-%>
-<%- indent(prop, 8); %>,
+<%- indent(prop, 4); %>,
 <% }); -%>
 })

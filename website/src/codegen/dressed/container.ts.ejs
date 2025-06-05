@@ -4,10 +4,10 @@ if (data.comp.accent_color) args.push(`accent_color: ${data.comp.accent_color}`)
 if (data.comp.spoiler) args.push(`spoiler: true`);
 
 const components = data.comp.components.map(comp =>
-    indent(include('/dressed/components.ts.ejs', { comp }), 8)
+    indent(include('/dressed/components.ts.ejs', { comp }), 4)
 ).join(',\n');
-const componentsConOptions = indent(`[\n${components}\n]`, 8);
-const options = args.length ? `,\n${indent(`{ ${args.join(', ')} }`, 8)}` : '';
+const componentsConOptions = indent(`[\n${components}\n]`, 4);
+const options = args.length ? `,\n${indent(`{ ${args.join(', ')} }`, 4)}` : '';
 %>Container(
 <%- options ? componentsConOptions : components %><% if (options) { %><%- options %><% } %>
 )
