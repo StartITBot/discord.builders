@@ -1,9 +1,9 @@
 <%
 const buttonStyle = {
-    1: "hikari.components.ButtonStyle.PRIMARY",
-    2: "hikari.components.ButtonStyle.SECONDARY",
-    3: "hikari.components.ButtonStyle.SUCCESS",
-    4: "hikari.components.ButtonStyle.DANGER"
+    1: "hikari.ButtonStyle.PRIMARY",
+    2: "hikari.ButtonStyle.SECONDARY",
+    3: "hikari.ButtonStyle.SUCCESS",
+    4: "hikari.ButtonStyle.DANGER"
 }
 
 const className = data.comp.style === 5 ? 'hikari.impl.LinkButtonBuilder' : 'hikari.impl.InteractiveButtonBuilder'
@@ -22,7 +22,7 @@ const className = data.comp.style === 5 ? 'hikari.impl.LinkButtonBuilder' : 'hik
     emoji=<%- include('/hikari/emoji.py.ejs', {emoji: data.comp.emoji}) -%>,
 <% } -%>
 <% if (data.comp.disabled) { -%>
-    disabled=True,
+    is_disabled=True,
 <% } -%>
 <% if (data.comp.custom_id) { -%>
     custom_id=<%=data.comp.custom_id%>,
