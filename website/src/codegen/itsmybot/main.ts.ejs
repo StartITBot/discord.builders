@@ -1,5 +1,4 @@
-message:
-  components:
+components:
 <% data.components.forEach(function(comp){ -%>
-<%_ %><%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 4); %>
+<%_ %><%- indent(include('/itsmybot/components.ts.ejs', {comp: comp}), 2); %>
 <% }); -%>
