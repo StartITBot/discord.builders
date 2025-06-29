@@ -127,7 +127,7 @@ function App() {
 
         if (error_data?.code === 220001 && dialog.current !== null) {
             dialog.current.showModal();
-            dispatch(actions.setWebhookResponse(null))
+            dispatch(actions.setWebhookResponse(null));
             return;
         }
 
@@ -140,9 +140,15 @@ function App() {
         const status_code = req.status;
         if (status_code === 204) return dispatch(actions.setWebhookResponse({"status": "204 Success"}))
         else if (status_code === 200) {
-            let loaded_data = await req.json()
+            let loaded_data = await req.json();
+            let reg_check = /"id":(([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9])|"[^"]*"),/gm; //Discord includes ids in the component but this doesnt like the ids (it causes duplicates), this is to remove them
+            try {
+                var fixed_data = JSON.parse(JSON.stringify(loaded_data).replaceAll(reg_check,""));
+            } catch(err) {
+                console.error(err);
+            }
             dispatch(actions.setComponentsData([]))
-            for (const comp of loaded_data["components"]){
+            for (const comp of fixed_data["components"]){
                 let data_to_add = comp
                 if ("id" in data_to_add){
                     delete data_to_add.id;
