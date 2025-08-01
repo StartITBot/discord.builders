@@ -12,7 +12,7 @@ const className = 'discord.ui.Button'
 <%-className%>(
 <% if (data.comp.style === 5) { -%>
     url=<%=data.comp.url%>,
-    style='discord.ButtonStyle.link',
+    style=discord.ButtonStyle.link,
 <% } else { -%>
     style=<%-buttonStyle[data.comp.style]%>,
 <% } -%>

@@ -1,6 +1,6 @@
 discord.ui.Container(
 <%_ data.comp.components.forEach(function(comp){ _%>
-<%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); -%>,
+<%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); -%><% if (comp.type !== 1) { %>,<% } %>
 <%_ }); _%>
 <% if (data.comp.accent_color) { -%>
     color=discord.Color(<%= data.comp.accent_color %>),
