@@ -17,6 +17,12 @@ export const libs: {
         path: '/hikari-python-code-generator',
     },
 
+    discordpy: {
+        name: 'Python: discord.py',
+        language: 'python',
+        path: '/discordpy-python-code-generator',
+    },
+
     pycord: {
         name: 'Python: py-cord',
         language: 'python',
