@@ -28,7 +28,7 @@ function varNameFor(compType) {
 class Components(discord.ui.LayoutView):<%_ data.components.forEach(function (comp) { _%>
     <% const varName = varNameFor(comp.type); %>
     <%- varName %> = <%- indent(include('/discordpy/components.py.ejs', { comp: comp }), 4).trim() %>
-<%_ }); _%>
+<%_ }); _%> <% if (data.components.length === 0) { %> ... <% } %>
 
 @bot.command()
 async def send_components(ctx: commands.Context) -> None:
