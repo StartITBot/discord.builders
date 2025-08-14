@@ -12,7 +12,7 @@ async def send_components(ctx: discord.ApplicationContext) -> None:
 
     view = discord.ui.View(*components)
 
-    await ctx.respond("Here are some components:", view=view, ephemeral=True)
+    await ctx.respond(view=view, ephemeral=True)
 
 
 bot.run(TOKEN)
