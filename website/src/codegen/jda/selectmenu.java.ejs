@@ -1,44 +1,28 @@
 <%
-  const menuType = {
-    3: 'String',
-    5: 'User',
-    6: 'Role',
-    7: 'Mentionable',
-    8: 'Channel',
-  };
 
-  const props = [];
+const defaultOptions = data.comp.options.filter(option => option.default).map(option => option.value);
 
-  props.push(`type: "${menuType[data.comp.type]}"`)
 
-  if (data.comp.custom_id) {
-    props.push(`custom_id: "${data.comp.custom_id}"`);
-  }
 
-  if (data.comp.disabled) {
-    props.push(`disabled: true`);
-  }
-
-  if (data.comp.placeholder) {
-    props.push(`placeholder: "${data.comp.placeholder}"`);
-  }
-
-  if (data.comp.min_values && data.comp.min_values !== 1) {
-    props.push(`min_values: ${data.comp.min_values}`);
-  }
-
-  if (data.comp.max_values && data.comp.max_values !== 1) {
-    props.push(`max_values: ${data.comp.max_values}`);
-  }
-
-  if (data.comp.options && data.comp.options.length > 0) {
-    const renderedOptions = data.comp.options.map(option =>
-      indent(include('/dressed/selectmenu_option.ts.ejs', { comp: option }), 4)
-    ).join(',\n');
-    props.push(`options: [\n${renderedOptions}\n]`);
-  }
-%>SelectMenu({
-<% props.forEach(function(prop){-%>
-<%- indent(prop, 4); %>,
-<% }); -%>
-})
+ -%>
+StringSelectMenu.create(<%=data.comp.custom_id%>)
+<% if (data.comp.disabled) { -%>
+    .setDisabled(true)
+<% } -%>
+<% if (data.comp.placeholder) { -%>
+    .setPlaceholder(<%=data.comp.placeholder%>)
+<% } -%>
+<% if ((data.comp.min_values && data.comp.min_values !== 1) || (data.comp.max_values && data.comp.max_values !== 1)) { -%>
+    .setRequiredRange(<%- data.comp.min_values || 1 %>, <%- data.comp.max_values || 1 %>)
+<% } -%>
+<%_ data.comp.options.forEach(function(comp, i){ _%>
+    <%_ %><%- indent(include('/jda/selectmenu_option.java.ejs', {comp: comp}), 4); %>
+<%_ }); _%>
+<% if (defaultOptions.length > 0) { -%>
+    .setDefaultValues(<% _%>
+        <%_ defaultOptions.forEach(function(comp, i){ _%>
+            <%_ %><%= comp _%>
+            <%_ if (i !== defaultOptions.length - 1) { %>, <% } _%>
+        <%_ }); %>)
+<% } -%>
+    .build()<% _%>

@@ -1,19 +1,10 @@
-<%
-  const props = [];
-
-  if (data.comp.description) {
-    props.push(indent(`description: "${data.comp.description}"`, 4));
-  }
-
-  if (data.comp.default) {
-    props.push(indent(`default: true`, 4));
-  }
-
-  if (data.comp.emoji && (data.comp.emoji.id || data.comp.emoji.name)) {
-    const emojiParts = [];
-    if (data.comp.emoji.id) emojiParts.push(`id: "${data.comp.emoji.id}"`);
-    if (data.comp.emoji.name) emojiParts.push(`name: "${data.comp.emoji.name}"`);
-    if (data.comp.emoji.animated) emojiParts.push(`animated: true`);
-    props.push(indent(`emoji: { ${emojiParts.join(', ')} }`, 4));
-  }
-%>SelectMenuOption(<%- props.length ? indent(`\n"${data.comp.label}",\n"${data.comp.value}",\n{\n${props.join(',\n')}\n}\n`, 4) : `"${data.comp.label}", "${data.comp.value}"` %>)
+.addOption(<% _%>
+<%=data.comp.label%>, <% _%>
+<%=data.comp.value%><% if (data.comp.description || data.comp.emoji) { %>, <%}%><% _%>
+<% if (data.comp.description) { -%>
+<%=data.comp.description%><% if (data.comp.emoji) { %>, <%}%><% _%>
+<% } -%>
+<% if (data.comp.emoji) { -%>
+<%- include('/jda/emoji.java.ejs', {emoji: data.comp.emoji}) -%><% _%>
+<% } -%>
+)<% _%>
