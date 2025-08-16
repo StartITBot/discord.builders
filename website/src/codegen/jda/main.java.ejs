@@ -1,0 +1,3 @@
+<% data.components.forEach(function(comp){ -%>
+<%_ %><%- indent(include('/jda/components.java.ejs', {comp: comp}), 4); %>,
+<% }); -%>

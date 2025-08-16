@@ -1,0 +1,5 @@
+ActionRow.of(
+<% data.comp.components.forEach(function(comp){-%>
+<%- indent(include('/jda/components.java.ejs', {comp: comp}), 4); %>,
+<% }); -%>
+)

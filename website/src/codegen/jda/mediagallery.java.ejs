@@ -1,0 +1,3 @@
+MediaGallery.of(
+    <% data.comp.items.forEach(function(comp, index) { -%><%- include('/jda/mediagallery_item.java.ejs', { comp }) %><%- index !== data.comp.items.length - 1 ? ', ' : '' %><% }); -%>
+)
