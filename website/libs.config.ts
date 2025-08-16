@@ -60,6 +60,12 @@ export const libs: {
         language: 'yaml',
         path: '/itsmybot-code-generator',
     },
+
+    jda: {
+        name: 'Java: JDA',
+        language: 'java',
+        path: '/jda-code-generator',
+    }
 };
 
 
