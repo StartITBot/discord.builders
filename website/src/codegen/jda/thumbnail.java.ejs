@@ -1,3 +1,5 @@
-Thumbnail.fromUrl(<%= data.comp.media.url %>)<% if (data.comp.description) { %>
-  .withDescription("<%- data.comp.description %>")<% } %><% if (data.comp.spoiler) { %>
-  .withSpoiler(true)<% } %>
+Thumbnail.fromUrl(<%= data.comp.media.url %>)<% _%>
+<% if (data.comp.description) { %>
+    .withDescription("<%- data.comp.description %>")<% } -%>
+<% if (data.comp.spoiler) { %>
+    .withSpoiler(true)<% } %><% _%>

@@ -1,3 +1,30 @@
-<% data.components.forEach(function(comp){ -%>
-<%_ %><%- indent(include('/jda/components.java.ejs', {comp: comp}), 4); %>,
-<% }); -%>
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+
+import java.util.EnumSet;
+import java.util.List;
+
+public class Main {
+  private static class MessageReceiveListener extends ListenerAdapter {
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+      if (event.getAuthor().isBot()) return;
+
+      List<MessageTopLevelComponent> components = List.of(
+          <%_ data.components.forEach(function(comp, i){ _%>
+              <%_ %><%- indent(include('/jda/components.java.ejs', {comp: comp}), 10); %><% if (i !== data.components.length - 1) { %>,<% } %>
+          <%_ }); _%>
+      );
+
+      event.getChannel().sendMessageComponents(components).useComponentsV2().queue();
+    }
+  }
+
+  public static void main(String[] args) {
+    JDABuilder
+        .createLight(System.getenv("BOT_TOKEN"), EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT))
+        .addEventListeners(new MessageReceiveListener()).build();
+  }
+}

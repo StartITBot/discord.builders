@@ -1,5 +1,5 @@
 ActionRow.of(
-<% data.comp.components.forEach(function(comp){-%>
-<%- indent(include('/jda/components.java.ejs', {comp: comp}), 4); %>,
-<% }); -%>
-)
+<%_ data.comp.components.forEach(function(comp, i){ _%>
+<%_ %><%- indent(include('/jda/components.java.ejs', {comp: comp}), 4); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
+<%_ }); _%>
+)<% _%>

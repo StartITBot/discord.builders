@@ -1,5 +1,9 @@
-<%
-const args = [];
-if (data.comp.description) args.push(`description: "${data.comp.description}"`);
-if (data.comp.spoiler) args.push(`spoiler: true`);
-%>MediaGalleryItem.fromUrl(<%= data.comp.media.url %><% if (args.length) { %>, { <%- args.join(', ') %> }<% } %>)
+MediaGalleryItem.fromUrl(<%=data.comp.media.url%>)<% _%>
+<% if (data.comp.description) { -%>
+
+    .withDescription(<%=data.comp.description%>)<% _%>
+<% } -%>
+<% if (data.comp.spoiler) { -%>
+
+    .withSpoiler(true)<% _%>
+<% } -%>

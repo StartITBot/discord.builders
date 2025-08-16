@@ -1,1 +1,1 @@
-FileDisplay.of(<%=data.comp.file.url %><% if (data.comp.spoiler) { %>, { spoiler: true }<% } %>)
+FileDisplay.fromFileName(<%=(data.comp.file.url || '').replace('attachment://', '') %>)<% if (data.comp.spoiler) { %>.withSpoiler(true)<% } %><% _%>

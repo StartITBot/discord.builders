@@ -1,10 +1,6 @@
-<%
-const componentLines = `\n${data.comp.components.map(comp =>
-  indent(include('/jda/section_textdisplay.java.ejs', { comp }), 4)
-).join(',\n')}\n`;
-
-const accessory = include('/jda/components.java.ejs', { comp: data.comp.accessory });
-%>Section.of(
-<%- indent(componentLines, 4) %>,
-<%- indent(accessory, 4) %>
-)
+Section.of(
+    <%- indent(include('/jda/components.java.ejs', {comp: data.comp.accessory}), 4, true); -%>,
+<%_ data.comp.components.forEach(function(comp, i){ _%>
+<%_ %><%- indent(include('/jda/components.java.ejs', {comp: comp}), 4); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
+<%_ }); _%>
+)<% _%>

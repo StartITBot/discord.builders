@@ -1,13 +1,11 @@
-<%
-const args = [];
-if (data.comp.accent_color) args.push(`accent_color: ${data.comp.accent_color}`);
-if (data.comp.spoiler) args.push(`spoiler: true`);
-
-const components = data.comp.components.map(comp =>
-    indent(include('/jda/components.java.ejs', { comp }), 4)
-).join(',\n');
-const componentsConOptions = indent(`[\n${components}\n]`, 4);
-const options = args.length ? `,\n${indent(`{ ${args.join(', ')} }`, 4)}` : '';
-%>Container.of(
-<%- options ? componentsConOptions : components %><% if (options) { %><%- options %><% } %>
-)
+Container.of(
+<%_ data.comp.components.forEach(function(comp, i){ _%>
+<%_ %><%- indent(include('/jda/components.java.ejs', {comp: comp}), 4); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
+<%_ }); _%>
+)<% _%>
+<% if (data.comp.accent_color) { -%>
+.withAccentColor(<%- "0x" + Number(data.comp.accent_color).toString(16).padStart(6, '0').toUpperCase() %>)<% _%>
+<% } -%>
+<% if (data.comp.spoiler) { -%>
+.withSpoiler(true)<% _%>
+<% } -%>
