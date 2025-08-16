@@ -1,10 +1,37 @@
+<%
+const builders = {
+    1: 'import net.dv8tion.jda.api.components.actionrow.ActionRow;',
+    2: 'import net.dv8tion.jda.api.components.buttons.Button;\nimport net.dv8tion.jda.api.components.buttons.ButtonStyle;',
+    3: 'import net.dv8tion.jda.api.components.selections.StringSelectMenu;',
+    5: 'import net.dv8tion.jda.api.components.selections.EntitySelectMenu;',
+    6: 'import net.dv8tion.jda.api.components.selections.EntitySelectMenu;',
+    7: 'import net.dv8tion.jda.api.components.selections.EntitySelectMenu;',
+    8: 'import net.dv8tion.jda.api.components.selections.EntitySelectMenu;',
+    9: 'import net.dv8tion.jda.api.components.section.Section;',
+    10: 'import net.dv8tion.jda.api.components.textdisplay.TextDisplay;',
+    11: 'import net.dv8tion.jda.api.components.thumbnail.Thumbnail;' ,
+    12: 'import net.dv8tion.jda.api.components.mediagallery.MediaGallery;\nimport net.dv8tion.jda.api.components.mediagallery.MediaGalleryItem;' ,
+    13: 'import net.dv8tion.jda.api.components.filedisplay.FileDisplay;',
+    14: 'import net.dv8tion.jda.api.components.separator.Separator;' ,
+    17: 'import net.dv8tion.jda.api.components.container.Container;'
+}
+function neededImports(components) {
+    return components.reduce((acc, component)=> acc.union(neededImports(component.components ?? [])).union(new Set(component.accessory ? [builders[component.accessory.type]] :[])).add(builders[component.type]), new Set());
+}
+
+-%>
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.List;
+
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.components.MessageTopLevelComponent;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
-import java.util.EnumSet;
-import java.util.List;
+<%- [...neededImports(data.components)].join("\n") %>
 
 public class Main {
   private static class MessageReceiveListener extends ListenerAdapter {
