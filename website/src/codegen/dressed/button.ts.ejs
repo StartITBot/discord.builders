@@ -1,6 +1,5 @@
 <%
   const buttonStyle = {
-    1: '"Primary"',
     2: '"Secondary"',
     3: '"Success"',
     4: '"Danger"',
@@ -8,7 +7,7 @@
 
   const props = [];
 
-  if (data.comp.style < 5) {
+  if (data.comp.style < 5 && data.comp.style > 1) {
     props.push(`style: ${buttonStyle[data.comp.style]}`);
   }
 
