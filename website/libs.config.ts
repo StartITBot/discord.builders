@@ -64,7 +64,7 @@ export const libs: {
     jda: {
         name: 'Java: JDA',
         language: 'java',
-        path: '/jda-code-generator',
+        path: '/jda-java-code-generator',
     }
 };
 
