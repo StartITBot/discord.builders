@@ -56,6 +56,7 @@ public class Main {
     JDABuilder
         .createDefault(System.getenv("BOT_TOKEN"))
         .enableIntents(GatewayIntent.MESSAGE_CONTENT)
-        .addEventListeners(new MessageReceiveListener()).build();
+        .addEventListeners(new MessageReceiveListener())
+        .build();
   }
 }
