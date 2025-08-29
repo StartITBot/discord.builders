@@ -54,7 +54,8 @@ public class Main {
 
   public static void main(String[] args) {
     JDABuilder
-        .createLight(System.getenv("BOT_TOKEN"), EnumSet.of(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT))
+        .createDefault(System.getenv("BOT_TOKEN"))
+        .enableIntents(GatewayIntent.MESSAGE_CONTENT)
         .addEventListeners(new MessageReceiveListener()).build();
   }
 }
