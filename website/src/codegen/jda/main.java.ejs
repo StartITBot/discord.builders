@@ -45,7 +45,10 @@ public class Main {
           <%_ }); _%>
       );
 
-      event.getChannel().sendMessageComponents(components).useComponentsV2().queue();
+      event.getChannel()
+          .sendMessageComponents(components)
+          .useComponentsV2()
+          .queue();
     }
   }
 
