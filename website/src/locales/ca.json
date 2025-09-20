@@ -1,0 +1,19 @@
+{
+  "welcome.welcome": "Hola,",
+  "welcome.home": "Aquesta es l'eina més fàcil per enviar components de UI a Discord, com ara botons, menús desplegables i contenidors amb suport d'arrossegar i deixar items.",
+  "welcome.github": "<b>T'ha agradata l'eina? Marca'ns amb una estrella a GitHub!</b><br/><a>https://github.com/StartITBot/discord.builders</a>",
+  "welcome.codegen": "Benvingut al generador de codi per a <b>{{page}}</b>. Un lloc perquè els programadors puguin jugar amb els nous components de Discord i donar vida a les seves idees.",
+  "welcome.clear": "Esborra-ho tot",
+  "homepage.title": "Millo eina de webhooks per a Discord",
+  "webhook.title": "Envia un missatge al canal de Discord",
+  "webhook.thread": "envia-ho a un thread en lloc d'això",
+  "webhook.send": "Envia",
+  "webhook.warning": "Avís: Els botons que no són d'enllaç i selecció no es permeten quan s'envien missatges mitjançant webhooks.",
+  "thread.id": "ID del thread",
+  "thread.placeholder": "Opcional. Si voleu enviar el missatge a un thread, poseu l'ID aquí.",
+  "thread.post.label": "Títol de la publicació",
+  "thread.post.placeholder": "Introduïu un títol...",
+  "thread.post.button": "Envia el missatge",
+  "author": "Projecte recolzat per <a>bot StartIT</a>.",
+  "codegen.title": "Generador per a programadors"
+}
