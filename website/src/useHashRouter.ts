@@ -30,6 +30,8 @@ export function useHashRouter() {
     const currentHash = useRef<string | null>(null);
     const state = useSelector((state: RootState) => state.display.data);
 
+    const isDefault = useSelector((state: RootState) => state.display.isDefault);
+
     useEffect(() => {
         webhookImplementation.clean(state);
         if (currentHash === null) {
@@ -38,7 +40,7 @@ export function useHashRouter() {
         }
 
         const getData = setTimeout(() => {
-            if (state.length == 0) {
+            if (state.length == 0 || isDefault) {
                 currentHash.current = '';
                 document.location.hash = '';
                 return;
