@@ -1,0 +1,31 @@
+<%
+const buttonStyle = {
+    1: "discord.ButtonStyle.primary",
+    2: "discord.ButtonStyle.secondary",
+    3: "discord.ButtonStyle.success",
+    4: "discord.ButtonStyle.danger"
+}
+
+const className = "discord.ui.Button"
+
+-%>
+<%-className%>(
+<% if (data.comp.style === 5) { -%>
+    url=<%=data.comp.url%>,
+    style=discord.ButtonStyle.link,
+<% } else { -%>
+    style=<%-buttonStyle[data.comp.style]%>,
+<% } -%>
+<% if (data.comp.label) { -%>
+    label=<%=data.comp.label%>,
+<% } -%>
+<% if (data.comp.emoji) { -%>
+    emoji=<%- include('/discordpy/emoji.py.ejs', {emoji: data.comp.emoji}) -%>,
+<% } -%>
+<% if (data.comp.disabled) { -%>
+    disabled=True,
+<% } -%>
+<% if (data.comp.custom_id) { -%>
+    custom_id=<%=data.comp.custom_id%>,
+<% } -%>
+)<% _%>

@@ -4,6 +4,7 @@ import { ComponentsProps } from '../Capsule';
 import { MediaGalleryComponent, MediaGalleryItem } from '../utils/componentTypes';
 import { DroppableID } from '../dnd/components';
 import { useMemo } from 'react';
+import { useRandomString } from '../utils/useRegenerate';
 
 function getClass(len: number) {
     if (len === 1) return Styles.alone;
@@ -15,15 +16,13 @@ function getClass(len: number) {
     if (len % 3 === 2) return Styles.two;
 }
 
-// TODO make key more specific
-//   it can't be state.media.url, as this key is used in Input
-//   it can't be index as image flickers on higher sibling removal
-
 export function MediaGallery({state, stateKey, stateManager, passProps} : ComponentsProps & {state: MediaGalleryComponent}) {
-    return  <div className={Styles.gallery + ' ' + getClass((state?.items || []).length) }>
+    const randomString = useRandomString();
+
+    return <div className={Styles.gallery + ' ' + getClass((state?.items || []).length) }>
         {(state?.items || []).map((component, index) => {
             return <MediaGalleryInner
-                key={`${index}`}
+                key={`${randomString}::${index}`}
                 state={component}
                 stateKey={stateKey}
                 stateManager={stateManager}
@@ -34,7 +33,7 @@ export function MediaGallery({state, stateKey, stateManager, passProps} : Compon
     </div>
 }
 
-function MediaGalleryInner({state, stateKey, stateManager, passProps, index} : Omit<ComponentsProps, 'state'> & {state: MediaGalleryItem, index: number}) {
+function MediaGalleryInner({state, stateKey, stateManager, passProps, index} : Omit<ComponentsProps, 'state' | 'actionCallback'> & {state: MediaGalleryItem, index: number}) {
     const stateKeyCached = useMemo(() => [...stateKey, 'items', index], [...stateKey, 'items', index]);
 
     return <Thumbnail

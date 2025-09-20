@@ -1,8 +1,10 @@
-import { BetterInput } from '../polyfills/BetterInput';
+import { BetterInput, BetterInputProps } from '../polyfills/BetterInput';
 import { EmojiPicker } from '../polyfills/EmojiPicker';
 import { EmojiShow } from '../polyfills/EmojiShow';
-import { getFileType, setFileType } from '../polyfills/files';
+import { getFileNameType, getFileType, setFileType } from '../polyfills/files';
 import { ColorPicker } from '../polyfills/ColorPicker';
+import { FC } from 'react';
+import { ActionMenu } from '../polyfills/ActionMenu';
 
 // This fragment of code is written in dedication to the JS devs who have to deal with this mess every day.
 function isObject(arg: unknown): arg is object {
@@ -47,10 +49,13 @@ export const parseComponent = {
 export type PassProps = {
     getFile: getFileType,
     setFile: setFileType,
+    getFileName: getFileNameType,
     BetterInput: BetterInput,
     EmojiPicker: EmojiPicker,
     ColorPicker: ColorPicker
     EmojiShow: EmojiShow,
+    ActionMenu?: ActionMenu,
+    interactiveDisabled: boolean,
 }
 
 export enum ButtonStyle {
@@ -113,7 +118,7 @@ function parseActionRowComponent(component: Component): ActionRowComponent<Actio
 }
 
 export interface EmojiObject {
-    id: string | null,  // [-] empty string, [x] null, [x] undefined | default: empty
+    id?: string | null,  // [-] empty string, [x] null, [x] undefined | default: empty
     name: string
 }
 
@@ -134,9 +139,9 @@ function parseEmojiObject(emoji: unknown): EmojiObject | null {
 export interface ButtonComponent extends Component {
     type: ComponentType.BUTTON,
     style: ButtonStyle,
-    label: string,  // [+] empty string, [+] null, [+] undefined | default: empty
-    emoji: EmojiObject | null,  // [+] null, [+] undefined | default: empty
-    disabled: boolean,  // [+] null, [+] undefined | default: empty, false
+    label?: string,  // [+] empty string, [+] null, [+] undefined | default: empty
+    emoji?: EmojiObject | null,  // [+] null, [+] undefined | default: empty
+    disabled?: boolean,  // [+] null, [+] undefined | default: empty, false
     custom_id?: string,
     url?: string
 }
@@ -182,10 +187,9 @@ function parseButtonComponent(component: Component): ButtonComponent | null {
 export interface StringSelectComponentOption {
     label: string,
     value: string,
-    description: string | null,
-    emoji: EmojiObject | null,
-    default: boolean,
-    disabled: boolean
+    description?: string | null,
+    emoji?: EmojiObject | null,
+    default?: boolean
 }
 
 export function parseStringSelectComponentOption(component: unknown): StringSelectComponentOption | null {
@@ -199,15 +203,13 @@ export function parseStringSelectComponentOption(component: unknown): StringSele
     const description = ('description' in component && typeof component.description === 'string') ? component.description : null;
     const emoji = ('emoji' in component) ? parseEmojiObject(component.emoji) : null;
     const defaultValue = ('default' in component) ? !!component.default : false;
-    const disabled = ('disabled' in component) ? !!component.disabled : false;
 
     return {
         label: component.label,
         value: component.value,
         description,
         emoji,
-        default: defaultValue,
-        disabled
+        default: defaultValue
     }
 }
 
@@ -215,9 +217,9 @@ export interface StringSelectComponent extends Component {
     type: ComponentType.STRING_SELECT,
     custom_id: string,
     options: StringSelectComponentOption[],
-    placeholder: string | null,
-    min_values: number,
-    max_values: number,
+    placeholder?: string | null,
+    min_values?: number,
+    max_values?: number,
     disabled?: boolean
 }
 
@@ -258,15 +260,19 @@ function parseStringSelectComponent(component: Component): StringSelectComponent
 export interface UnfurledMediaItem {
     // Supports arbitrary urls _and_ attachment://<filename> references
     url: string;
+    attachment_id?: string
 }
 
 function parseUnfurledMediaItem(media: unknown): UnfurledMediaItem | null {
     if (!isObject(media)) return null;
     if (!('url' in media) || typeof media.url !== 'string') return null;
 
-    return {
-        url: media.url
-    }
+    const rtn: UnfurledMediaItem = {url: media.url};
+
+    if ('attachment_id' in media && typeof media.attachment_id === 'string' && media.attachment_id.length > 0)
+        rtn.attachment_id = media.attachment_id;
+
+    return rtn
 }
 
 export interface SectionComponent extends Component {
@@ -335,7 +341,7 @@ function parseTextDisplayComponent(component: Component): TextDisplayComponent |
 export interface ThumbnailComponent extends Component {
     type: ComponentType.THUMBNAIL;
     media: UnfurledMediaItem;
-    description: string | null;
+    description?: string | null;
     spoiler?: boolean
 }
 
@@ -353,7 +359,7 @@ function parseThumbnailComponent(component: unknown): ThumbnailComponent | null 
 
 export interface MediaGalleryItem {
     media: UnfurledMediaItem;
-    description: string | null;
+    description?: string | null;
     spoiler?: boolean;
 }
 
@@ -450,7 +456,7 @@ function parseFileComponent(component: Component): FileComponent | null {
 
 export interface ContainerComponent extends Component {
     type: ComponentType.CONTAINER;
-    accent_color: number | null;
+    accent_color?: number | null;
     spoiler?: boolean;
     components: Array<
         ActionRowComponent<ActionRowPossible>

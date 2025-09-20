@@ -1,0 +1,28 @@
+<%
+
+const defaultOptions = data.comp.options.filter(option => option.default).map(option => option.value);
+
+
+
+ -%>
+StringSelectMenu.create(<%=data.comp.custom_id%>)
+<% if (data.comp.disabled) { -%>
+    .setDisabled(true)
+<% } -%>
+<% if (data.comp.placeholder) { -%>
+    .setPlaceholder(<%=data.comp.placeholder%>)
+<% } -%>
+<% if ((data.comp.min_values && data.comp.min_values !== 1) || (data.comp.max_values && data.comp.max_values !== 1)) { -%>
+    .setRequiredRange(<%- data.comp.min_values || 1 %>, <%- data.comp.max_values || 1 %>)
+<% } -%>
+<%_ data.comp.options.forEach(function(comp, i){ _%>
+    <%_ %><%- indent(include('/jda/selectmenu_option.java.ejs', {comp: comp}), 4); %>
+<%_ }); _%>
+<% if (defaultOptions.length > 0) { -%>
+    .setDefaultValues(<% _%>
+        <%_ defaultOptions.forEach(function(comp, i){ _%>
+            <%_ %><%= comp _%>
+            <%_ if (i !== defaultOptions.length - 1) { %>, <% } _%>
+        <%_ }); %>)
+<% } -%>
+    .build()<% _%>

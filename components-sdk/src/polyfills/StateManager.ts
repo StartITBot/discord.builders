@@ -33,10 +33,12 @@ export type deleteKeyType = {
     removeKeyParent?: stateKeyType | undefined;
 };
 
+/* Remember to update these fields in useRegenerate.tsx if you change them */
+
 export interface StateManager {
     deleteKey({key, decoupleFrom, removeKeyParent}: deleteKeyType): void,
     appendKey<T>({key, value}: appendKeyType<T>): void,
-    addKey<T>({key, index, value}: addKeyType<T>): void,
+    addKey<T>({key, index, value, deleteKey, decoupleFrom, removeKeyParent}: addKeyType<T>): void,
     setKey<T>({key, value}: setKeyType<T>): void,
     wrapKey<T>({key, toArray, innerKey, value}: wrapKeyType<T>): void,
 }

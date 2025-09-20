@@ -1,0 +1,5 @@
+<% if (data.comp.divider) { -%>
+Separator.createDivider(Separator.Spacing.<%- data.comp.spacing === 2 ? "LARGE" : "SMALL" %>)<% _%>
+<% } else { -%>
+Separator.createInvisible(Separator.Spacing.<%- data.comp.spacing === 2 ? "LARGE" : "SMALL" %>)<% _%>
+<% } _%>

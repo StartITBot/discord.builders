@@ -1,0 +1,5 @@
+MediaGallery.of(
+<%_ data.comp.items.forEach(function(comp, i){ _%>
+<%_ %><%- indent(include('/jda/mediagallery_item.java.ejs', {comp: comp}), 4); %><% if (i !== data.comp.items.length - 1) { %>,<% } %>
+<%_ }); _%>
+)<% _%>

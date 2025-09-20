@@ -2,6 +2,7 @@ import { ClosestState, DistanceProps, DragContextType } from './types';
 import { MOVE_THRESHOLD } from './distance';
 import { getDroppableOrientation, isValidLocation } from './components';
 import { ComponentType, ComponentTypeUnofficial } from '../utils/componentTypes';
+import { BoundariesProps, testBoundaries } from './boundaries';
 
 
 const mimetypeRegex = /^application\/x-dsc-builders\[(.*)\]$/;
@@ -24,13 +25,18 @@ export const handleDragOver = (
         refs,
         visible,
         setVisible,
+        boundaries
     }: {
         refs: DragContextType['refs'];
         visible: DragContextType['visible'];
         setVisible: DragContextType['setVisible'];
-    }
+    } & BoundariesProps
 ) => {
-    if (!e.dataTransfer) return null;
+    if (!testBoundaries(e.target, boundaries)) {
+        setVisible(null);
+        return;
+    }
+    if (!e.dataTransfer) return;
 
     const comp = getContentType(e.dataTransfer);
     e.preventDefault();

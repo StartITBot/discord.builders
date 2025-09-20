@@ -4,6 +4,7 @@ import TrashIcon from '../icons/Trash.svg';
 import UploadImage from '../icons/UploadImage.svg';
 import Url from '../icons/Url.svg';
 import AddDescription from '../icons/AddDescription.svg';
+import AddDescriptionActive from '../icons/AddDescriptionActive.svg';
 import { Dispatch, SetStateAction, useRef } from 'react';
 import CapsuleStyles from '../Capsule.module.css';
 import { MenuLabel } from './Button';
@@ -16,6 +17,8 @@ import SpoilerIcon from '../icons/Spoiler.svg';
 import { useStateOpen } from '../utils/useStateOpen';
 import { ClosestType } from '../dnd/types';
 import { DragLines } from '../dnd/DragLine';
+import { useTranslation } from 'react-i18next';
+import DescriptionTextActive from '../icons/DescriptionTextActive.svg';
 
 export function Thumbnail({
     state,
@@ -26,7 +29,7 @@ export function Thumbnail({
     className = undefined,
     droppableId = undefined,
     dragKeyToDeleteOverwrite = undefined,
-}: Omit<ComponentsProps, 'state'> & { state: MediaGalleryItem | ThumbnailComponent; className?: string }) {
+}: Omit<ComponentsProps, 'state' | 'actionCallback'> & { state: MediaGalleryItem | ThumbnailComponent; className?: string }) {
     const { open, setOpen, ignoreRef, closeLockRef } = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
 
@@ -37,6 +40,8 @@ export function Thumbnail({
         passProps?.setFile,
         stateManager
     );
+
+    const {t} =  useTranslation('components-sdk');
 
     return (
         <div
@@ -79,6 +84,7 @@ export function Thumbnail({
                             stateKey={[...stateKey, 'media', 'url']}
                             stateManager={stateManager}
                             setOpen={setOpen}
+                            placeholder={t('thumbnail.image-url')}
                         />
                     )}
                     {open === 3 && (
@@ -107,6 +113,7 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
     openFileSelector: () => any,
     removeKeyParent?: stateKeyType
 }) {
+    const {t} = useTranslation('components-sdk');
     return <>
         <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             stateManager.setKey({key: [...stateKey, "media", "url"], value: ''});
@@ -114,26 +121,32 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
             ev.stopPropagation();
         }}>
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={Url} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Set image url</div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.set-image-url')}</div>
         </div>
         <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             openFileSelector();
         }}>
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={UploadImage} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Upload image</div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.upload-image')}</div>
         </div>
         <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             setOpen(3)
             ev.stopPropagation();
         }}>
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={AddDescription} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Add description</div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{state.description ? t('thumbnail.change-description') : t('thumbnail.add-description')}</div>
         </div>
+        {!!state.description && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
+            stateManager.setKey({key: [...stateKey, "description"], value: null})
+        }}>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={AddDescriptionActive} alt=""/></div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.clear-description')}</div>
+        </div>}
         <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             stateManager.setKey({key: [...stateKey, "spoiler"], value: !state.spoiler});
         }}>
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={state.spoiler ? SpoilerActiveIcon : SpoilerIcon} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>{state.spoiler ? "Remove spoiler" : "Set spoiler"}</div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{state.spoiler ? t('thumbnail.remove-spoiler') : t('thumbnail.set-spoiler')}</div>
         </div>
         {!!removeKeyParent && <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             setOpen(0);
@@ -141,14 +154,14 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
             ev.stopPropagation();
         }}>
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={TrashIcon} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Delete</div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.delete')}</div>
         </div>}
         {!!removeKeyParent && <div className={CapsuleStyles.large_button_ctx_item + ' ' + CapsuleStyles.separator} onClick={ev => {
             setOpen(0);
             stateManager.appendKey({key: [...removeKeyParent, 'items'], value: default_settings.MediaGallery.items[0]});
             ev.stopPropagation();
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>Add new image</div>
+            <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.add-image')}</div>
         </div>}
     </>
 }

@@ -1,0 +1,36 @@
+import discord
+from discord.ext import commands
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot('!', intents=intents)
+<%
+const counters = {};  // {name: count}
+const compTypeName = {
+  1: 'action_row',
+  2: 'button',
+  3: 'select',
+  9: 'section',
+  10: 'text_display',
+  11: 'thumbnail',
+  12: 'media_gallery',
+  13: 'file',
+  14: 'separator',
+  17: 'container',
+};
+function varNameFor(compType) {
+  let name = compTypeName[compType] || 'item';
+  counters[name] = (counters[name] || 0) + 1;
+  return `${name}${counters[name]}`;
+}
+%>
+class Components(discord.ui.LayoutView):<%_ data.components.forEach(function (comp) { _%>
+    <% const varName = varNameFor(comp.type); %>
+    <%- varName %> = <%- indent(include('/discordpy/components.py.ejs', { comp: comp }), 4).trim() %>
+<%_ }); _%> <% if (data.components.length === 0) { %> ... <% } %>
+
+@bot.command()
+async def send_components(ctx: commands.Context) -> None:
+    view = Components()
+    await ctx.send(view=view)

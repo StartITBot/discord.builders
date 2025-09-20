@@ -41,9 +41,9 @@ Some icons used in this project are custom-made. However, before creating a new 
 | ![Maximum.svg](Maximum.svg)                 | Not needed                                              | Select: Maximum options                   |
 | ![FileIcon.svg](FileIcon.svg)               | Not needed                                              | File component: Set/change file icon      |
 | ![Icons.svg](Icons.svg)                     | Not needed                                              | Add component                             |
-| ![AddDescription.svg](AddDescription.svg)   | TODO                                                    | Thumbnail: Add description                |
-| ![UploadImage.svg](UploadImage.svg)         | TODO                                                    | Thumbnail: Upload image                   |
-| ![Url.svg](Url.svg)                         | TODO                                                    | Thumbnail: Set image URL; Button: Set URL |
+| ![AddDescription.svg](AddDescription.svg)   | ![AddDescriptionActive.svg](AddDescriptionActive.svg)   | Thumbnail: Add description                |
+| ![UploadImage.svg](UploadImage.svg)         | Not needed                                              | Thumbnail: Upload image                   |
+| ![Url.svg](Url.svg)                         | Not needed                                              | Thumbnail: Set image URL; Button: Set URL |
 
 ### Placeholder
 

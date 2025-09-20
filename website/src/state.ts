@@ -8,6 +8,8 @@ import {
     wrapKeyType,
 } from 'components-sdk/src/polyfills/StateManager';
 
+import defaultJson from "./defaultJson"
+
 const __deleteKeyHelper = (
     state: any,
     key: stateKeyType,
@@ -50,12 +52,16 @@ function arraysEqual<T>(arr1: T[], arr2: T[]): boolean {
 export const displaySlice = createSlice({
     name: 'display',
     initialState: () => ({
-        data: [] as Component[],
+        data: defaultJson as Component[],
+        isDefault: true,
         webhookUrl: localStorage.getItem("discord.builders__webhookToken") || "", // Toolkit run this function so type is string
-        webhookResponse: null as object | null
+        webhookResponse: null as object | null,
+        showThread: false
     }),
     reducers: {
         wrapKey(state, action: PayloadAction<wrapKeyType<any>>) {
+            state.isDefault = false;
+
             const key = action.payload.key;
             let current: any = state;
             for (let i = 0; i < key.length; i++) {
@@ -72,6 +78,8 @@ export const displaySlice = createSlice({
         },
 
         setKey(state, action: PayloadAction<setKeyType<any>>) {
+            state.isDefault = false;
+
             const key = action.payload.key;
             let current: any = state;
             for (let i = 0; i < key.length; i++) {
@@ -85,6 +93,8 @@ export const displaySlice = createSlice({
         },
 
         appendKey(state, action: PayloadAction<appendKeyType<any>>) {
+            state.isDefault = false;
+
             const key = action.payload.key;
             let current: any = state;
             for (let i = 0; i < key.length; i++) {
@@ -100,6 +110,8 @@ export const displaySlice = createSlice({
         },
 
         addKey(state, action: PayloadAction<addKeyType<any>>) {
+            state.isDefault = false;
+
             const key: stateKeyType = action.payload.key;
             const deleteKey: stateKeyType = action.payload.deleteKey ? [...action.payload.deleteKey] : [];
             const deleteKeyParent: stateKeyType | null = action.payload.removeKeyParent ? [...action.payload.removeKeyParent] : null;
@@ -128,6 +140,8 @@ export const displaySlice = createSlice({
         },
 
         deleteKey(state, action: PayloadAction<deleteKeyType>) {
+            state.isDefault = false;
+
             const key = action.payload.key;
             let current: any = state;
             for (let i = 0; i < key.length; i++) {
@@ -150,8 +164,26 @@ export const displaySlice = createSlice({
             state.webhookUrl = action.payload
         },
 
-        setWebhookResponse(state, action: PayloadAction<object>) {
+        setThreadId(state, action: PayloadAction<string>) {
+            try {
+                const parsed_url = new URL(state.webhookUrl);
+                const parsed_query = new URLSearchParams(parsed_url.search);
+                if (!action.payload) {
+                    parsed_query.delete('thread_id');
+                } else {
+                    parsed_query.set('thread_id', action.payload);
+                }
+                parsed_url.search = parsed_query.toString();
+                state.webhookUrl = parsed_url.toString();
+            } catch (e) {}
+        },
+
+        setWebhookResponse(state, action: PayloadAction<object | null>) {
             state.webhookResponse = action.payload
+        },
+
+        setShowThread(state) {
+            state.showThread = true;
         }
     }
 })

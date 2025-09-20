@@ -8,10 +8,11 @@ import { ClientFunction, IncludeCallback } from 'ejs';
 import { RootState } from './state';
 import { OnChangeValue } from 'react-select/dist/declarations/src/types';
 import { Component } from 'components-sdk';
+import { useTranslation } from 'react-i18next';
 
 const codegenModules: {
     [name: string]: { default: ClientFunction };
-} = import.meta.globEager('./codegen/**/*.ejs');
+} = import.meta.glob('./codegen/**/*.ejs', { eager: true });
 
 const libComponents: {[name: string]: ClientFunction} = {};
 
@@ -42,6 +43,7 @@ export function Codegen({state, page, setPage} : {
 
     // In this scope of code null === JSON, this may change in the future
     const libSelected = page === '200.home' ? 'json' : page;
+    const {t} = useTranslation("website");
     const setLibSelected = (lib: string) => setPage(lib === 'json' ? '200.home' : lib);
 
     const selectOptions: selectOption[] = [
@@ -68,7 +70,7 @@ export function Codegen({state, page, setPage} : {
 
     return (
         <>
-            <p style={{marginBottom: '1rem'}}>Code generator</p>
+            <p style={{marginBottom: '0.5rem', marginTop: '8rem'}}>{t('codegen.title')}</p>
             <Select
                 styles={select_styles}
                 options={selectOptions}

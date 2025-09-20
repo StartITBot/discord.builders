@@ -19,10 +19,11 @@ export function useFileUpload(
         multiple: false,
         accept: ['.png', '.jpg', '.jpeg'],
         readFilesContent: false,
-        onFilesSelected: ({ plainFiles } : SelectedFiles<undefined>) => {
+        onFilesSelected: async ({ plainFiles } : SelectedFiles<undefined>) => {
             const name = uuidv4();
             const ext = plainFiles[0].type.split('/')[1] || 'bin';
-            const link = setFile(`${name}.${ext}`, plainFiles[0]);
+            const link = await setFile(`${name}.${ext}`, plainFiles[0]);
+            if (link === null) return;
             stateManager.setKey({key: stateKey, value: link})
         },
     });

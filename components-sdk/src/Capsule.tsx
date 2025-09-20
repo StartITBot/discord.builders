@@ -11,7 +11,7 @@ import { StringSelect } from './components/StringSelect';
 import { File } from './components/File';
 import { CapsuleInner } from './CapsuleInner';
 import { generateRandomAnimal, randomSentence, uuidv4 } from './utils/randomGen';
-import { stateKeyType, StateManager } from './polyfills/StateManager';
+import { addKeyType, appendKeyType, deleteKeyType, stateKeyType, StateManager } from './polyfills/StateManager';
 import {
     ActionRowComponent,
     ButtonComponent,
@@ -33,6 +33,9 @@ import {
 import { DragContextProvider } from './dnd/DragContext';
 import { DroppableID } from './dnd/components';
 import { KeyToDeleteType } from './dnd/types';
+import { BoundariesProps } from './dnd/boundaries';
+import { RegenerateContextProvider } from './utils/useRegenerate';
+import { useMemo } from 'react';
 
 const _Button = {
     type: 2,
@@ -142,6 +145,8 @@ export type ComponentsProps = {
     removeKeyParent?: stateKeyType,
     dragKeyToDeleteOverwrite?: Omit<KeyToDeleteType, 'sessionId'>, // Available only for Section accessory
     droppableId?: DroppableID, // Available only for Section accessory
+    errors?: Record<string, any> | null,
+    actionCallback?: (custom_id: string | null) => void,
 }
 
 export const COMPONENTS = {
@@ -168,20 +173,22 @@ export function Capsule(props : {
     stateKey: stateKeyType,
     state: Component[],
     className?: string | null,
-    passProps: PassProps
-} ) {
+    passProps: PassProps,
+    errors: Record<string, any> | null,
+} & BoundariesProps ) {
     const cls = props.className ? ' ' + props.className : '';
 
     return <div className={Styles.preview + cls}>
-        <DragContextProvider stateManager={props.stateManager}>
+        <RegenerateContextProvider stateManager={props.stateManager}>{stateMng => <DragContextProvider stateManager={stateMng} boundaries={props.boundaries}>
             <CapsuleInner
                 state={props.state}
                 stateKey={props.stateKey}
-                stateManager={props.stateManager}
+                stateManager={stateMng}
                 buttonContext={'main'}
                 passProps={props.passProps}
                 droppableId={DroppableID.TOP_LEVEL}
+                errors={props.errors}
             />
-        </DragContextProvider>
+        </DragContextProvider>}</RegenerateContextProvider>
     </div>
 }

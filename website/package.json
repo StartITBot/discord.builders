@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "rm -rf node_modules/.vite && vite",
         "build": "vite build",
         "preview": "vite preview"
     },
@@ -12,12 +12,15 @@
         "components-sdk": "*",
         "ejs": "^3.1.10",
         "emoji-mart": "^3.0.1",
+        "i18next": "^22.4.10",
+        "i18next-browser-languagedetector": "^7.0.1",
         "rc-slider": "^9.7.5",
         "react": "^18.2.0",
         "react-code-blocks": "^0.1.6",
         "react-color": "^2.19.3",
         "react-dom": "^18.2.0",
         "react-error-boundary": "^5.0.0",
+        "react-i18next": "^12.1.5",
         "react-redux": "^8.0.2",
         "react-select": "^5.10.1",
         "react-textarea-autosize": "^8.3.4",
@@ -28,9 +31,9 @@
         "@types/emoji-mart": "^3.0.1",
         "@types/react": "^18",
         "@types/react-dom": "^18",
-        "@vitejs/plugin-react": "1.2.0",
+        "@vitejs/plugin-react": "^5.0.0",
         "postcss-nesting": "^13.0.1",
         "typescript": "4.6.3",
-        "vite": "2.8.6"
+        "vite": "^7.0.0"
     }
 }

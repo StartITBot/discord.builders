@@ -3,6 +3,7 @@ import { StateManager } from '../polyfills/StateManager';
 import { customDropActions, getValidObj } from './components';
 import { default_settings } from '../Capsule';
 import { TextDisplayComponent } from '../utils/componentTypes';
+import { BoundariesProps, testBoundaries } from './boundaries';
 
 function assertValidJSON(arg: unknown): asserts arg is object {
     if (typeof arg !== 'object' || arg === null) throw new Error('Invalid component type');
@@ -36,13 +37,16 @@ export const handleDragDrop = (
         setVisible,
         stateManager,
         keyToDelete: keyToDeleteRef,
+        boundaries,
     }: {
         visible: DragContextType['visible'];
         setVisible: DragContextType['setVisible'];
         stateManager: StateManager;
         keyToDelete: DragContextType['keyToDelete'];
-    }
+    } & BoundariesProps
 ) => {
+    if (!testBoundaries(e.target, boundaries)) return;
+
     /*
 
     Warning! When data is dropped from external sources, dragOverEvent hadn't accessed the data to validate it.

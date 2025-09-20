@@ -1,0 +1,5 @@
+ActionRow(
+<% data.comp.components.forEach(function(comp){-%>
+<%- indent(include('/dressed/components.ts.ejs', {comp: comp}), 4); %>,
+<% }); -%>
+)

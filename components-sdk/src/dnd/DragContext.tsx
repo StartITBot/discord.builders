@@ -2,6 +2,7 @@ import { ClosestState, DragContextType, DroppableState, KeyToDeleteType } from '
 import { createContext, FC, ReactNode, useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { StateManager } from '../polyfills/StateManager';
 import { DragEvents } from './DragEvents';
+import { BoundariesProps } from './boundaries';
 
 const DragContext = createContext<DragContextType | undefined>(undefined);
 
@@ -16,9 +17,10 @@ export function useDragContext(): DragContextType {
 export const DragContextProvider: FC<{
     children: ReactNode;
     stateManager: StateManager
-}> = ({
+} & BoundariesProps> = ({
           children,
-          stateManager
+          stateManager,
+          boundaries
       }) => {
     const refs = useRef<Set<DroppableState>>(new Set());
 
@@ -44,7 +46,7 @@ export const DragContextProvider: FC<{
 
     return (
         <DragContext.Provider value={value}>
-            <DragEvents stateManager={stateManager}>{children}</DragEvents>
+            <DragEvents stateManager={stateManager} boundaries={boundaries}>{children}</DragEvents>
         </DragContext.Provider>
     );
 };

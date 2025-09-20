@@ -1,0 +1,10 @@
+.addOption(<% _%>
+<%=data.comp.label%>, <% _%>
+<%=data.comp.value%><% if (data.comp.description || data.comp.emoji) { %>, <%}%><% _%>
+<% if (data.comp.description) { -%>
+<%=data.comp.description%><% if (data.comp.emoji) { %>, <%}%><% _%>
+<% } -%>
+<% if (data.comp.emoji) { -%>
+<%- include('/jda/emoji.java.ejs', {emoji: data.comp.emoji}) -%><% _%>
+<% } -%>
+)<% _%>

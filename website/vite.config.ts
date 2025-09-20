@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import {resolve} from "node:path";
 import postcssNesting from 'postcss-nesting';
 import ejsTemplatePlugin from './src/rollupPlugin';
+import seoPlugin from './src/seoPlugin';
 
 
 export default defineConfig(({command, mode}) => ({
@@ -10,7 +11,7 @@ export default defineConfig(({command, mode}) => ({
       jsxRuntime: 'classic',
     }), ejsTemplatePlugin({
         compileDebug: mode === 'development'
-    })],
+    }), seoPlugin()],
 
     esbuild: {
         jsxInject: `import React from 'react'`
@@ -29,4 +30,10 @@ export default defineConfig(({command, mode}) => ({
             ],
         },
     },
+    server: {
+        host: '127.0.0.1',
+        port: 3000,
+    },
+    build: {
+    }
 }));

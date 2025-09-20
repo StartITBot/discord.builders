@@ -1,3 +1,8 @@
+.error {
+  color: #dd9898;
+  margin: 1rem 0;
+  user-select: text;
+}
 
 .preview {
   padding: 2rem 4rem;
@@ -11,35 +16,6 @@
   letter-spacing: normal;
   font-weight: 400;
   position: relative;
-
-  [type="text"], [role="textbox"] {
-    padding: 0;
-    min-height: 0;
-    border: unset;
-    box-shadow: unset !important;
-    background: none;
-
-    font-size: inherit;
-    font-family: inherit;
-    line-height: inherit;
-    letter-spacing: inherit;
-    font-weight: inherit;
-    color: inherit;
-    outline: unset;
-    width: 100%;
-    resize: none;
-
-    &::placeholder {
-      font-style: italic !important;
-      color: gray !important;
-    }
-
-    [data-slate-placeholder="true"] {
-      top: 0 !important; /* the same as padding-top */
-    }
-
-  }
-
 }
 
 .component {
@@ -198,4 +174,11 @@
     color: #dcddde;
     padding: 1rem;
   }
+}
+
+.highlight {
+  color: #FFB400 !important;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  text-shadow: 0 0 17px #FF9E00;
 }

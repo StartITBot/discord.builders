@@ -1,0 +1,5 @@
+discord.ui.MediaGallery(
+<%_ data.comp.items.forEach(function(comp){ _%>
+    <%_ %><%- indent(include('/pycord/mediagallery_item.py.ejs', {comp: comp}), 4); %>,
+<%_ }); _%>
+)<% _%>

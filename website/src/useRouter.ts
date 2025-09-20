@@ -1,5 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-import { libs } from '../libs.config';
+import { libs, supportedLngs, translatePath } from '../libs.config';
+
+const isCrawler = () => /(bot|crawler|spider|crawling|google|baidu|bing|teoma|slurp|yandex)/.test(navigator.userAgent.toLowerCase());
+
+const allPages = Object.entries(libs).reduce((acc, [page, lib]) => {
+    acc[lib.path] = page;
+    for (const lang of supportedLngs) acc[translatePath(lang, lib.path)] = page;
+    return acc;
+}, {} as { [path: string]: string; });
+
+for (const lang of supportedLngs) allPages[`/${lang}`] = '200.home';
+allPages[''] = '200.home';
 
 
 function findPath(page: string): string | null {
@@ -13,21 +24,15 @@ function findPath(page: string): string | null {
 
 function findPage(path: string): string {
     path = path.replace(/\/$/, ''); // remove trailing slash
-
-    if (path === '') return '200.home';
-
-    const selectedLib = Object.keys(libs).find(key => path === libs[key].path);
-    if (selectedLib) return selectedLib;
-
-    return '404.not-found'
+    return allPages[path] || '404.not-found';
 }
 
 function firstLoadPage(): string {
     const page = findPage(window.location.pathname);
-    if (page === "200.home") {
+    if (window.location.pathname === "/" && !isCrawler()) {
         const cacheLib = localStorage.getItem("discord.builders__selectedLib");
         const libPath = cacheLib && findPath(cacheLib);
-        if (libPath) {
+        if (libPath && libPath !== "/") {
             redirect(libPath);
             return cacheLib;
         }

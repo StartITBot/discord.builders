@@ -2,3 +2,31 @@
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.27);
   border-radius: 3px;
 }
+
+.text_display_input[type="text"], .text_display_input[type="textbox"], .text_display [type="text"], .text_display [role="textbox"] {
+  padding: 0;
+  min-height: 0;
+  border: unset;
+  box-shadow: unset !important;
+  background: none;
+
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  font-weight: inherit;
+  color: inherit;
+  outline: unset;
+  width: 100%;
+  resize: none;
+
+  &::placeholder {
+    font-style: italic !important;
+    color: gray !important;
+  }
+
+  [data-slate-placeholder="true"] {
+    top: 0 !important; /* the same as padding-top */
+  }
+
+}

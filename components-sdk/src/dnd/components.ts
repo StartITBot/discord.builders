@@ -85,7 +85,7 @@ function randomizeIds(data: any): any {
         return Object.fromEntries(
             Object.entries(data).map(([key, value]) => [
                 key,
-                key === 'custom_id' ? uuidv4() : randomizeIds(value),
+                ['custom_id', 'value'].includes(key) ? uuidv4() : randomizeIds(value),
             ])
         );
     }

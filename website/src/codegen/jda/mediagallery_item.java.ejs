@@ -1,0 +1,9 @@
+MediaGalleryItem.fromUrl(<%=data.comp.media.url%>)<% _%>
+<% if (data.comp.description) { -%>
+
+    .withDescription(<%=data.comp.description%>)<% _%>
+<% } -%>
+<% if (data.comp.spoiler) { -%>
+
+    .withSpoiler(true)<% _%>
+<% } -%>

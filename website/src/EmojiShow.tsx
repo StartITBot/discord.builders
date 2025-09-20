@@ -8,7 +8,7 @@ export const EmojiShow: EmojiShowType = ({emoji}) => {
         return getEmojiDataFromNative(emoji, 'twitter', data)
     }, [])
 
-    if (emoji.id !== null) return <img alt={`Discord emoji: ${emoji.name}`}
+    if (emoji.id != null) return <img alt={`Discord emoji: ${emoji.name}`}
          src={`https://cdn.discordapp.com/emojis/${emoji.id}`}
          width={19}
          height={19}

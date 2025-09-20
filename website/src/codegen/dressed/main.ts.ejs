@@ -1,0 +1,28 @@
+<% 
+const builders = { 
+    1: 'ActionRow', 
+    2: 'Button', 
+    3: 'SelectMenu, SelectMenuOption', 
+    5: 'SelectMenu', 
+    6: 'SelectMenu', 
+    7: 'SelectMenu', 
+    8: 'SelectMenu', 
+    9: 'Section' , 
+    10: 'TextDisplay' , 
+    11: 'Thumbnail' , 
+    12: 'MediaGallery, MediaGalleryItem' ,
+    13: 'File', 
+    14: 'Separator' , 
+    17: 'Container' 
+}
+function neededImports(components) { 
+    return components.reduce((acc, component)=> acc.union(neededImports(component.components ?? [])).union(new Set(component.accessory ? [builders[component.accessory.type]] :[])).add(builders[component.type]), new Set()); 
+} 
+-%>
+import { <%- [...neededImports(data.components)].join(", ") %> } from "dressed";
+
+const components = [
+<% data.components.forEach(function(comp){ -%>
+<%_ %><%- indent(include('/dressed/components.ts.ejs', {comp: comp}), 4); %>,
+<% }); -%>
+];

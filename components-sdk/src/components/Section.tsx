@@ -9,7 +9,7 @@ import { useDragLine } from '../dnd/DragLine';
 import { dragline_hor } from '../dnd/DragLine.module.css';
 import { DroppableID } from '../dnd/components';
 
-export function Section({ state, stateKey, stateManager, passProps }: ComponentsProps & { state: SectionComponent }) {
+export function Section({ state, stateKey, stateManager, passProps, actionCallback }: ComponentsProps & { state: SectionComponent }) {
     const Accessory = COMPONENTS[state.accessory.type];
     if (typeof Accessory === 'undefined') return null;
 
@@ -47,15 +47,17 @@ export function Section({ state, stateKey, stateManager, passProps }: Components
                     stateManager={stateManager}
                     passProps={passProps}
                     dragKeyToDeleteOverwrite={dragKeyToDeleteOverwrite}
+                    actionCallback={actionCallback}
                 />
             </div>
         </div>
     );
 }
-export function SectionFrame({children, stateKey, stateManager} : {
+export function SectionFrame({children, stateKey, stateManager, interactiveDisabled} : {
     children: ReactNode,
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
+    interactiveDisabled: boolean
 }) {
     const { ref: el, visible } = useDragLine({stateKey, droppableId: DroppableID.SECTION_ADD_ACCESSORY});
     return <div className={Styles.section}>
@@ -76,6 +78,7 @@ export function SectionFrame({children, stateKey, stateManager} : {
                     }
                 })}
                 style={(!!el.current && visible?.ref.element === el.current) ? {opacity: 0, pointerEvents: 'none'} : {}}
+                interactiveDisabled={interactiveDisabled}
             />
 
             {(!!el.current && visible?.ref.element === el.current) && <div key={'top-dragline'} className={dragline_hor} style={{right: 0, maxHeight: 50}} />}

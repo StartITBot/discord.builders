@@ -1,0 +1,20 @@
+<%
+const buttonStyle = {
+    1: "ButtonStyle.PRIMARY",
+    2: "ButtonStyle.SECONDARY",
+    3: "ButtonStyle.SUCCESS",
+    4: "ButtonStyle.DANGER",
+    5: "ButtonStyle.LINK"
+}
+
+-%>
+Button.of(
+    <%-buttonStyle[data.comp.style]%>,
+    <%= data.comp.style === 5 ? data.comp.url : data.comp.custom_id%>,
+<% if (data.comp.label) { _%>
+    <%=data.comp.label%><% if (data.comp.emoji) { %>,<% } %>
+<% } -%>
+<% if (data.comp.emoji) { _%>
+    <%- include('/jda/emoji.java.ejs', {emoji: data.comp.emoji}) %>
+<% } -%>
+)<% _%>

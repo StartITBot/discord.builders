@@ -7,6 +7,7 @@ import {
     SectionComponent,
     setFileType
 } from "components-sdk";
+import { getFileNameType } from 'components-sdk/src/polyfills/files';
 
 
 export const webhookImplementation = {
@@ -14,10 +15,15 @@ export const webhookImplementation = {
         return window.uploadedFiles[name];
     }) as getFileType,
 
-    setFile: ((name, file) => {
+    setFile: (async (name, file) => {
         window.uploadedFiles[name] = file
         return `attachment://${name}`
     }) as setFileType,
+
+    getFileName: ((url: string) => {
+        const name = url.startsWith("attachment://") ? url.slice(13) : '';
+        return name || null;
+    }) as getFileNameType,
 
     scrapFiles(data: Component | Component[]): string[] {
         if (Array.isArray(data)) return data.flatMap(obj => this.scrapFiles(obj));
@@ -29,9 +35,9 @@ export const webhookImplementation = {
             const url = dataAsSection.accessory.media.url;
             if (url.startsWith("attachment://")) return [url.slice(13)]
         } else if (data.type === ComponentType.FILE) {
-            const dataAsSection = data as FileComponent;
+            const dataAsFile = data as FileComponent;
 
-            const url = dataAsSection.file.url;
+            const url = dataAsFile.file.url;
             if (url.startsWith("attachment://")) return [url.slice(13)]
         } else if (data.type === ComponentType.MEDIA_GALLERY) {
             const dataAsGallery = data as MediaGalleryComponent;
@@ -58,12 +64,13 @@ export const webhookImplementation = {
         }
     },
 
-    prepareRequest(state: Component[]): RequestInit {
+    prepareRequest(state: Component[], thread_name?: string): RequestInit {
         const files = this.scrapFiles(state);
 
         const data = JSON.stringify({
             components: state,
-            flags: 32768
+            flags: 32768,
+            thread_name,
         });
 
         if (!files.length) return {method: "POST", body: data, headers: {"Content-Type": "application/json"}}
@@ -71,10 +78,24 @@ export const webhookImplementation = {
         const form = new FormData();
         form.append('payload_json', data);
         files.map((filename, idx) => {
-            const blob = window.uploadedFiles[filename];
+            let blob = window.uploadedFiles[filename];
+            if (!blob) blob = new File([], filename, {type: "application/octet-stream"});
             form.append(`files[${idx}]`, blob, filename);
         })
         return {method: "POST", body: form, headers: {}}
+    },
+
+    getErrors(response: unknown) {
+        if (response === null || typeof response !== 'object') return null;
+        if (!("errors" in response)) return null;
+        const responseErrors = response.errors;
+        if (responseErrors === null || typeof responseErrors !== 'object') return null;
+        if (!("components" in responseErrors)) return null;
+        const components = responseErrors.components;
+        if (components === null || typeof components !== 'object') return null;
+        if (Array.isArray(components)) return null;
+
+        return components as Record<string, any>;
     }
 
 }
