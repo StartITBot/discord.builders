@@ -4,25 +4,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { webhookImplementation } from './webhook.impl';
 
 async function encodeState(state: any): Promise<string> {
-    const stream = new Blob([JSON.stringify(state)], {
-        type: 'application/json',
-    }).stream();
-    const compressedReadableStream = stream.pipeThrough(new CompressionStream('gzip'));
+    try {
+        const cs = new CompressionStream("gzip");
+        const writer = cs.writable.getWriter();
+        writer.write(new TextEncoder().encode(JSON.stringify(state)));
+        writer.close();
+        const data = await new Response(cs.readable).bytes();
 
-    const buffer = await new Response(compressedReadableStream).arrayBuffer();
-
-    return btoa(new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+        let binary = '';
+        for (let b of data) binary += String.fromCharCode(b);
+        return '1$' + btoa(binary);
+    } catch (e) {
+        console.error('Failed to encode compressed state to URL', e);
+        return btoa(encodeURIComponent(JSON.stringify(state)));
+    }
 }
 
 async function decodeState(data: string) {
-    const buffer = new Uint8Array([...atob(data)].map((c) => c.charCodeAt(0)));
-    const stream = new Blob([buffer], {
-        type: 'application/json',
-    }).stream();
+    try {
+        const cs = new DecompressionStream("gzip");
+        const writer = cs.writable.getWriter();
+        writer.write(Uint8Array.from(atob(data.slice(2)), c => c.charCodeAt(0)));
+        writer.close();
+        const state = await new Response(cs.readable).text();
+        return JSON.parse(state);
+    } catch (e) {
+        console.error('Failed to decode compressed state from URL', e);
+        return [];
+    }
+}
 
-    const decompressedStream = stream.pipeThrough(new DecompressionStream('gzip'));
-    const blob = await new Response(decompressedStream).blob();
-    return JSON.parse(await blob.text());
+async function decodeStateOld(data: string) {
+    try {
+        return JSON.parse(decodeURIComponent(atob(data)));
+    } catch (e) {
+        console.error('Failed to decode raw state from URL', e);
+        return [];
+    }
 }
 
 export function useHashRouter() {
@@ -39,20 +57,13 @@ export function useHashRouter() {
             return;
         }
 
-        const getData = setTimeout(() => {
-            if (state.length == 0 || isDefault) {
-                currentHash.current = '';
-                document.location.hash = '';
-                return;
-            }
+        const getData = setTimeout(async () => {
+            const value = await encodeState(state);
+            currentHash.current = value; // infinite loop resolver
+            if (!isDefault) document.location.hash = value;
+        }, 600)
 
-            encodeState(state).then((value) => {
-                currentHash.current = value; // infinite loop resolver
-                document.location.hash = value;
-            });
-        }, 600);
-
-        return () => clearTimeout(getData);
+        return () => clearTimeout(getData)
     }, [state]);
 
     useEffect(() => {
@@ -63,20 +74,12 @@ export function useHashRouter() {
 
             console.log('Loaded state from URL');
 
-            if (atob(newHash).startsWith(encodeURIComponent('['))) {
-                // Old deserialization logic (raw JSON)
-                console.log('Deserializing old payload');
-                const value = JSON.parse(decodeURIComponent(atob(newHash)));
-                dispatch(actions.setKey({ key: ['data'], value }));
+            const f = newHash.startsWith('1$') ? decodeState : decodeStateOld;
+
+            f(newHash).then((value) => {
+                dispatch(actions.setKey({key: ['data'], value}))
                 currentHash.current = event.newURL.substring(1);
-            } else {
-                // New deserialization logic (gzip compression)
-                console.log('Deserializing new payload');
-                decodeState(newHash).then((value) => {
-                    dispatch(actions.setKey({ key: ['data'], value }));
-                    currentHash.current = event.newURL.substring(1);
-                });
-            }
+            });
         };
 
         handleChange({ newURL: window.location.toString() });
