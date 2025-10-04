@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import ThumbnailIcon from "../icons/Thumbnail.svg";
 import {stateKeyType, StateManager} from "../polyfills/StateManager";
 import {uuidv4} from "./randomGen";
-import {SelectedFiles} from "use-file-picker/types";
 import {getFileType, setFileType} from "../polyfills/files";
 
 export function useFileUpload(
@@ -19,7 +18,8 @@ export function useFileUpload(
         multiple: false,
         accept: ['.png', '.jpg', '.jpeg'],
         readFilesContent: false,
-        onFilesSelected: async ({ plainFiles } : SelectedFiles<undefined>) => {
+        onFilesSelected: async ({ plainFiles }) => {
+            if (!plainFiles) return;
             const name = uuidv4();
             const ext = plainFiles[0].type.split('/')[1] || 'bin';
             const link = await setFile(`${name}.${ext}`, plainFiles[0]);

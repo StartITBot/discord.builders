@@ -1,7 +1,6 @@
 import {ComponentsProps} from "../Capsule";
 import {FileComponent} from "../utils/componentTypes";
 import {useFilePicker} from "use-file-picker";
-import {SelectedFiles} from "use-file-picker/types";
 import Styles from "./File.module.css"
 import FileIcon from "../icons/FileIcon.svg"
 import { useTranslation } from 'react-i18next';
@@ -22,7 +21,8 @@ export function File({state, stateManager, stateKey, passProps} : ComponentsProp
     const { openFilePicker: openFileSelector } = useFilePicker({
         multiple: false,
         readFilesContent: false,
-        onFilesSelected: async ({ plainFiles } : SelectedFiles<undefined>) => {
+        onFilesSelected: async ({ plainFiles }) => {
+            if (!plainFiles) return;
             const link = await passProps.setFile(sanitizeFilename(plainFiles[0].name) || 'file.bin', plainFiles[0]);
             if (link === null) return;
             stateManager.setKey({key: [...stateKey, "file", "url"], value: link})

@@ -10,11 +10,13 @@ export default function seoPlugin(): PluginOption {
         apply: 'build',
         enforce: 'post',
         generateBundle(_, bundle) {
+            const nginxConf: string[] = [];
             const headers: string[] = [];
             const redirects: string[] = [];
             const urlset: string[] = [];
             for (const page of pages) {
                 headers.push(`${page}\n  Link: <https://discord.builders${page}>; rel="canonical"\n`);
+                nginxConf.push(`location = ${page} { try_files /index.html =404; add_header Link "<https://discord.builders${page}>; rel=\\"canonical\\""; }`);
                 if (page !== '/') redirects.push(`${page} / 200`);
 
                 const altKeys = supportedLngs.map((lang) => {
@@ -27,6 +29,7 @@ export default function seoPlugin(): PluginOption {
 
                 for (const lang of supportedLngs) {
                     headers.push(`${translatePath(lang, page)}\n  Link: <https://discord.builders${translatePath(lang, page)}>; rel="canonical"\n`);
+                    nginxConf.push(`location = ${translatePath(lang, page)} { try_files /index.html =404; add_header Link "<https://discord.builders${translatePath(lang, page)}>; rel=\\"canonical\\""; }`);
                     redirects.push(`${translatePath(lang, page)} / 200`);
                     const priority = (page === '/') ? '<priority>1.0</priority>' : '';
                     urlset.push(
@@ -57,6 +60,12 @@ export default function seoPlugin(): PluginOption {
                 type: 'asset',
                 fileName: '_redirects',
                 source: `${redirects.join('\n')}\n`,
+            });
+
+            this.emitFile({
+                type: 'asset',
+                fileName: 'nginx.conf',
+                source: `server {listen 80;listen [::]:80;error_page 404 /404.html;root /usr/share/nginx/html;${nginxConf.join('\n')}}`,
             });
 
             this.emitFile({
