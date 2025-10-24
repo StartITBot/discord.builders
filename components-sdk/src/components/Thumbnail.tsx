@@ -29,7 +29,8 @@ export function Thumbnail({
     className = undefined,
     droppableId = undefined,
     dragKeyToDeleteOverwrite = undefined,
-}: Omit<ComponentsProps, 'state' | 'actionCallback'> & { state: MediaGalleryItem | ThumbnailComponent; className?: string }) {
+    allowAddition = undefined,
+}: Omit<ComponentsProps, 'state' | 'actionCallback'> & { state: MediaGalleryItem | ThumbnailComponent; className?: string, allowAddition?: boolean }) {
     const { open, setOpen, ignoreRef, closeLockRef } = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
 
@@ -75,6 +76,7 @@ export function Thumbnail({
                             setOpen={setOpen}
                             removeKeyParent={removeKeyParent}
                             openFileSelector={openFileSelector}
+                            allowAddition={allowAddition}
                         />
                     )}
                     {open === 2 && (
@@ -105,13 +107,14 @@ export function Thumbnail({
 
 
 
-function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, removeKeyParent} : {
+function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, removeKeyParent, allowAddition} : {
     state: MediaGalleryItem | ThumbnailComponent,
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
     setOpen: Dispatch<SetStateAction<number>>,
     openFileSelector: () => any,
-    removeKeyParent?: stateKeyType
+    removeKeyParent?: stateKeyType,
+    allowAddition?: boolean
 }) {
     const {t} = useTranslation('components-sdk');
     return <>
@@ -156,7 +159,7 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={TrashIcon} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.delete')}</div>
         </div>}
-        {!!removeKeyParent && <div className={CapsuleStyles.large_button_ctx_item + ' ' + CapsuleStyles.separator} onClick={ev => {
+        {(!!removeKeyParent && allowAddition) && <div className={CapsuleStyles.large_button_ctx_item + ' ' + CapsuleStyles.separator} onClick={ev => {
             setOpen(0);
             stateManager.appendKey({key: [...removeKeyParent, 'items'], value: default_settings.MediaGallery.items[0]});
             ev.stopPropagation();
