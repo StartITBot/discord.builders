@@ -3,7 +3,7 @@
   content: <%= data.comp.content %><% _%>
 <% } else if (data.comp.type == 13) { -%>
 - type: 'file'
-  content: <%= data.comp.file.url %><% _%>
+  url: <%= data.comp.file.url %><% _%>
 <%_ %><% if (data.comp.spoiler) { %>spoiler: true<% } %><% _%>
 <% } else if (data.comp.type == 14) { -%>
 <%- include('/itsmybot/separator.ts.ejs', {comp: data.comp}); -%>
