@@ -24,12 +24,13 @@ export function Section({ state, stateKey, stateManager, passProps, actionCallba
         [...stateKey]
     );
 
+    const components = state?.components || [];
     return (
         <div className={Styles.section}>
             <div>
                 <CapsuleInner
                     droppableId={DroppableID.SECTION_CONTENT}
-                    state={state?.components || []}
+                    state={components}
                     stateKey={stateKeyComponents}
                     stateManager={stateManager}
                     showSectionButton={false}
@@ -37,6 +38,7 @@ export function Section({ state, stateKey, stateManager, passProps, actionCallba
                     buttonContext={'inline'}
                     buttonClassName={CapsuleStyles.inline}
                     passProps={passProps}
+                    buttonShow={components.length < 3}
                 />
             </div>
             <div className={Styles.right}>
@@ -49,6 +51,7 @@ export function Section({ state, stateKey, stateManager, passProps, actionCallba
                     dragKeyToDeleteOverwrite={dragKeyToDeleteOverwrite}
                     actionCallback={actionCallback}
                 />
+
             </div>
         </div>
     );

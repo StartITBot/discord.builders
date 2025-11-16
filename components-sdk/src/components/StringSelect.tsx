@@ -64,7 +64,7 @@ export function StringSelect({
                 actionCallback={actionCallback}
             />)}
 
-            <div>
+            {state.options.length < 25 && <div>
                 <div className={Styles.select_option + ' ' + Styles.select_new} onClick={() => {
                     stateManager.appendKey({key: [...stateKey, "options"], value: default_settings.StringSelect().components[0].options[0]});
                 }}>
@@ -73,7 +73,7 @@ export function StringSelect({
                     </div>
                     <div className={Styles.text}>{t('button.new-option')}</div>
                 </div>
-            </div>
+            </div>}
         </div>
     </div>
 }

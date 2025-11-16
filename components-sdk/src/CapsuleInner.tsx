@@ -25,11 +25,12 @@ type props = {
     state: Component[],
     stateKey: stateKeyType,
     buttonClassName?: string,
+    buttonShow?: boolean,
     errors?: Record<string, any> | null,
 } & commonProps
 
 export function CapsuleInner(props: props) {
-    const {state, stateKey, stateManager, showSectionButton = true, buttonContext, buttonClassName, errors = null, droppableId} = props;
+    const {state, stateKey, stateManager, showSectionButton = true, buttonContext, buttonClassName, errors = null, droppableId, buttonShow = true} = props;
     const randomString = useRandomString();
 
     const { ref: el, visible } = useDragLine({
@@ -66,7 +67,7 @@ export function CapsuleInner(props: props) {
             {hasErrors && flattenErrors(errors!).map((error, i) => <div key={i} className={CapsuleStyles.error}><b>Error:</b> {error}</div>)}
         </div>
 
-        <CapsuleButton context={buttonContext} className={buttonClassName} callback={value => stateManager.appendKey({key: stateKey, value})} interactiveDisabled={props.passProps.interactiveDisabled} />
+        {buttonShow && <CapsuleButton context={buttonContext} className={buttonClassName} callback={value => stateManager.appendKey({key: stateKey, value})} interactiveDisabled={props.passProps.interactiveDisabled} />}
 
         {/* CapsuleButton is inline, so you can add more buttons after <CapsuleInner .../> */}
 

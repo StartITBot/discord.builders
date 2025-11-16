@@ -19,12 +19,14 @@ function getClass(len: number) {
 export function MediaGallery({state, stateKey, stateManager, passProps} : ComponentsProps & {state: MediaGalleryComponent}) {
     const randomString = useRandomString();
 
-    return <div className={Styles.gallery + ' ' + getClass((state?.items || []).length) }>
-        {(state?.items || []).map((component, index) => {
+    const mediaGalleryItems = state?.items || [];
+    return <div className={Styles.gallery + ' ' + getClass(mediaGalleryItems.length) }>
+        {mediaGalleryItems.map((component, index) => {
             return <MediaGalleryInner
                 key={`${randomString}::${index}`}
                 state={component}
                 stateKey={stateKey}
+                allowAddition={mediaGalleryItems.length < 10}
                 stateManager={stateManager}
                 passProps={passProps}
                 index={index}
@@ -33,7 +35,7 @@ export function MediaGallery({state, stateKey, stateManager, passProps} : Compon
     </div>
 }
 
-function MediaGalleryInner({state, stateKey, stateManager, passProps, index} : Omit<ComponentsProps, 'state' | 'actionCallback'> & {state: MediaGalleryItem, index: number}) {
+function MediaGalleryInner({state, stateKey, stateManager, passProps, index, allowAddition} : Omit<ComponentsProps, 'state' | 'actionCallback'> & {state: MediaGalleryItem, index: number, allowAddition: boolean}) {
     const stateKeyCached = useMemo(() => [...stateKey, 'items', index], [...stateKey, 'items', index]);
 
     return <Thumbnail
@@ -43,6 +45,7 @@ function MediaGalleryInner({state, stateKey, stateManager, passProps, index} : O
         state={state}
         stateKey={stateKeyCached}
         stateManager={stateManager}
+        allowAddition={allowAddition}
         passProps={passProps}
     />
 }
