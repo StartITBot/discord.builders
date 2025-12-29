@@ -1,6 +1,5 @@
-<%_ data.comp.components.forEach(function(comp, index) { -%>
-<%- include('/pycord/components.py.ejs', {comp: comp}) -%>
-,    <%_ if (index < data.comp.components.length - 1) { -%>
-<%- '\n' -%>
-    <%_ } -%>
-<%_ }); -%>
+discord.ui.ActionRow(
+<%_ data.comp.components.forEach(function(comp){ _%>
+<%_ %><%- indent(include('/pycord/components.py.ejs', {comp: comp}), 4); -%>,
+<%_ }); _%>
+)<% _%>
