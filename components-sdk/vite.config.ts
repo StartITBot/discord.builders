@@ -28,7 +28,7 @@ export default defineConfig({
         },
         rollupOptions: {
             external: (source) => {
-                if (source.startsWith('/') || source.startsWith('.')) return null;
+                if (path.isAbsolute(source) || source.startsWith('/') || source.startsWith('.')) return false;
                 return true;
             },
             output: {
