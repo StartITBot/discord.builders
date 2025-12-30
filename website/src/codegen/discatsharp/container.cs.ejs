@@ -1,0 +1,11 @@
+<%
+const accent = data.comp.accent_color !== undefined && data.comp.accent_color !== null
+    ? "#" + Number(data.comp.accent_color).toString(16).padStart(6, "0")
+    : null;
+-%>
+new DiscordContainerComponent(<% if (accent) { %>accentColor: new DiscordColor("<%- accent %>")<% if (data.comp.spoiler) { %>, spoiler: true<% } %><% } else if (data.comp.spoiler) { %>spoiler: true<% } %>)
+            .AddComponents([
+<%_ data.comp.components.forEach(function(comp, i){ _%>
+        <%- indent(include('/discatsharp/components.cs.ejs', {comp: comp}), 8); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
+<%_ }); _%>
+        ])

@@ -1,0 +1,1 @@
+new DiscordStringSelectComponentOption(<%= data.comp.label %>, <%= data.comp.value %>, <% if (data.comp.description) { %><%= data.comp.description %><% } else { %> <%= null %> <% } %>, <%- data.comp.default ? 'true' : 'false' %>, <%- data.comp.emoji ? include('/discatsharp/emoji.cs.ejs', {emoji: data.comp.emoji}).trim() : 'null' %>)

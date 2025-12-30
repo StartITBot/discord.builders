@@ -1,0 +1,23 @@
+<% if (data.comp.type === 1) { -%>
+<%- include('/discatsharp/actionrow.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 2) { -%>
+<%- include('/discatsharp/button.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 3) { -%>
+<%- include('/discatsharp/selectmenu.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 9) { -%>
+<%- include('/discatsharp/section.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 10) { -%>
+<%- include('/discatsharp/textdisplay.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 11) { -%>
+<%- include('/discatsharp/thumbnail.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 12) { -%>
+<%- include('/discatsharp/mediagallery.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 13) { -%>
+<%- include('/discatsharp/file.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 14) { -%>
+<%- include('/discatsharp/separator.cs.ejs', {comp: data.comp}) -%>
+<% } else if (data.comp.type === 17) { -%>
+<%- include('/discatsharp/container.cs.ejs', {comp: data.comp}) -%>
+<% } else { -%>
+new DiscordTextDisplayComponent($"Unsupported component type <%- data.comp.type %>")
+<% } -%>
