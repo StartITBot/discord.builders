@@ -11,9 +11,9 @@ const hasEmoji = !!data.comp.emoji;
 const disabled = !!data.comp.disabled;
 -%>
 <% if (data.comp.style === 5) { -%>
-new DiscordLinkButtonComponent(<%= data.comp.url || 'string.Empty' %>, <%= data.comp.label || 'null' %>, <%- disabled ? 'true' : 'false' %><% if (hasEmoji) { %>, <%- include('/discatsharp/emoji.cs.ejs', {emoji: data.comp.emoji}).trim() %><% } %>)
+new DiscordLinkButtonComponent(<%= data.comp.url || 'string.Empty' %>, <%= data.comp.label || 'null' %>, <%- disabled ? 'true' : 'false' %><% if (hasEmoji) { %>, <%- include('/discatsharp/emoji.cs.ejs', {emoji: data.comp.emoji}).trim() %><% } %>)<% _%>
 <% } else if (data.comp.style === 6) { -%>
-new DiscordPremiumButtonComponent(<%- data.comp.sku_id || 0 %>, <%- disabled ? 'true' : 'false' %>)
+new DiscordPremiumButtonComponent(<%- data.comp.sku_id || 0 %>, <%- disabled ? 'true' : 'false' %>)<% _%>
 <% } else { -%>
-new DiscordButtonComponent(<%- buttonStyle[data.comp.style] ?? 'ButtonStyle.Secondary' %>, <% if (data.comp.custom_id) { %><%= data.comp.custom_id %><% } else { %> <%= 'null' %> <% } %>, <%= data.comp.label || 'null' %>, <%- disabled ? 'true' : 'false' %><% if (hasEmoji) { %>, <%- include('/discatsharp/emoji.cs.ejs', {emoji: data.comp.emoji}).trim() %><% } %>)
+new DiscordButtonComponent(<%- buttonStyle[data.comp.style] ?? 'ButtonStyle.Secondary' %>, <% if (data.comp.custom_id) { %><%= data.comp.custom_id %><% } else { %> <%= 'null' %> <% } %>, <%= data.comp.label || 'null' %>, <%- disabled ? 'true' : 'false' %><% if (hasEmoji) { %>, <%- include('/discatsharp/emoji.cs.ejs', {emoji: data.comp.emoji}).trim() %><% } %>)<% _%>
 <% } -%>

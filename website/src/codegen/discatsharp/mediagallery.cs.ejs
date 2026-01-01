@@ -1,5 +1,5 @@
 new DiscordMediaGalleryComponent([
 <%_ data.comp.items.forEach(function(comp, i){ _%>
-	<%- indent(include('/discatsharp/mediagallery_item.cs.ejs', {comp: comp}), 4); %><% if (i !== data.comp.items.length - 1) { %>,<% } %>
+<%- indent(include('/discatsharp/mediagallery_item.cs.ejs', {comp: comp}), 4); %><% if (i !== data.comp.items.length - 1) { %>,<% } %>
 <%_ }); _%>
-	])
+])

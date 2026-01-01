@@ -4,8 +4,8 @@ const accent = data.comp.accent_color !== undefined && data.comp.accent_color !=
     : null;
 -%>
 new DiscordContainerComponent(<% if (accent) { %>accentColor: new DiscordColor("<%- accent %>")<% if (data.comp.spoiler) { %>, spoiler: true<% } %><% } else if (data.comp.spoiler) { %>spoiler: true<% } %>)
-            .AddComponents([
+    .AddComponents([
 <%_ data.comp.components.forEach(function(comp, i){ _%>
-        <%- indent(include('/discatsharp/components.cs.ejs', {comp: comp}), 8); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
+<%- indent(include('/discatsharp/components.cs.ejs', {comp: comp}), 8); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
 <%_ }); _%>
-        ])
+    ])
