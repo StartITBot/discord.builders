@@ -1,5 +1,5 @@
 new DiscordSectionComponent(<% if (data.comp.components && data.comp.components.length > 0) { -%>[
 <%_ data.comp.components.forEach(function(comp, i){ _%>
-        <%- indent(include('/discatsharp/components.cs.ejs', {comp: comp}), 8); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
+<%- indent(include('/discatsharp/components.cs.ejs', {comp: comp}), 4); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
 <%_ }); _%>
-        ]<% } %>)<% if (data.comp.accessory) { -%>.<%- indent(include('/discatsharp/accessory_components.cs.ejs', {comp: data.comp.accessory}), 4, true); %> <% } -%>
+]<% } %>)<% if (data.comp.accessory) { -%>.<%- indent(include('/discatsharp/accessory_components.cs.ejs', {comp: data.comp.accessory}), 4, true); %><% } -%>

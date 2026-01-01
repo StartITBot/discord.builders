@@ -1,7 +1,7 @@
 <% if (data.comp.type === 2) { -%>
-WithButtonComponent(<%- include('/discatsharp/button.cs.ejs', {comp: data.comp}) -%>)
+WithButtonComponent(<%- include('/discatsharp/button.cs.ejs', {comp: data.comp}) -%>)<% _%>
 <% } else if (data.comp.type === 11) { -%>
 <%- include('/discatsharp/thumbnail.cs.ejs', {comp: data.comp}) -%>
 <% } else { -%>
-new DiscordTextDisplayComponent($"Unsupported component type <%- data.comp.type %>")
+new DiscordTextDisplayComponent($"Unsupported component type <%- data.comp.type %>")<% _%>
 <% } -%>
