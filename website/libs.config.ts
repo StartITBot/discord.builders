@@ -1,4 +1,4 @@
-export const supportedLngs = ['en', 'pl', 'de', 'es', 'ca', 'pt'] as const;
+export const supportedLngs = ['en', 'pl', 'de', 'es', 'ca', 'pt', 'fr'] as const;
 
 
 export const libs: {
