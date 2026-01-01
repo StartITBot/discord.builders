@@ -1,0 +1,5 @@
+new DiscordStringSelectComponent(<%- JSON.stringify(data.comp.placeholder || data.comp.label || "Select an option") %>, [
+<%_ data.comp.options.forEach(function(comp, i){ _%>
+		<%- indent(include('/discatsharp/selectmenu_option.cs.ejs', {comp: comp}), 8); %><% if (i !== data.comp.options.length - 1) { %>,<% } %>
+<%_ }); _%>
+		], <% if (data.comp.custom_id) { %><%= data.comp.custom_id %><% } else { %> <%= 'null' %> <% } %>, <%- data.comp.min_values || 1 %>, <%- data.comp.max_values || 1 %>, <%- data.comp.disabled ? 'true' : 'false' %>, <%- typeof data.comp.required !== 'undefined' ? (data.comp.required ? 'true' : 'false') : 'null' %>)

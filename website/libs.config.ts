@@ -66,6 +66,12 @@ export const libs: {
         name: 'Java: JDA',
         language: 'java',
         path: '/jda-java-code-generator',
+    },
+
+    discatsharp: {
+        name: 'C#: DisCatSharp',
+        language: 'csharp',
+        path: '/discatsharp-csharp-code-generator'
     }
 };
 

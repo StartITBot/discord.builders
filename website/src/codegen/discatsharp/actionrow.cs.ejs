@@ -1,0 +1,4 @@
+new DiscordActionRowComponent([
+<%_ data.comp.components.forEach(function(comp, i){ _%>
+		<%- indent(include('/discatsharp/components.cs.ejs', {comp: comp})); %><% if (i !== data.comp.components.length - 1) { %>,<% } %><%_ }); _%>
+])

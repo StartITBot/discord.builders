@@ -1,0 +1,9 @@
+<%
+const hasId = typeof data.emoji.id !== 'undefined' && data.emoji.id !== null;
+const name = data.emoji.name;
+-%>
+<% if (hasId) { -%>
+new DiscordComponentEmoji(<%- data.emoji.id %>)
+<% } else { -%>
+new DiscordComponentEmoji("<%- name %>")
+<% } -%>

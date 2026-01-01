@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using DisCatSharp;
+using DisCatSharp.Entities;
+using DisCatSharp.Enums;
+using DisCatSharp.ApplicationCommands;
+using DisCatSharp.ApplicationCommands.Attributes;
+using DisCatSharp.ApplicationCommands.Context;
+
+namespace DisCatSharpComponentsDemo;
+
+internal static class Program
+{
+    private static async Task Main()
+    {
+        var client = new DiscordClient(new DiscordConfiguration
+        {
+            Token = Environment.GetEnvironmentVariable("BOT_TOKEN"),
+            TokenType = TokenType.Bot,
+            Intents = DiscordIntents.AllUnprivileged
+        });
+
+        client.UseApplicationCommands();
+        client.GetApplicationCommands().RegisterGlobalCommands<ApplicationCommandExample>();
+
+        await client.ConnectAsync();
+        await Task.Delay(-1);
+    }
+}
+
+internal class ApplicationCommandExample : ApplicationCommandsModule
+{
+    [SlashCommand("example_components", "An example command demonstrating components.")]
+    public async Task ExampleComponents(InteractionContext ctx)
+    {
+        /*
+            If you want to use it with other builders, you just have to switch out DiscordInteractionResponseBuilder
+            All builders are compatible with each other regarding V2 components since they all use DisCatSharpBuilder as base.
+
+            - For normal messages and message edits, use DiscordMessageBuilder.
+            - For interaction edits, use DiscordWebhookBuilder.
+            - For follow-up messages, use the DiscordFollowupMessageBuilder.
+        */
+        var builder = new DiscordInteractionResponseBuilder().WithV2Components().AddComponents([
+<% data.components.forEach(function(comp, i){ -%>
+        <%- indent(include('/discatsharp/components.cs.ejs', {comp: comp}), 8); %><% if (i !== data.components.length - 1) { %>,<% } %>
+<% }); -%>
+        ]);
+
+        await ctx.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, builder);
+    }
+}
