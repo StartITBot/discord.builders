@@ -22,14 +22,14 @@ new ButtonBuilder()
     )<% _%>
 <%_ } -%><% _%>
 <%_ %><% if (data.comp.disabled) { %>
-    .WithDisabled(true)
-<%_ } -%>
+    .WithDisabled(true)<% _%>
+<%_ } -%><% _%>
 <%_ %><% if (data.comp.custom_id && data.comp.style !== 5 && data.comp.style !== 6) { %>
     .WithCustomId(<%= data.comp.custom_id %>)<% _%>
-<%_ } -%>
+<%_ } -%><% _%>
 <%_ %><% if (data.comp.sku_id && data.comp.style === 6) { %>
     .WithSkuId(<%= data.comp.sku_id %>)<% _%>
-<%_ } -%>
+<%_ } -%><% _%>
 <%_ %><% if (data.comp.url && data.comp.style === 5) { %>
     .WithUrl(<%= data.comp.url %>)<% _%>
 <% } -%>
