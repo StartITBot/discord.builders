@@ -1,7 +1,7 @@
 new SectionBuilder()
 <%_ %><% if (data.comp.accessory) { %><% _%>
     .WithAccessory(
-<%- indent(include('/discord-net/components.js.ejs', {comp: data.comp.accessory}), 8); %>
+<%- indent(include('/discord-net/components.cs.ejs', {comp: data.comp.accessory}), 8); %>
     )<% _%>
 <% } -%>
 <%_ %><% if (data.comp.components) { %>
