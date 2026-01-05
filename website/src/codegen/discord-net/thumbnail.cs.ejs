@@ -1,0 +1,10 @@
+new ThumbnailBuilder()<% _%>
+<% if (data.comp.media) { %>
+    .WithMedia(<%= data.comp.media.url %>)<% _%>
+<% } -%><% _%>
+<% if (data.comp.description) { %>
+    .WithDescription(<%= data.comp.description %>)<% _%>
+<% } -%><% _%>
+<% if (data.comp.spoiler) { %>
+    .WithSpoiler(true)<% _%>
+<% } -%><% _%>

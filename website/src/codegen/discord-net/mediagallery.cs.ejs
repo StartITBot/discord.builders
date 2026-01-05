@@ -1,0 +1,8 @@
+new MediaGalleryBuilder()<% _%>
+<%_ %><% if (data.comp.items.length > 0) { %>
+    .AddItems(
+<%_ %><% data.comp.items.forEach(function(comp, i){ -%>
+<%- indent(include('/discord-net/mediagalleryitem.cs.ejs', {comp: comp}), 8); %><% if (i !== data.comp.items.length - 1) { %>,<% } %>
+<% }); -%>
+    )<% _%>
+<% } -%>

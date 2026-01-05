@@ -1,0 +1,8 @@
+using System;
+using Discord;
+
+var components = new ComponentBuilderV2([
+<% data.components.forEach(function(comp, i){ -%>
+    <%_ %><%- indent(include('/discord-net/components.cs.ejs', {comp: comp}), 4); %><% if (i !== data.components.length - 1) { %>,<% } %>
+<% }); -%>
+]);

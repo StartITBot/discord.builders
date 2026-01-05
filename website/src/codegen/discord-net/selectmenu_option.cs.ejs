@@ -1,0 +1,21 @@
+new SelectMenuOptionBuilder()<% _%>
+<%_ %><% if (data.comp.label) { %>
+    .WithLabel(<%= data.comp.label %>)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.value) { %>
+    .WithValue(<%= data.comp.value %>)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.description) { %>
+    .WithDescription(<%= data.comp.description %>)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.default) { %>
+    .WithDefault(true)<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.emoji && (data.comp.emoji.id || data.comp.emoji.name)) { %>
+    .WithEmote(<% if (data.comp.emoji.id) { %>
+        new Emote(id: <%= data.comp.emoji.id %>, name: <%= data.comp.emoji.name %>, animated: <%= data.comp.emoji.animated === true %>)
+<% } else { %>
+        new Emoji(<%= data.comp.emoji.name %>)
+<%_ } -%>
+    )<% _%>
+<%_ } -%><% _%>
