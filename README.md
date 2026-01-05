@@ -2,8 +2,8 @@
 
 This monorepo contains two main packages:
 
-- [website](/website/) – Open-source, public-facing website, licensed under [MIT](./website/LICENSE).
-- [components-sdk](/components-sdk/) – Source-available components SDK, licensed under the [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0/).
+- [website](/website/) – Open-source, public-facing website, licensed under [MIT](./LICENSE.md).
+- [components-sdk](/components-sdk/) – Source-available components SDK, licensed under the [PolyForm Noncommercial License 1.0.0](./components-sdk/LICENSE.md).
 
 ## 📦 Installation
 

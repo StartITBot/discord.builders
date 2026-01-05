@@ -1,7 +1,7 @@
 import ejs from 'ejs'
 import type { PluginOption } from 'vite';
 
-// Yes, I have actually written plugin to compile .ejs files on build XD
+// Yes, I have actually written a plugin to compile .ejs files on build
 
 // To be used by the codegen templates
 const baseCode = `
