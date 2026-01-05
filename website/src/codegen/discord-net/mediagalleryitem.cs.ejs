@@ -2,4 +2,4 @@
 const args = [];
 if(data.comp.description) args.push(`description: "${data.comp.description}"`);
 if(data.comp.spoiler) args.push(`isSpoiler: true`);
-%>new MediaGalleryItemProperties(<%= data.comp.media.url %><% if (args.length) { %><%- args.join(', ') %><% } %>)
+%>new MediaGalleryItemProperties(<%= data.comp.media.url %><% if (args.length) { %>, <%- args.join(', ') %><% } %>)
