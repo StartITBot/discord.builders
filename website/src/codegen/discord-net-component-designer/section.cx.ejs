@@ -1,0 +1,9 @@
+<section 
+    accessory=(
+<%_ %><%- indent(include('/discord-net-component-designer/components.cx.ejs', {comp: comp}), 8); %>
+    )
+>
+<%_ %><% data.comp.components.forEach(function(comp){ -%>
+<%- indent(include('/discord-net-component-designer/components.cx.ejs', {comp: comp}), 4); %>
+<% }); -%>
+</section>

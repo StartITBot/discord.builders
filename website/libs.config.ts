@@ -72,7 +72,13 @@ export const libs: {
         name: 'C#: DisCatSharp',
         language: 'csharp',
         path: '/discatsharp-csharp-code-generator'
-    }
+    },
+
+    'discord-net-component-designer': {
+        name: 'C#: Discord.Net Component Designer',
+        language: 'csharp',
+        path: '/discord-net-component-designer-csharp-code-generator'
+    },
 };
 
 
