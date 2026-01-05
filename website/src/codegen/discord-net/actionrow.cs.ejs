@@ -1,0 +1,6 @@
+new ActionRowBuilder()
+    .WithComponents([
+<% data.comp.components.forEach(function(comp){ _%>
+<%- indent(include('/discord-net/components.cs.ejs', {comp: comp}), 8); %>,
+<% }); _%>
+    ])<% -%>
