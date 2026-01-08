@@ -1,0 +1,5 @@
+<row>
+<% data.comp.components.forEach(function(comp){ _%>
+<%_ %><%- indent(include('/discord-net-component-designer/components.cx.ejs', {comp: comp}), 4); %><% _%>
+<% }); _%>
+</row>
