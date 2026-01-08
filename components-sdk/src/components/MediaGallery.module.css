@@ -5,7 +5,7 @@
   min-height: 0;
   min-width: 0;
 
-  img[data-image-role='main'] {
+  img[data-image-role='main'], video[data-image-role='main'] {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -34,7 +34,7 @@
     display: block;
     .gallery_item {
       aspect-ratio: unset;
-      img[data-image-role='main'] {
+      img[data-image-role='main'], video[data-image-role='main'] {
         width: unset;
         height: unset;
         max-width: 100%;
