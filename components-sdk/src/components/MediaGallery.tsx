@@ -47,5 +47,6 @@ function MediaGalleryInner({state, stateKey, stateManager, passProps, index, all
         stateManager={stateManager}
         allowAddition={allowAddition}
         passProps={passProps}
+        videoSupport={true}
     />
 }

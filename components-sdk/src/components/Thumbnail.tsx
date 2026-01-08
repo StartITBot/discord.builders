@@ -30,16 +30,18 @@ export function Thumbnail({
     droppableId = undefined,
     dragKeyToDeleteOverwrite = undefined,
     allowAddition = undefined,
-}: Omit<ComponentsProps, 'state' | 'actionCallback'> & { state: MediaGalleryItem | ThumbnailComponent; className?: string, allowAddition?: boolean }) {
+    videoSupport = false
+}: Omit<ComponentsProps, 'state' | 'actionCallback'> & { state: MediaGalleryItem | ThumbnailComponent; className?: string, allowAddition?: boolean, videoSupport?: boolean }) {
     const { open, setOpen, ignoreRef, closeLockRef } = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
 
-    const { src, setSrc, openFileSelector } = useFileUpload(
+    const { src, setSrc, openFileSelector, isVideo } = useFileUpload(
         state.media.url,
         [...stateKey, 'media', 'url'],
         passProps?.getFile,
         passProps?.setFile,
-        stateManager
+        stateManager,
+        videoSupport
     );
 
     const {t} =  useTranslation('components-sdk');
@@ -64,7 +66,7 @@ export function Thumbnail({
                 dragKeyToDeleteOverwrite={dragKeyToDeleteOverwrite}
                 className={state.spoiler ? Styles.spoiler : ''}
             >
-                <img src={src || ThumbnailIcon} data-image-role="main" alt="" />
+                {(isVideo && videoSupport) ? <video src={src || undefined} data-image-role="main" /> : <img src={src || ThumbnailIcon} data-image-role="main" alt="" /> }
             </DragLines>
             {!!open && (
                 <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
