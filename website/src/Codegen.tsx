@@ -68,18 +68,43 @@ export function Codegen({state, page, setPage} : {
         data = JSON.stringify(state, undefined, 4)
     }
 
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(data).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        });
+    };
+
     return (
         <>
-            <p style={{marginBottom: '0.5rem', marginTop: '8rem'}}>{t('codegen.title')}</p>
-            <Select
-                styles={select_styles}
-                options={selectOptions}
-                isMulti={false}
-                value={selectOptions.find((opt) => opt.value === libSelected)}
-                onChange={((newValue: OnChangeValue<selectOption, false>) => {
-                    if (newValue) setLibSelected(newValue.value);
-                }) as Props['onChange']}
-            />
+            <p style={{ marginBottom: '0.5rem', marginTop: '8rem' }}>{t('codegen.title')}</p>
+
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                <div style={{ flex: 1 }}>
+                    <Select
+                        styles={select_styles}
+                        options={selectOptions}
+                        isMulti={false}
+                        value={selectOptions.find((opt) => opt.value === libSelected)}
+                        onChange={
+                            ((newValue: OnChangeValue<selectOption, false>) => {
+                                if (newValue) setLibSelected(newValue.value);
+                            }) as Props['onChange']
+                        }
+                    />
+                </div>
+
+                <button
+                    className={Styles.button}
+                    onClick={handleCopy}
+                    disabled={copied}
+                    style={{ whiteSpace: 'nowrap', minWidth: '100px' }}
+                >
+                    {copied ? t('codegen.copied.button') : t('codegen.copy.button')}
+                </button>
+            </div>
 
             <div className={Styles.data}>
                 <CodeBlock text={data} language={language} showLineNumbers={false} theme={dracula} />
