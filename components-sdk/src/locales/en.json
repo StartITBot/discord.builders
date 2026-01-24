@@ -87,8 +87,8 @@
   "modal.label.unset-required": "Set as optional",
   "modal.label.set-required": "Set as required",
   "modal.label.required": "required",
-  "modal.file-upload.info-one": "Users will send here one file or image.",
-  "modal.file-upload.info-multiple": "Users will send here multiple files or images.",
+  "modal.file-upload.info-one": "Users can send one file or image here.",
+  "modal.file-upload.info-multiple": "Users can send multiple files or images here.",
   "modal.file-upload.set-maximum": "Set maximum number of files",
   "modal.file-upload.set-minimum": "Set minimum number of files"
 }
