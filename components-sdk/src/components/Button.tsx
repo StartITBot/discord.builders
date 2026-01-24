@@ -1,16 +1,17 @@
 import Styles from './Button.module.css';
-import {text_display_input} from './TextDisplay.module.css';
+import { text_display_input } from './TextDisplay.module.css';
 import CapsuleStyles from '../Capsule.module.css';
 import {
     Dispatch,
-    Fragment, MouseEventHandler,
+    Fragment,
+    MouseEventHandler,
     RefObject,
     SetStateAction,
     useEffect,
     useImperativeHandle,
     useLayoutEffect,
     useRef,
-    useState
+    useState,
 } from 'react';
 import ColorBlue from '../icons/ColorBlue.svg';
 import ColorGrey from '../icons/ColorGrey.svg';
@@ -115,8 +116,8 @@ export function Button(
             {!!open && <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
                 {open === 1 && <MenuFirst actionCallback={actionCallback} state={state} stateManager={stateManager} stateKey={stateKey} removeKeyParent={removeKeyParent} setOpen={setOpen}/>}
                 {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager} passProps={passProps}/>}
-                {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label || ""} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
-                {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.url || ""} stateKey={[...stateKey, 'url']} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label || ""} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen} max={80}/>}
+                {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.url || ""} stateKey={[...stateKey, 'url']} stateManager={stateManager} setOpen={setOpen} max={512}/>}
             </div>}
         </div></DragLines>
     )
@@ -184,19 +185,51 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent, act
 }
 
 export function MenuOption({ src, text, onClick, className }: {
-    src: string;
+    src: string | null;
     text: string;
     onClick?: MouseEventHandler<HTMLDivElement>;
     className?: string;
 }) {
     return (
         <div className={CapsuleStyles.large_button_ctx_item} onClick={onClick}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}>
+            {src !== null && <div className={CapsuleStyles.large_button_ctx_item_img}>
                 <img src={src} alt="" />
-            </div>
+            </div>}
             <div className={CapsuleStyles.large_button_ctx_item_text + ' ' + className}>{text}</div>
         </div>
     );
+}
+
+export function MenuArea({state, stateKey, stateManager, setOpen, closeLockRef, max} : {
+    state: (string | number | null),
+    stateKey: ComponentsProps['stateKey'],
+    stateManager: ComponentsProps['stateManager'],
+    setOpen: Dispatch<SetStateAction<number>>,
+    closeLockRef: RefObject<any>,
+    max: number,
+}) {
+    const ref = useRef<HTMLTextAreaElement>(null);
+    useImperativeHandle(closeLockRef, () => "SHIFT");
+
+    useEffect(() => {
+        if (ref.current) ref.current.focus();
+    }, [ref.current]);
+    return <div className={Styles.menu_label}>
+        <textarea
+            ref={ref}
+            value={state ?? ""}
+            className={text_display_input + ' ' + Styles.textarea}
+            placeholder={"abcdefg"}
+            onChange={(ev) => {
+                stateManager.setKey({
+                    key: stateKey,
+                    value: ev.target.value,
+                })
+            }}
+            maxLength={max}
+        />
+        <img width={30} height={30} src={TimesSolid} alt={'x'} onClick={() => setOpen(0)} />
+    </div>
 }
 
 export function MenuEmoji({stateKey, stateManager, passProps} : {
@@ -213,15 +246,36 @@ export function MenuEmoji({stateKey, stateManager, passProps} : {
     />
 }
 
-export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = false, closeLockRef, placeholder} : {
-    state: string,
+function processText(text: string, nullable: boolean) {
+    return nullable ? (text || null) : (text || "")
+}
+
+function processNumber(text: string, nullable: boolean, min?: number, max?: number) {
+    if (text.trim() === '' && nullable) return null;
+
+    try {
+        let no = Number(text);
+        if (min != null && no < min) no = min;
+        if (max != null && no > max) no = max;
+        return no;
+    } catch {
+        return 0;
+    }
+}
+
+export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = false, closeLockRef, placeholder, number, min, max} : {
+    state: (string | number | null),
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
     setOpen: Dispatch<SetStateAction<number>>,
     nullable?: boolean,
     closeLockRef: RefObject<any>,
-    placeholder?: string
+    placeholder?: string,
+    number?: boolean,
+    min?: number,
+    max: number,
 }) {
+    const func = number ? processNumber : processText;
     const ref = useRef<HTMLInputElement>(null);
     useImperativeHandle(closeLockRef, () => true);
 
@@ -231,14 +285,20 @@ export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = fa
     return <div className={Styles.menu_label}>
         <input
             ref={ref}
-            type="text"
-            value={state}
+            type={number?"number":"text"}
+            value={state ?? ""}
             className={text_display_input + ' ' + Styles.input}
-            placeholder={placeholder || "abcdefg"}
-            onChange={(ev) => stateManager.setKey({
-                key: stateKey,
-                value: nullable ? (ev.target.value || null) : ev.target.value
-            })}
+            placeholder={placeholder || (number?"1234":"abcdefg")}
+            onChange={(ev) => {
+                const val = func(ev.target.value, nullable, min, max);
+                ev.target.value = val as any;
+                stateManager.setKey({
+                    key: stateKey,
+                    value: val,
+                })
+            }}
+            min={min} max={number ? max : undefined}
+            maxLength={number ? undefined : max}
         />
         <img width={30} height={30} src={TimesSolid} alt={'x'} onClick={() => setOpen(0)} />
     </div>

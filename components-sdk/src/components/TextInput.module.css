@@ -1,0 +1,45 @@
+.textInput {
+  padding: 0.8rem 1.6rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #dcddde;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+
+  &:hover, &.open {
+    background: #101013;
+  }
+
+  .length {
+    position: absolute;
+    bottom: 4px;
+    right: 8px;
+    font-size: 1.2rem;
+    color: #8e8e99;
+  }
+
+  .desc {
+    font-style: italic !important;
+    color: gray !important;
+  }
+
+  .caret {
+    margin-inline-start: 1px;
+    width: 1px;
+    height: 1.6rem;
+    vertical-align: middle;
+    background: #dcddde;
+    display: inline-block;
+  }
+
+  .placeholder {
+    color: #8e8e99;
+    font-size: 1.3rem;
+  }
+
+  &.paragraph {
+    height: 100px;
+  }
+}

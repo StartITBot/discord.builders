@@ -8,8 +8,6 @@ import {
     wrapKeyType,
 } from 'components-sdk/src/polyfills/StateManager';
 
-import defaultJson from "./defaultJson"
-
 const __deleteKeyHelper = (
     state: any,
     key: stateKeyType,
@@ -52,7 +50,7 @@ function arraysEqual<T>(arr1: T[], arr2: T[]): boolean {
 export const displaySlice = createSlice({
     name: 'display',
     initialState: () => ({
-        data: defaultJson as Component[],
+        data: [] as Component[],
         isDefault: true,
         webhookUrl: localStorage.getItem("discord.builders__webhookToken") || "", // Toolkit run this function so type is string
         webhookResponse: null as object | null,
@@ -184,6 +182,10 @@ export const displaySlice = createSlice({
 
         setShowThread(state) {
             state.showThread = true;
+        },
+
+        overwriteDefaultState(state, action: PayloadAction<any>) {
+            if (state.isDefault) state.data = [...action.payload];
         }
     }
 })

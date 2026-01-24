@@ -1,0 +1,46 @@
+.upload {
+  padding: 1.8rem 1.6rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #dcddde;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+
+  &:hover, &.open {
+    background: #101013;
+  }
+
+  .with_badge {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+    gap: 1rem;
+  }
+
+  .badge {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    color: white;
+    border-radius: 100px;
+    font-size: 12px;
+    padding: 0 1.6rem;
+    white-space: nowrap;
+    &.invalid {
+      border-color: #F69083;
+      color: #F69083;
+    }
+  }
+
+  .icon {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    img {
+      width: 3.6rem;
+      height: 3.6rem;
+    }
+  }
+}

@@ -1,9 +1,10 @@
 import { ClosestType, DragContextType } from './types';
 import { StateManager } from '../polyfills/StateManager';
-import { customDropActions, getValidObj } from './components';
+import { customDropActions, getValidObj, guessComponentType, isValidLocation } from './components';
 import { default_settings } from '../Capsule';
-import { TextDisplayComponent } from '../utils/componentTypes';
+import { RenderMode, TextDisplayComponent } from '../utils/componentTypes';
 import { BoundariesProps, testBoundaries } from './boundaries';
+import { getValidModalObj } from './componentsModal';
 
 function assertValidJSON(arg: unknown): asserts arg is object {
     if (typeof arg !== 'object' || arg === null) throw new Error('Invalid component type');
@@ -36,12 +37,14 @@ export const handleDragDrop = (
         visible,
         setVisible,
         stateManager,
+        renderMode,
         keyToDelete: keyToDeleteRef,
         boundaries,
     }: {
         visible: DragContextType['visible'];
         setVisible: DragContextType['setVisible'];
         stateManager: StateManager;
+        renderMode: RenderMode;
         keyToDelete: DragContextType['keyToDelete'];
     } & BoundariesProps
 ) => {
@@ -64,7 +67,12 @@ export const handleDragDrop = (
     const comp = getJSON(e.dataTransfer);
     if (!comp) return;
 
-    const value = getValidObj(comp, visible.ref.droppableId, e.dataTransfer.dropEffect === 'copy');
+    const compType = guessComponentType(comp);
+    if (!compType) return;
+    if (!isValidLocation(compType)(visible.ref.droppableId)) return;
+
+    const compFunc = renderMode === RenderMode.MODAL ? getValidModalObj : getValidObj;
+    const value = compFunc(comp, visible.ref.droppableId, e.dataTransfer.dropEffect === 'copy');
     if (value === null) return;
 
     e.preventDefault();

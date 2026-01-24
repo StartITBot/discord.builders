@@ -3,7 +3,7 @@
   border-radius: 3px;
 }
 
-.text_display_input[type="text"], .text_display_input[type="textbox"], .text_display [type="text"], .text_display [role="textbox"] {
+.text_display_input[type="text"], textarea.text_display_input, .text_display_input[type="number"], .text_display_input[type="textbox"], .text_display [type="text"], .text_display textarea, .text_display [type="number"], .text_display [role="textbox"] {
   padding: 0;
   min-height: 0;
   border: unset;

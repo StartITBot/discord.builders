@@ -17,6 +17,9 @@ export function useStateOpen<T>(defaultValue: T): {
     }, [ignoreRef.current]);
 
     const documentKeyDown = useCallback((ev: KeyboardEvent) => {
+        // @ts-ignore
+        if (closeLockRef.current == 'SHIFT' && ev.key == 'Enter' && !ev.shiftKey) return;
+
         if (ev.key == "Enter" || ev.key == "Escape") {
             setOpen(defaultValue);
         }

@@ -15,5 +15,6 @@
   "thread.post.placeholder": "Enter a title…",
   "thread.post.button": "Send message",
   "author": "Project backed by the <a>StartIT bot</a>.",
-  "codegen.title": "Generator for programmers"
+  "codegen.title": "Generator for programmers",
+  "modal.title": "Form"
 }

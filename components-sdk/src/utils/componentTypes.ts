@@ -1,13 +1,12 @@
-import { BetterInput, BetterInputProps } from '../polyfills/BetterInput';
+import { BetterInput } from '../polyfills/BetterInput';
 import { EmojiPicker } from '../polyfills/EmojiPicker';
 import { EmojiShow } from '../polyfills/EmojiShow';
 import { getFileNameType, getFileType, setFileType } from '../polyfills/files';
 import { ColorPicker } from '../polyfills/ColorPicker';
-import { FC } from 'react';
 import { ActionMenu } from '../polyfills/ActionMenu';
 
 // This fragment of code is written in dedication to the JS devs who have to deal with this mess every day.
-function isObject(arg: unknown): arg is object {
+export function isObject(arg: unknown): arg is object {
     return typeof arg === 'object' && arg !== null && !Array.isArray(arg);
 }
 
@@ -16,6 +15,7 @@ export enum ComponentType {
     ACTION_ROW = 1,
     BUTTON = 2,
     STRING_SELECT = 3,
+    TEXT_INPUT = 4,
 
     SECTION = 9,
     TEXT_DISPLAY = 10,
@@ -23,7 +23,9 @@ export enum ComponentType {
     MEDIA_GALLERY = 12,
     FILE = 13,
     SEPARATOR = 14,
-    CONTAINER = 17
+    CONTAINER = 17,
+    LABEL = 18,
+    FILE_UPLOAD = 19,
 }
 
 export enum ComponentTypeUnofficial {
@@ -42,8 +44,16 @@ export const parseComponent = {
     [ComponentType.FILE]: parseFileComponent,
     [ComponentType.SEPARATOR]: parseSeparatorComponent,
     [ComponentType.CONTAINER]: parseContainerComponent,
+    [ComponentType.TEXT_INPUT]: () => null,
+    [ComponentType.LABEL]: () => null,
+    [ComponentType.FILE_UPLOAD]: () => null,
     [ComponentTypeUnofficial.MEDIA_GALLERY_ITEM]: parseMediaGalleryItem,
     [ComponentTypeUnofficial.STRING_SELECT_OPTION]: parseStringSelectComponentOption,
+} as const;
+
+export enum RenderMode {
+    MESSAGE = 0,
+    MODAL = 1
 }
 
 export type PassProps = {
@@ -56,6 +66,7 @@ export type PassProps = {
     EmojiShow: EmojiShow,
     ActionMenu?: ActionMenu,
     interactiveDisabled: boolean,
+    renderMode?: RenderMode,
 }
 
 export enum ButtonStyle {
