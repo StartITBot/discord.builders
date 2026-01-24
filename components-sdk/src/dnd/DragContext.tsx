@@ -3,6 +3,7 @@ import { createContext, FC, ReactNode, useCallback, useContext, useMemo, useRef,
 import { StateManager } from '../polyfills/StateManager';
 import { DragEvents } from './DragEvents';
 import { BoundariesProps } from './boundaries';
+import { RenderMode } from '../utils/componentTypes';
 
 const DragContext = createContext<DragContextType | undefined>(undefined);
 
@@ -16,11 +17,13 @@ export function useDragContext(): DragContextType {
 
 export const DragContextProvider: FC<{
     children: ReactNode;
-    stateManager: StateManager
+    stateManager: StateManager;
+    renderMode: RenderMode
 } & BoundariesProps> = ({
           children,
           stateManager,
-          boundaries
+          boundaries,
+          renderMode
       }) => {
     const refs = useRef<Set<DroppableState>>(new Set());
 
@@ -46,7 +49,7 @@ export const DragContextProvider: FC<{
 
     return (
         <DragContext.Provider value={value}>
-            <DragEvents stateManager={stateManager} boundaries={boundaries}>{children}</DragEvents>
+            <DragEvents stateManager={stateManager} boundaries={boundaries} renderMode={renderMode}>{children}</DragEvents>
         </DragContext.Provider>
     );
 };

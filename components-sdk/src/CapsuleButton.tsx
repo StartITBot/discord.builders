@@ -14,7 +14,7 @@ import { Component } from './utils/componentTypes';
 import { useStateOpen } from './utils/useStateOpen';
 import { useTranslation } from 'react-i18next';
 
-export type capsuleButtonCtx = 'main' | 'container' | 'inline' | 'button-row' | 'frame';
+export type capsuleButtonCtx = 'main' | 'container' | 'inline' | 'button-row' | 'frame' | 'modal';
 
 type props = {
     context: capsuleButtonCtx,
@@ -39,6 +39,7 @@ export function CapsuleButton({context, callback, className, style, interactiveD
             {context === "inline" && t('button.add-inline')}
             {context === "container" && t('button.add-content')}
             {context === "button-row" && t('button.add-button')}
+            {context === "modal" && t('button.add-input')}
 
             { open && <div className={Styles.large_button_ctx} ref={btn_select}>
                 {['main', 'inline', 'container'].includes(context) && <div className={Styles.large_button_ctx_item} onClick={() => {
@@ -94,6 +95,36 @@ export function CapsuleButton({context, callback, className, style, interactiveD
                 }}>
                     <div className={Styles.large_button_ctx_item_img}><img src={MediaGalleryIcon} alt=""/></div>
                     <div className={Styles.large_button_ctx_item_text}>{t('components.thumbnail')}</div>
+                </div>}
+                {['modal'].includes(context) && <div className={Styles.large_button_ctx_item} onClick={() => {
+                    callback(default_settings.ModalShortInput())
+                }}>
+                    <div className={Styles.large_button_ctx_item_img}><img src={SelectIcon} alt=""/></div>
+                    <div className={Styles.large_button_ctx_item_text}>{t('components.modal.short-input')}</div>
+                </div>}
+                {['modal'].includes(context) && <div className={Styles.large_button_ctx_item} onClick={() => {
+                    callback(default_settings.ModalParagraphInput())
+                }}>
+                    <div className={Styles.large_button_ctx_item_img}><img src={SelectIcon} alt=""/></div>
+                    <div className={Styles.large_button_ctx_item_text}>{t('components.modal.paragraph-input')}</div>
+                </div>}
+                {['modal'].includes(context) && <div className={Styles.large_button_ctx_item} onClick={() => {
+                    callback(default_settings.TextDisplay())
+                }}>
+                    <div className={Styles.large_button_ctx_item_img}><img src={TextDisplayIcon} alt=""/></div>
+                    <div className={Styles.large_button_ctx_item_text}>{t('components.modal.content')}</div>
+                </div>}
+                {['modal'].includes(context) && <div className={Styles.large_button_ctx_item} onClick={() => {
+                    callback(default_settings.ModalStringSelect())
+                }}>
+                    <div className={Styles.large_button_ctx_item_img}><img src={SelectIcon} alt=""/></div>
+                    <div className={Styles.large_button_ctx_item_text}>{t('components.modal.string-select')}</div>
+                </div>}
+                {['modal'].includes(context) && <div className={Styles.large_button_ctx_item} onClick={() => {
+                    callback(default_settings.ModalFileUpload())
+                }}>
+                    <div className={Styles.large_button_ctx_item_img}><img src={SelectIcon} alt=""/></div>
+                    <div className={Styles.large_button_ctx_item_text}>{t('components.modal.file-upload')}</div>
                 </div>}
             </div>}
         </div>

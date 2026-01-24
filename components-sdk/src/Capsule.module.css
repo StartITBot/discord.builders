@@ -10,12 +10,24 @@
   color: #dcddde;
   background: #36393f;
   font-family: "gg sans",Whitney,"Noto Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  overflow-wrap: anywhere;
 
   font-size: 1.6rem;
   line-height: 2.2rem;
   letter-spacing: normal;
   font-weight: 400;
   position: relative;
+
+  &.modal {
+    background: #242429;
+    .header {
+      font-size: 2.4rem;
+      color: white;
+      font-weight: bold;
+      margin-top: 1rem;
+      margin-bottom: 24px;
+    }
+  }
 }
 
 .component {

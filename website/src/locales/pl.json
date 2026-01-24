@@ -15,5 +15,6 @@
   "thread.post.placeholder": "Wpisz tytuł…",
   "thread.post.button": "Wyślij wiadomość",
   "author": "Projekt rozwijany przez twórców <a>bota StartIT</a>.",
-  "codegen.title": "Generator dla programistów"
+  "codegen.title": "Generator dla programistów",
+  "modal.title": "Formularz"
 }

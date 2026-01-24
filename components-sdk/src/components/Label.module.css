@@ -1,0 +1,71 @@
+
+.label {
+  .label_text {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: column;
+    padding-right: 32px;
+
+    &:before {
+      content: "";
+      display: none;
+      position: absolute;
+      top: -4px;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      border-radius: 4px;
+      background: #1c1d20;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+      max-width: 100%;
+    }
+
+    &.open, &:hover {
+      color: #86c232;
+    }
+
+    &.open:before, &:hover:before {
+      display: block;
+    }
+
+    margin-bottom: 8px;
+  }
+
+  .header {
+    font-size: 1.6rem;
+    position: relative;
+    font-weight: 600;
+    .required {
+      color: #ff6b6b;
+      margin-inline-start: 4px;
+    }
+  }
+  .description {
+    font-size: 1.4rem;
+    position: relative;
+    color: #a8a8a8;
+    line-height: 1.8rem;
+  }
+  .badge {
+    &.required, &.optional {
+      font-size: 1.2rem;
+      line-height: 100%;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-top: 4px;
+    }
+
+    &.required {
+      background: #503a17;
+      color: white;
+    }
+
+    &.optional {
+      background: #175033;
+      color: white;
+    }
+
+  }
+}

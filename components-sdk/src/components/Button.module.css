@@ -37,9 +37,14 @@
   border: 1px solid rgba(255,255,255, 0.1);
 }
 
-.input[type="text"] {
+.input[type="text"], .input[type="number"] {
   padding: 0.8rem 1.6rem;
   width: 200px;
+}
+
+textarea.textarea {
+  padding: 0.8rem 1.6rem;
+  width: 500px;
 }
 
 .link_btn {

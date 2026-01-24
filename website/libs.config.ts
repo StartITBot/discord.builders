@@ -8,6 +8,12 @@ export const libs: {
         path: string;
     };
 } = {
+    modal: {
+        name: 'JSON: Modal Format',
+        language: 'json',
+        path: '/modal'
+    },
+
     dpp: {
         name: 'C++: DPP',
         language: 'cpp',

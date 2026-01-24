@@ -6,6 +6,7 @@ import { useDragContext } from './DragContext';
 import { handleDragDrop } from './handleDragDrop';
 import { handleDragOver } from './handleDragOver';
 import { BoundariesProps, testBoundaries } from './boundaries';
+import { RenderMode } from '../utils/componentTypes';
 
 const handleDragStart = (e: DragEvent, { boundaries }: BoundariesProps) => {
     if (!testBoundaries(e.target, boundaries)) return;
@@ -32,7 +33,8 @@ const handleDragEnd = (
 export const DragEvents: FC<{
     children: ReactNode;
     stateManager: StateManager;
-} & BoundariesProps> = ({ children, stateManager, boundaries }) => {
+    renderMode: RenderMode;
+} & BoundariesProps> = ({ children, stateManager, boundaries, renderMode }) => {
     const { refs, visible, setVisible, keyToDelete } = useDragContext();
 
     useEffect(() => {
@@ -48,6 +50,7 @@ export const DragEvents: FC<{
             visible,
             setVisible,
             stateManager,
+            renderMode,
             keyToDelete,
             boundaries: boundaries
         });
@@ -67,7 +70,7 @@ export const DragEvents: FC<{
             window.removeEventListener('mouseup', onMouseUp);
         };
     }, [
-        visible, stateManager,
+        visible, stateManager, renderMode,
     ]);
 
     return <>{children}</>;

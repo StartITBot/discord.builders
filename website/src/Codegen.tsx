@@ -2,10 +2,8 @@ import { CodeBlock, dracula } from 'react-code-blocks';
 import Styles from './App.module.css';
 import Select, { Props } from 'react-select';
 import { select_styles } from './Select';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { libs } from '../libs.config';
 import { ClientFunction, IncludeCallback } from 'ejs';
-import { RootState } from './state';
 import { OnChangeValue } from 'react-select/dist/declarations/src/types';
 import { Component } from 'components-sdk';
 import { useTranslation } from 'react-i18next';
@@ -51,6 +49,11 @@ export function Codegen({state, page, setPage} : {
             label: 'JSON',
             value: 'json',
         },
+
+        {
+            label: 'JSON for modals [ALPHA]',
+            value: 'modal',
+        },
         ...Object.keys(libComponents).map((comp) => ({
             label: libs[comp]?.name || comp,
             value: comp,
@@ -70,7 +73,7 @@ export function Codegen({state, page, setPage} : {
 
     return (
         <>
-            <p style={{marginBottom: '0.5rem', marginTop: '8rem'}}>{t('codegen.title')}</p>
+            <p style={{marginBottom: '0.5rem', marginTop: page === 'modal' ? '4rem' : '8rem'}}>{t('codegen.title')}</p>
             <Select
                 styles={select_styles}
                 options={selectOptions}
