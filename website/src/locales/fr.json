@@ -14,6 +14,7 @@
   "thread.post.label": "Titre du message",
   "thread.post.placeholder": "Entrez un titre…",
   "thread.post.button": "Envoyer le message",
-  "author": "Projet soutenu par le <a>bot StartIT</a>.",
-  "codegen.title": "Générateur pour programmeurs"
+  "author": "Projet soutenu par <a>StartIT bot</a>.",
+  "codegen.title": "Générateur pour programmeurs",
+  "modal.title": "Formulaire"
 }
