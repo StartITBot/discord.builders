@@ -117,6 +117,7 @@ export function Button(
                 {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager} passProps={passProps}/>}
                 {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label || ""} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
                 {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.url || ""} stateKey={[...stateKey, 'url']} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 5 && <MenuLabel closeLockRef={closeLockRef} state={state.custom_id || ""} stateKey={[...stateKey, 'custom_id']} stateManager={stateManager} setOpen={setOpen}/>}
             </div>}
         </div></DragLines>
     )
@@ -175,6 +176,10 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent, act
                 stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.RED});
                 ev.stopPropagation();
             }}/>
+            <MenuOption src={DescriptionPen} text={t('button.change-custom_id')} onClick={(ev) => {
+                setOpen(5);
+                ev.stopPropagation();
+            }} />
         </Fragment>}
 
         {!!removeKeyParent && <MenuOption src={TrashIcon} text={t('button.delete')} onClick={() => {
