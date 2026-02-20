@@ -1,0 +1,22 @@
+<option<% _%>
+<%_ %><% if (data.comp.label) { %>
+    label=<%= data.comp.label %><% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.value) { %>
+    value=<%= data.comp.value %><% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.description) { %>
+    description=<%= data.comp.description %><% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.default) { %>
+    default<% _%>
+<% } -%><% _%>
+<%_ %><% if (data.comp.emoji && (data.comp.emoji.id || data.comp.emoji.name)) { %>
+    emote=<% if (data.comp.emoji.id) { %><% _%>
+<% _%>{new Emote(id: <%= data.comp.emoji.id %>, name: <%= data.comp.emoji.name %>, animated: <%= data.comp.emoji.animated === true %>)}<% _%>
+<% } else { %><% _%>
+<% _%>{new Emoji(<%= data.comp.emoji.name %>)}<% _%>
+<%_ } -%>
+<%_ } -%><% _%>
+
+/>
