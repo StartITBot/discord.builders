@@ -2,7 +2,7 @@
     "name": "builders",
     "private": true,
     "scripts": {
-        "build": "cd components-sdk && bun build && cd ..",
+        "build": "cd components-sdk && bunx --bun vite build && cd ..",
         "dev": "cd website && bun dev"
     },
     "workspaces": {
