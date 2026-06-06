@@ -44,6 +44,7 @@
   "string-select.change-emoji": "Canviar emoji",
   "string-select.clear-emoji": "Esborrar emoji",
   "string-select.change-label": "Canviar etiqueta",
+  "string-select.change-custom-id": "Canviar custom_id",
   "string-select.add-description": "Afegir descripció",
   "string-select.change-description": "Canviar descriptió",
   "string-select.clear-description": "Esborrar descriptió",
@@ -59,5 +60,6 @@
   "button.change-emoji": "Canviar emoji",
   "button.clear-emoji": "Esborrar emoji",
   "button.change-label": "Canviar etiqueta",
+  "button.change-custom-id": "Canviar custom_id",
   "button.delete": "Esborrar"
 }

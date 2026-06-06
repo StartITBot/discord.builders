@@ -104,6 +104,7 @@ function GlobalSettings({state, stateKey, stateManager} : {
             {open === 2 && <MenuLabel closeLockRef={closeLockRef} state={state.placeholder || ""} stateKey={[...stateKey, 'placeholder']} stateManager={stateManager} setOpen={setOpen}/>}
             {open === 3 && <MenuRange min={1} max={state.options.length} state={min_values} stateKey={[...stateKey, 'min_values']} stateManager={stateManager}/>}
             {open === 4 && <MenuRange min={1} max={state.options.length} state={max_values} stateKey={[...stateKey, 'max_values']} stateManager={stateManager}/>}
+            {open === 5 && <MenuLabel closeLockRef={closeLockRef} state={state.custom_id} stateKey={[...stateKey, 'custom_id']} stateManager={stateManager} setOpen={setOpen} placeholder="custom_id" lockClose={false}/>}
         </div>}
 
     </div>
@@ -164,6 +165,11 @@ function GlobalSettingsFirst({state, stateKey, stateManager, setOpen} : {
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionTextActive} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>{t('string-select.clear-placeholder')}</div>
         </div>}
+
+        <MenuOption src={EditIcon} text={t('string-select.change-custom-id')} onClick={(ev) => {
+            setOpen(5);
+            ev.stopPropagation();
+        }} />
 
         <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             setOpen(3);

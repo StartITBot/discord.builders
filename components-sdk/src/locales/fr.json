@@ -44,6 +44,7 @@
   "string-select.change-emoji": "Modifier l'emoji",
   "string-select.clear-emoji": "Effacer l'emoji",
   "string-select.change-label": "Modifier l'étiquette",
+  "string-select.change-custom-id": "Modifier le custom_id",
   "string-select.add-description": "Ajouter une description",
   "string-select.change-description": "Modifier la description",
   "string-select.clear-description": "Effacer la description",
@@ -59,5 +60,6 @@
   "button.change-emoji": "Modifier l'emoji",
   "button.clear-emoji": "Effacer l'emoji",
   "button.change-label": "Modifier l'étiquette",
+  "button.change-custom-id": "Modifier le custom_id",
   "button.delete": "Supprimer"
 }

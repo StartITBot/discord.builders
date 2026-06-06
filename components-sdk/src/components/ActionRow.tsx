@@ -25,7 +25,7 @@ export function ActionRow({
         <div className={isStringSelect ? '' : Styles.action_row}>
             {(state?.components || []).map((component, index) => (
                 <ActionRowInner
-                    key={component.custom_id || `${randomString}::${index}`}
+                    key={`${randomString}::${index}`}
                     stateKey={stateKey}
                     index={index}
                     passProps={passProps}

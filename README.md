@@ -11,19 +11,19 @@ This monorepo contains two main packages:
 First, install the dependencies of the monorepo:
 
 ```bash
-yarn install
+bun install
 ```
 
 Build the components library:
 
 ```bash
-cd components-sdk && yarn build
+cd components-sdk && bun build
 ```
 
 Run the development server of the website:
 
 ```bash
-cd website && yarn dev
+cd website && bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

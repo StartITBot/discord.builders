@@ -1,26 +1,26 @@
-FROM node:22.20-alpine3.22 as build-step
+FROM oven/bun:latest as build-step
 
 WORKDIR /app
 
 # Env setup
 
-COPY package.json yarn.lock .yarnrc.yml /app/
+COPY package.json bun.lock /app/
 COPY components-sdk/package.json /app/components-sdk/
 COPY website/package.json /app/website/
 
 RUN <<EOF
 corepack enable
-yarn install --immutable
+bun install --immutable
 EOF
 
 COPY components-sdk /app/components-sdk
 COPY website /app/website
 
 #EXPOSE 8080
-#ENTRYPOINT ["yarn"]
+#ENTRYPOINT ["bun"]
 #CMD ["dev", "--host", "0.0.0.0", "--port", "8080", "--strictPort"]
 
-CMD ["yarn", "build"]
+CMD ["bun", "build"]
 
 FROM nginx
 COPY --from=build-step /app/website/dist /usr/share/nginx/html
