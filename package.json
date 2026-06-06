@@ -5,6 +5,9 @@
         "build": "cd components-sdk && bunx --bun vite build && cd ..",
         "dev": "cd website && bun dev"
     },
+    "engines": {
+        "node": ">=22.12.0"
+    },
     "workspaces": {
         "packages": [
             "components-sdk",
