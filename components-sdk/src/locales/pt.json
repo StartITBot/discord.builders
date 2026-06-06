@@ -44,6 +44,7 @@
     "string-select.change-emoji": "Alterar emoji",
     "string-select.clear-emoji": "Limpar emoji",
     "string-select.change-label": "Alterar rótulo",
+    "string-select.change-value": "Alterar valor",
     "string-select.change-custom-id": "Alterar ID customizado",
     "string-select.add-description": "Adicionar descrição",
     "string-select.change-description": "Alterar descrição",

@@ -25,6 +25,7 @@ import { DragLines } from '../dnd/DragLine';
 import { DroppableID } from '../dnd/components';
 import Action from '../icons/Action.svg';
 import { useTranslation } from 'react-i18next';
+import { useRandomString } from '../utils/useRegenerate';
 
 export function StringSelect({
     state,
@@ -47,13 +48,14 @@ export function StringSelect({
     // }, [state.max_values]);
 
     const {t} = useTranslation("components-sdk")
+    const randomString = useRandomString();
 
     return <div>
         <div className={Styles.select}>
             <GlobalSettings state={state} stateKey={stateKey} stateManager={stateManager} />
 
             {state.options.map((option, index) => <StringSelectOption
-                key={option.value}
+                key={`${randomString}::${index}`}
                 state={option}
                 stateKey={stateKey}
                 index={index}
@@ -221,6 +223,7 @@ function StringSelectOption({state, stateKey: stateParent, index, stateManager, 
                 {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager} passProps={passProps}/>}
                 {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
                 {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.description || ""} nullable={true} stateKey={[...stateKey, "description"]} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 5 && <MenuLabel closeLockRef={closeLockRef} state={state.value} stateKey={[...stateKey, 'value']} stateManager={stateManager} setOpen={setOpen} placeholder="value" lockClose={false}/>}
             </div>}
         </div></DragLines>
     )
@@ -271,6 +274,10 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent, act
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={DescriptionPen} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>{t('string-select.change-label')}</div>
         </div>
+        <MenuOption src={EditIcon} text={t('string-select.change-value')} onClick={(ev) => {
+            setOpen(5);
+            ev.stopPropagation();
+        }} />
         <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             setOpen(4);
             ev.stopPropagation();
