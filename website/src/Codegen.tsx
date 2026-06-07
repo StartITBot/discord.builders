@@ -9,6 +9,7 @@ import { RootState } from './state';
 import { OnChangeValue } from 'react-select/dist/declarations/src/types';
 import { Component } from 'components-sdk';
 import { useTranslation } from 'react-i18next';
+import { withMediaProxyUrls } from './mediaSerialization';
 
 const codegenModules: {
     [name: string]: { default: ClientFunction };
@@ -65,7 +66,7 @@ export function Codegen({state, page, setPage} : {
         data = renderer({components: state}, undefined, importCallback);
         language = libs[libSelected]?.language || 'json';
     } else {
-        data = JSON.stringify(state, undefined, 4)
+        data = JSON.stringify(withMediaProxyUrls(state), undefined, 4)
     }
 
     const [copied, setCopied] = useState(false);

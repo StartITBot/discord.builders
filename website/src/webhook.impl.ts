@@ -21,6 +21,7 @@ export const webhookImplementation = {
     }) as setFileType,
 
     getFileName: ((url: string) => {
+        if (typeof url !== 'string') return null;
         const name = url.startsWith("attachment://") ? url.slice(13) : '';
         return name || null;
     }) as getFileNameType,
