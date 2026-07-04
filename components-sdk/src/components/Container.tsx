@@ -1,25 +1,25 @@
 import Styles from './Container.module.css';
-import { CapsuleInner } from '../CapsuleInner';
+import {CapsuleInner} from '../CapsuleInner';
 import ColorIcon from '../icons/Color.svg';
 import SpoilerIcon from '../icons/Spoiler.svg';
 import CapsuleStyles from '../Capsule.module.css';
 import ColorActiveIcon from '../icons/ColorActive.svg';
 import SpoilerActiveIcon from '../icons/SpoilerActive.svg';
-import { ComponentsProps } from '../Capsule';
-import { ContainerComponent } from '../utils/componentTypes';
-import { useStateOpen } from '../utils/useStateOpen';
-import { DroppableID } from '../dnd/components';
-import { useMemo, useTransition } from 'react';
-import { flattenErrorsWithoutComponents, hasErrorsWithoutComponents } from '../errors';
-import { useTranslation } from 'react-i18next';
+import {ComponentsProps} from '../Capsule';
+import {ContainerComponent} from '../utils/componentTypes';
+import {useStateOpen} from '../utils/useStateOpen';
+import {DroppableID} from '../dnd/components';
+import {useMemo} from 'react';
+import {flattenErrorsWithoutComponents, hasErrorsWithoutComponents} from '../errors';
+import {useTranslation} from 'react-i18next';
 
 export function Container({
-    state,
-    stateKey,
-    stateManager,
-    passProps,
-    errors
-}: ComponentsProps & { state: ContainerComponent }) {
+                              state,
+                              stateKey,
+                              stateManager,
+                              passProps,
+                              errors
+                          }: ComponentsProps & { state: ContainerComponent }) {
     const ColorPicker = passProps.ColorPicker;
 
     const hasColor = state.accent_color != null;
@@ -28,15 +28,15 @@ export function Container({
         Number(state.accent_color || 0)
             .toString(16)
             .padStart(6, '0');
-    const { open: pickerOpen, setOpen: setPickerOpen, ignoreRef: picker } = useStateOpen(false);
+    const {open: pickerOpen, setOpen: setPickerOpen, ignoreRef: picker} = useStateOpen(false);
     const stateKeyComponents = useMemo(() => [...stateKey, 'components'], [...stateKey]);
 
     const hasErrors = errors ? hasErrorsWithoutComponents(errors) : false;
-    const { t } = useTranslation('components-sdk');
+    const {t} = useTranslation('components-sdk');
 
     return (
         <div className={Styles.embed + ' ' + (state.spoiler ? Styles.spoiler : '')}>
-            {hasColor && <div className={Styles.bar} style={{ backgroundColor: colorHex }} />}
+            {hasColor && <div className={Styles.bar} style={{backgroundColor: colorHex}}/>}
 
             <CapsuleInner
                 state={state?.components || []}
@@ -64,7 +64,7 @@ export function Container({
                         />
                     </div>
                 )}
-                <img className={CapsuleStyles.large_button_icon} src={hasColor ? ColorActiveIcon : ColorIcon} alt="" />
+                <img className={CapsuleStyles.large_button_icon} src={hasColor ? ColorActiveIcon : ColorIcon} alt=""/>
             </div>
 
             <div
@@ -84,7 +84,9 @@ export function Container({
             </div>
 
             <div>
-                {hasErrors && flattenErrorsWithoutComponents(errors!).map((error, i) => <div key={i} className={CapsuleStyles.error}><b>{t('error')}</b> {error}</div>)}
+                {hasErrors && flattenErrorsWithoutComponents(errors!).map((error, i) => <div key={i}
+                                                                                             className={CapsuleStyles.error}>
+                    <b>{t('error')}</b> {error}</div>)}
             </div>
         </div>
     );

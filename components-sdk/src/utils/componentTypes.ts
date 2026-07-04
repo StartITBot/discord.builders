@@ -1,10 +1,9 @@
-import { BetterInput, BetterInputProps } from '../polyfills/BetterInput';
-import { EmojiPicker } from '../polyfills/EmojiPicker';
-import { EmojiShow } from '../polyfills/EmojiShow';
-import { getFileNameType, getFileType, setFileType } from '../polyfills/files';
-import { ColorPicker } from '../polyfills/ColorPicker';
-import { FC } from 'react';
-import { ActionMenu } from '../polyfills/ActionMenu';
+import {BetterInput} from '../polyfills/BetterInput';
+import {EmojiPicker} from '../polyfills/EmojiPicker';
+import {EmojiShow} from '../polyfills/EmojiShow';
+import {getFileNameType, getFileType, setFileType} from '../polyfills/files';
+import {ColorPicker} from '../polyfills/ColorPicker';
+import {ActionMenu} from '../polyfills/ActionMenu';
 
 // This fragment of code is written in dedication to the JS devs who have to deal with this mess every day.
 function isObject(arg: unknown): arg is object {
@@ -98,7 +97,7 @@ function parseActionRowComponent(component: Component): ActionRowComponent<Actio
             if (button === null) continue;
 
             components.push(button);
-        } else if ( components.length == 0 && comp.type === ComponentType.STRING_SELECT) {
+        } else if (components.length == 0 && comp.type === ComponentType.STRING_SELECT) {
             const stringSelect = parseStringSelectComponent(comp);
             if (stringSelect === null) continue;
 
@@ -288,6 +287,7 @@ export interface SectionComponent extends Component {
     // Eventually this will support Button and others
     accessory: ThumbnailComponent | ButtonComponent
 }
+
 function parseSectionComponent(component: Component): SectionComponent | null {
     if (!('components' in component) || !Array.isArray(component.components)) return null;
 

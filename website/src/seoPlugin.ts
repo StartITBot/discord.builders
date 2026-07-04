@@ -1,5 +1,5 @@
-import type { PluginOption } from 'vite';
-import { libs, supportedLngs, translatePath } from '../libs.config';
+import type {PluginOption} from 'vite';
+import {libs, supportedLngs, translatePath} from '../libs.config';
 import * as fs from 'node:fs';
 
 const pages = Object.values(libs).map(lib => lib.path).concat(['/']);

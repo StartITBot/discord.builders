@@ -1,5 +1,4 @@
 import {FC} from "react";
-import {EmojiObject, PassProps} from "../utils/componentTypes";
 
 export interface ActionMenuProps {
     closeCallback: () => void,

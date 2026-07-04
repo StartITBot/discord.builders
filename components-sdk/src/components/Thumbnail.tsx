@@ -5,37 +5,41 @@ import UploadImage from '../icons/UploadImage.svg';
 import Url from '../icons/Url.svg';
 import AddDescription from '../icons/AddDescription.svg';
 import AddDescriptionActive from '../icons/AddDescriptionActive.svg';
-import { Dispatch, SetStateAction, useRef } from 'react';
+import {Dispatch, SetStateAction, useRef} from 'react';
 import CapsuleStyles from '../Capsule.module.css';
-import { MenuLabel } from './Button';
-import { ComponentsProps, default_settings } from '../Capsule';
-import { MediaGalleryItem, ThumbnailComponent } from '../utils/componentTypes';
-import { stateKeyType } from '../polyfills/StateManager';
-import { useFileUpload } from '../utils/useFileUpload';
+import {MenuLabel} from './Button';
+import {ComponentsProps, default_settings} from '../Capsule';
+import {MediaGalleryItem, ThumbnailComponent} from '../utils/componentTypes';
+import {stateKeyType} from '../polyfills/StateManager';
+import {useFileUpload} from '../utils/useFileUpload';
 import SpoilerActiveIcon from '../icons/SpoilerActive.svg';
 import SpoilerIcon from '../icons/Spoiler.svg';
-import { useStateOpen } from '../utils/useStateOpen';
-import { ClosestType } from '../dnd/types';
-import { DragLines } from '../dnd/DragLine';
-import { useTranslation } from 'react-i18next';
-import DescriptionTextActive from '../icons/DescriptionTextActive.svg';
+import {useStateOpen} from '../utils/useStateOpen';
+import {ClosestType} from '../dnd/types';
+import {DragLines} from '../dnd/DragLine';
+import {useTranslation} from 'react-i18next';
 
 export function Thumbnail({
-    state,
-    stateKey,
-    stateManager,
-    passProps,
-    removeKeyParent = undefined,
-    className = undefined,
-    droppableId = undefined,
-    dragKeyToDeleteOverwrite = undefined,
-    allowAddition = undefined,
-    videoSupport = false
-}: Omit<ComponentsProps, 'state' | 'actionCallback'> & { state: MediaGalleryItem | ThumbnailComponent; className?: string, allowAddition?: boolean, videoSupport?: boolean }) {
-    const { open, setOpen, ignoreRef, closeLockRef } = useStateOpen(0);
+                              state,
+                              stateKey,
+                              stateManager,
+                              passProps,
+                              removeKeyParent = undefined,
+                              className = undefined,
+                              droppableId = undefined,
+                              dragKeyToDeleteOverwrite = undefined,
+                              allowAddition = undefined,
+                              videoSupport = false
+                          }: Omit<ComponentsProps, 'state' | 'actionCallback'> & {
+    state: MediaGalleryItem | ThumbnailComponent;
+    className?: string,
+    allowAddition?: boolean,
+    videoSupport?: boolean
+}) {
+    const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
 
-    const { src, setSrc, openFileSelector, isVideo } = useFileUpload(
+    const {src, setSrc, openFileSelector, isVideo} = useFileUpload(
         state.media.url,
         [...stateKey, 'media', 'url'],
         passProps?.getFile,
@@ -44,7 +48,7 @@ export function Thumbnail({
         videoSupport
     );
 
-    const {t} =  useTranslation('components-sdk');
+    const {t} = useTranslation('components-sdk');
 
     return (
         <div
@@ -66,7 +70,8 @@ export function Thumbnail({
                 dragKeyToDeleteOverwrite={dragKeyToDeleteOverwrite}
                 className={state.spoiler ? Styles.spoiler : ''}
             >
-                {(isVideo && videoSupport) ? <video src={src || undefined} data-image-role="main" /> : <img src={src || ThumbnailIcon} data-image-role="main" alt="" /> }
+                {(isVideo && videoSupport) ? <video src={src || undefined} data-image-role="main"/> :
+                    <img src={src || ThumbnailIcon} data-image-role="main" alt=""/>}
             </DragLines>
             {!!open && (
                 <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
@@ -108,8 +113,7 @@ export function Thumbnail({
 }
 
 
-
-function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, removeKeyParent, allowAddition} : {
+function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, removeKeyParent, allowAddition}: {
     state: MediaGalleryItem | ThumbnailComponent,
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
@@ -139,7 +143,8 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
             ev.stopPropagation();
         }}>
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={AddDescription} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>{state.description ? t('thumbnail.change-description') : t('thumbnail.add-description')}</div>
+            <div
+                className={CapsuleStyles.large_button_ctx_item_text}>{state.description ? t('thumbnail.change-description') : t('thumbnail.add-description')}</div>
         </div>
         {!!state.description && <div className={CapsuleStyles.large_button_ctx_item} onClick={(ev) => {
             stateManager.setKey({key: [...stateKey, "description"], value: null})
@@ -150,8 +155,10 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
         <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             stateManager.setKey({key: [...stateKey, "spoiler"], value: !state.spoiler});
         }}>
-            <div className={CapsuleStyles.large_button_ctx_item_img}><img src={state.spoiler ? SpoilerActiveIcon : SpoilerIcon} alt=""/></div>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>{state.spoiler ? t('thumbnail.remove-spoiler') : t('thumbnail.set-spoiler')}</div>
+            <div className={CapsuleStyles.large_button_ctx_item_img}><img
+                src={state.spoiler ? SpoilerActiveIcon : SpoilerIcon} alt=""/></div>
+            <div
+                className={CapsuleStyles.large_button_ctx_item_text}>{state.spoiler ? t('thumbnail.remove-spoiler') : t('thumbnail.set-spoiler')}</div>
         </div>
         {!!removeKeyParent && <div className={CapsuleStyles.large_button_ctx_item} onClick={ev => {
             setOpen(0);
@@ -161,12 +168,16 @@ function MenuFirst({state, stateKey, stateManager, setOpen, openFileSelector, re
             <div className={CapsuleStyles.large_button_ctx_item_img}><img src={TrashIcon} alt=""/></div>
             <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.delete')}</div>
         </div>}
-        {(!!removeKeyParent && allowAddition) && <div className={CapsuleStyles.large_button_ctx_item + ' ' + CapsuleStyles.separator} onClick={ev => {
-            setOpen(0);
-            stateManager.appendKey({key: [...removeKeyParent, 'items'], value: default_settings.MediaGallery.items[0]});
-            ev.stopPropagation();
-        }}>
-            <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.add-image')}</div>
-        </div>}
+        {(!!removeKeyParent && allowAddition) &&
+            <div className={CapsuleStyles.large_button_ctx_item + ' ' + CapsuleStyles.separator} onClick={ev => {
+                setOpen(0);
+                stateManager.appendKey({
+                    key: [...removeKeyParent, 'items'],
+                    value: default_settings.MediaGallery.items[0]
+                });
+                ev.stopPropagation();
+            }}>
+                <div className={CapsuleStyles.large_button_ctx_item_text}>{t('thumbnail.add-image')}</div>
+            </div>}
     </>
 }

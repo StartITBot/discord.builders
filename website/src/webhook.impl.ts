@@ -1,13 +1,14 @@
 import {
     Component,
     ComponentType,
-    ContainerComponent, FileComponent,
+    ContainerComponent,
+    FileComponent,
     getFileType,
     MediaGalleryComponent,
     SectionComponent,
     setFileType
 } from "components-sdk";
-import { getFileNameType } from 'components-sdk/src/polyfills/files';
+import {getFileNameType} from 'components-sdk/src/polyfills/files';
 
 
 export const webhookImplementation = {

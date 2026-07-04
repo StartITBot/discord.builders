@@ -1,4 +1,4 @@
-import { StylesConfig } from 'react-select/dist/declarations/src/styles';
+import {StylesConfig} from 'react-select/dist/declarations/src/styles';
 
 export const select_styles: StylesConfig = {
     control: (provided) => ({

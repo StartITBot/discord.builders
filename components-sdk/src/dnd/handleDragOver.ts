@@ -1,8 +1,8 @@
-import { ClosestState, DistanceProps, DragContextType } from './types';
-import { MOVE_THRESHOLD } from './distance';
-import { getDroppableOrientation, isValidLocation } from './components';
-import { ComponentType, ComponentTypeUnofficial } from '../utils/componentTypes';
-import { BoundariesProps, testBoundaries } from './boundaries';
+import {ClosestState, DistanceProps, DragContextType} from './types';
+import {MOVE_THRESHOLD} from './distance';
+import {getDroppableOrientation, isValidLocation} from './components';
+import {ComponentType, ComponentTypeUnofficial} from '../utils/componentTypes';
+import {BoundariesProps, testBoundaries} from './boundaries';
 
 
 const mimetypeRegex = /^application\/x-dsc-builders\[(.*)\]$/;
@@ -20,7 +20,6 @@ function getContentType(dataTransfer: DataTransfer | null): ComponentType | Comp
 
 export const handleDragOver = (
     e: DragEvent,
-
     {
         refs,
         visible,
@@ -62,7 +61,7 @@ export const handleDragOver = (
             mouseX,
         } as DistanceProps;
         const distanceFunc = getDroppableOrientation(ref.droppableId);
-        ({ closest, closestDistance, activeDistance } = distanceFunc(distanceProps));
+        ({closest, closestDistance, activeDistance} = distanceFunc(distanceProps));
     });
 
     const hasChanged = closest?.ref?.element !== visible?.ref?.element || closest?.type !== visible?.type;

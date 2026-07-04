@@ -1,13 +1,13 @@
-import i18next from 'i18next';
+import i18next, {BackendModule} from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { initReactI18next } from 'react-i18next';
-import { BackendModule } from 'i18next'
-import { ComponentsSdkBackend } from 'components-sdk';
-import { supportedLngs } from '../libs.config';
+import {initReactI18next} from 'react-i18next';
+import {ComponentsSdkBackend} from 'components-sdk';
+import {supportedLngs} from '../libs.config';
 
 const Backend: BackendModule = {
     type: 'backend',
-    init(services, backendOptions, i18nextOptions) {},
+    init(services, backendOptions, i18nextOptions) {
+    },
     read(language, namespace, callback) {
         console.log(`Loading i18n resources for language: ${language}, namespace: ${namespace}`);
         if (namespace === 'components-sdk') return ComponentsSdkBackend.read(language, namespace, callback);

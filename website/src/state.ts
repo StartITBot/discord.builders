@@ -1,5 +1,5 @@
-import { Component, stateKeyType, StateManager } from 'components-sdk';
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {Component, stateKeyType, StateManager} from 'components-sdk';
+import {configureStore, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {
     addKeyType,
     appendKeyType,
@@ -45,8 +45,8 @@ const __mutateDeleteKey = (addIndex: number, key: stateKeyType, deleteKey: state
 }
 
 function arraysEqual<T>(arr1: T[], arr2: T[]): boolean {
-  if (arr1.length !== arr2.length) return false;
-  return arr1.every((value, index) => value === arr2[index]);
+    if (arr1.length !== arr2.length) return false;
+    return arr1.every((value, index) => value === arr2[index]);
 }
 
 export const displaySlice = createSlice({
@@ -125,7 +125,10 @@ export const displaySlice = createSlice({
             let current: any = state;
 
             for (let i = 0; i < key.length; i++) {
-                if (i !== key.length - 1) {current = current[key[i]]; continue;}
+                if (i !== key.length - 1) {
+                    current = current[key[i]];
+                    continue;
+                }
 
                 if (!current[key[i]]) current[key[i]] = [];
                 current[key[i]].splice(action.payload.index, 0, action.payload.value);
@@ -175,7 +178,8 @@ export const displaySlice = createSlice({
                 }
                 parsed_url.search = parsed_query.toString();
                 state.webhookUrl = parsed_url.toString();
-            } catch (e) {}
+            } catch (e) {
+            }
         },
 
         setWebhookResponse(state, action: PayloadAction<object | null>) {

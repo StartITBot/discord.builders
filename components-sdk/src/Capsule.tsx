@@ -1,17 +1,17 @@
 import Styles from './Capsule.module.css';
-import { TextDisplay } from './components/TextDisplay';
-import { Thumbnail } from './components/Thumbnail';
-import { MediaGallery } from './components/MediaGallery';
-import { Separator } from './components/Separator';
-import { Section } from './components/Section';
-import { Container } from './components/Container';
-import { Button } from './components/Button';
-import { ActionRow } from './components/ActionRow';
-import { StringSelect } from './components/StringSelect';
-import { File } from './components/File';
-import { CapsuleInner } from './CapsuleInner';
-import { generateRandomAnimal, randomSentence, uuidv4 } from './utils/randomGen';
-import { addKeyType, appendKeyType, deleteKeyType, stateKeyType, StateManager } from './polyfills/StateManager';
+import {TextDisplay} from './components/TextDisplay';
+import {Thumbnail} from './components/Thumbnail';
+import {MediaGallery} from './components/MediaGallery';
+import {Separator} from './components/Separator';
+import {Section} from './components/Section';
+import {Container} from './components/Container';
+import {Button} from './components/Button';
+import {ActionRow} from './components/ActionRow';
+import {StringSelect} from './components/StringSelect';
+import {File} from './components/File';
+import {CapsuleInner} from './CapsuleInner';
+import {generateRandomAnimal, randomSentence, uuidv4} from './utils/randomGen';
+import {stateKeyType, StateManager} from './polyfills/StateManager';
 import {
     ActionRowComponent,
     ButtonComponent,
@@ -30,12 +30,11 @@ import {
     ThumbnailComponent,
 } from './utils/componentTypes';
 
-import { DragContextProvider } from './dnd/DragContext';
-import { DroppableID } from './dnd/components';
-import { KeyToDeleteType } from './dnd/types';
-import { BoundariesProps } from './dnd/boundaries';
-import { RegenerateContextProvider } from './utils/useRegenerate';
-import { useMemo } from 'react';
+import {DragContextProvider} from './dnd/DragContext';
+import {DroppableID} from './dnd/components';
+import {KeyToDeleteType} from './dnd/types';
+import {BoundariesProps} from './dnd/boundaries';
+import {RegenerateContextProvider} from './utils/useRegenerate';
 
 const _Button = {
     type: 2,
@@ -133,7 +132,7 @@ export const default_settings = {
     Thumbnail: ThumbnailComponent,
     MediaGallery: MediaGalleryComponent,
     Separator: SeparatorComponent,
-    Container:ContainerComponent,
+    Container: ContainerComponent,
     File: FileComponent
 }
 
@@ -168,18 +167,19 @@ export const SECTIONABLE = [
     ComponentType.TEXT_DISPLAY
 ]
 
-export function Capsule(props : {
+export function Capsule(props: {
     stateManager: StateManager,
     stateKey: stateKeyType,
     state: Component[],
     className?: string | null,
     passProps: PassProps,
     errors: Record<string, any> | null,
-} & BoundariesProps ) {
+} & BoundariesProps) {
     const cls = props.className ? ' ' + props.className : '';
 
     return <div className={Styles.preview + cls}>
-        <RegenerateContextProvider stateManager={props.stateManager}>{stateMng => <DragContextProvider stateManager={stateMng} boundaries={props.boundaries}>
+        <RegenerateContextProvider stateManager={props.stateManager}>{stateMng => <DragContextProvider
+            stateManager={stateMng} boundaries={props.boundaries}>
             <CapsuleInner
                 state={props.state}
                 stateKey={props.stateKey}

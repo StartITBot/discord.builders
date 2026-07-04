@@ -1,8 +1,9 @@
-import { BackendModule } from 'i18next';
+import {BackendModule} from 'i18next';
 
 export const ComponentsSdkBackend: BackendModule = {
     type: 'backend',
-    init(services, backendOptions, i18nextOptions) {},
+    init(services, backendOptions, i18nextOptions) {
+    },
     read(language, namespace, callback) {
         if (namespace !== 'components-sdk') return;
 

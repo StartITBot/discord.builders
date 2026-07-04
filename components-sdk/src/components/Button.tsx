@@ -3,7 +3,8 @@ import {text_display_input} from './TextDisplay.module.css';
 import CapsuleStyles from '../Capsule.module.css';
 import {
     Dispatch,
-    Fragment, MouseEventHandler,
+    Fragment,
+    MouseEventHandler,
     RefObject,
     SetStateAction,
     useEffect,
@@ -16,11 +17,11 @@ import ColorBlue from '../icons/ColorBlue.svg';
 import ColorGrey from '../icons/ColorGrey.svg';
 import ColorGreen from '../icons/ColorGreen.svg';
 import ColorRed from '../icons/ColorRed.svg';
-import { ButtonComponent, ButtonStyle, EmojiObject } from '../utils/componentTypes';
-import { ComponentsProps } from '../Capsule';
-import { stateKeyType } from '../polyfills/StateManager';
+import {ButtonComponent, ButtonStyle, EmojiObject} from '../utils/componentTypes';
+import {ComponentsProps} from '../Capsule';
+import {stateKeyType} from '../polyfills/StateManager';
 import TrashIcon from '../icons/Trash.svg';
-import { useStateOpen } from '../utils/useStateOpen';
+import {useStateOpen} from '../utils/useStateOpen';
 import TimesSolid from '../icons/times-solid.svg';
 import Emoji from '../icons/Emoji.svg';
 import EmojiActive from '../icons/EmojiActive.svg';
@@ -30,10 +31,10 @@ import Lock from '../icons/Lock.svg';
 import Url from '../icons/Url.svg';
 import DescriptionPen from '../icons/DescriptionPen.svg';
 import EditIcon from '../icons/Edit.svg';
-import { DragLines } from '../dnd/DragLine';
-import { ClosestType } from '../dnd/types';
-import { DroppableID } from '../dnd/components';
-import { useTranslation } from 'react-i18next';
+import {DragLines} from '../dnd/DragLine';
+import {ClosestType} from '../dnd/types';
+import {DroppableID} from '../dnd/components';
+import {useTranslation} from 'react-i18next';
 
 function getColor(style: ButtonStyle, disabled: boolean) {
     if (disabled)
@@ -64,8 +65,17 @@ function getColor(style: ButtonStyle, disabled: boolean) {
 
 
 export function Button(
-    {state, stateKey, stateManager, removeKeyParent = undefined, passProps, droppableId=undefined, dragKeyToDeleteOverwrite = undefined, actionCallback} :
-    ComponentsProps & {state: ButtonComponent}
+    {
+        state,
+        stateKey,
+        stateManager,
+        removeKeyParent = undefined,
+        passProps,
+        droppableId = undefined,
+        dragKeyToDeleteOverwrite = undefined,
+        actionCallback
+    }:
+        ComponentsProps & { state: ButtonComponent }
 ) {
     const {open, setOpen, ignoreRef, closeLockRef} = useStateOpen(0);
     const btn_select = useRef<HTMLDivElement>(null);
@@ -91,40 +101,54 @@ export function Button(
             stateKey={stateKey}
             removeKeyParent={removeKeyParent}
             dragKeyToDeleteOverwrite={dragKeyToDeleteOverwrite}
-        ><div
-            className={CapsuleStyles.large_button  + ' ' + getColor(state.style, !!state.disabled)}
-            onClick={(ev) => {
-                if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
-                setOpen(1)
-            }}
-            ref={ignoreRef}
-            title={state.url}
         >
-            {state.emoji != null && <div className={CapsuleStyles.emoji}>
-                <Comp passProps={passProps} emoji={state.emoji}/>
-            </div>}
-            {/**/}
-            {state.style === ButtonStyle.URL ? <>
-                <div className={CapsuleStyles.text + ' ' + Styles.link_btn}>
-                    <div className={Styles.text} ref={textRef}>{state.label}</div>
-                    <div className={Styles.link} style={{width: textWidth}}>{(state.url || "").replace("https://", "").replace("http://", "")}</div>
-                </div>
+            <div
+                className={CapsuleStyles.large_button + ' ' + getColor(state.style, !!state.disabled)}
+                onClick={(ev) => {
+                    if (btn_select.current && btn_select.current.contains(ev.target as HTMLElement)) return;
+                    setOpen(1)
+                }}
+                ref={ignoreRef}
+                title={state.url}
+            >
+                {state.emoji != null && <div className={CapsuleStyles.emoji}>
+                    <Comp passProps={passProps} emoji={state.emoji}/>
+                </div>}
+                {/**/}
+                {state.style === ButtonStyle.URL ? <>
+                    <div className={CapsuleStyles.text + ' ' + Styles.link_btn}>
+                        <div className={Styles.text} ref={textRef}>{state.label}</div>
+                        <div className={Styles.link}
+                             style={{width: textWidth}}>{(state.url || "").replace("https://", "").replace("http://", "")}</div>
+                    </div>
 
-                <div style={{paddingLeft: '10px'}}><i className="fas fa-arrow-up-right-from-square" style={{fontSize: 12}}></i></div>
-            </> : <div className={CapsuleStyles.text}>{state.label}</div>}
+                    <div style={{paddingLeft: '10px'}}><i className="fas fa-arrow-up-right-from-square"
+                                                          style={{fontSize: 12}}></i></div>
+                </> : <div className={CapsuleStyles.text}>{state.label}</div>}
 
-            {!!open && <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
-                {open === 1 && <MenuFirst actionCallback={actionCallback} state={state} stateManager={stateManager} stateKey={stateKey} removeKeyParent={removeKeyParent} setOpen={setOpen}/>}
-                {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager} passProps={passProps}/>}
-                {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label || ""} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
-                {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.url || ""} stateKey={[...stateKey, 'url']} stateManager={stateManager} setOpen={setOpen}/>}
-                {open === 5 && <MenuLabel closeLockRef={closeLockRef} state={state.custom_id || ""} stateKey={[...stateKey, 'custom_id']} stateManager={stateManager} setOpen={setOpen} placeholder="custom_id" lockClose={false}/>}
-            </div>}
-        </div></DragLines>
+                {!!open &&
+                    <div className={CapsuleStyles.large_button_ctx + ' ' + CapsuleStyles.noright} ref={btn_select}>
+                        {open === 1 &&
+                            <MenuFirst actionCallback={actionCallback} state={state} stateManager={stateManager}
+                                       stateKey={stateKey} removeKeyParent={removeKeyParent} setOpen={setOpen}/>}
+                        {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager}
+                                                  passProps={passProps}/>}
+                        {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label || ""}
+                                                  stateKey={[...stateKey, 'label']} stateManager={stateManager}
+                                                  setOpen={setOpen}/>}
+                        {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.url || ""}
+                                                  stateKey={[...stateKey, 'url']} stateManager={stateManager}
+                                                  setOpen={setOpen}/>}
+                        {open === 5 && <MenuLabel closeLockRef={closeLockRef} state={state.custom_id || ""}
+                                                  stateKey={[...stateKey, 'custom_id']} stateManager={stateManager}
+                                                  setOpen={setOpen} placeholder="custom_id" lockClose={false}/>}
+                    </div>}
+            </div>
+        </DragLines>
     )
 }
 
-function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent, actionCallback} : {
+function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent, actionCallback}: {
     state: ButtonComponent,
     setOpen: Dispatch<SetStateAction<number>>,
     stateKey: ComponentsProps['stateKey'],
@@ -135,48 +159,53 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent, act
     const {t} = useTranslation('components-sdk');
 
     return <>
-        {(state.style !== ButtonStyle.URL && actionCallback != null) && <MenuOption src={Action} text={t("actions.add-action")} className={CapsuleStyles.highlight} onClick={(ev) => {
-            setOpen(0);
-            actionCallback(state.custom_id || null);
-            ev.stopPropagation();
-        }} />}
-        <MenuOption src={Emoji} text={state.emoji == null ? t('button.set-emoji') : t('button.change-emoji')} onClick={(ev) => {
-            setOpen(2);
-            ev.stopPropagation();
-        }}/>
+        {(state.style !== ButtonStyle.URL && actionCallback != null) &&
+            <MenuOption src={Action} text={t("actions.add-action")} className={CapsuleStyles.highlight}
+                        onClick={(ev) => {
+                            setOpen(0);
+                            actionCallback(state.custom_id || null);
+                            ev.stopPropagation();
+                        }}/>}
+        <MenuOption src={Emoji} text={state.emoji == null ? t('button.set-emoji') : t('button.change-emoji')}
+                    onClick={(ev) => {
+                        setOpen(2);
+                        ev.stopPropagation();
+                    }}/>
         {state.emoji != null && <MenuOption src={EmojiActive} text={t('button.clear-emoji')} onClick={(ev) => {
             stateManager.setKey({key: [...stateKey, "emoji"], value: null})
         }}/>}
         <MenuOption src={DescriptionPen} text={t('button.change-label')} onClick={(ev) => {
             setOpen(3);
             ev.stopPropagation();
-        }} />
+        }}/>
         {state.style === ButtonStyle.URL && <MenuOption src={Url} text={t('button.change-url')} onClick={(ev) => {
             setOpen(4);
             ev.stopPropagation();
-        }} />}
-        {state.style !== ButtonStyle.URL && <MenuOption src={EditIcon} text={t('button.change-custom-id')} onClick={(ev) => {
-            setOpen(5);
-            ev.stopPropagation();
-        }} />}
-        <MenuOption src={state.disabled ? LockActive : Lock} text={state.disabled ? t('button.mark-enabled') : t('button.mark-disabled')} onClick={(ev) => {
+        }}/>}
+        {state.style !== ButtonStyle.URL &&
+            <MenuOption src={EditIcon} text={t('button.change-custom-id')} onClick={(ev) => {
+                setOpen(5);
+                ev.stopPropagation();
+            }}/>}
+        <MenuOption src={state.disabled ? LockActive : Lock}
+                    text={state.disabled ? t('button.mark-enabled') : t('button.mark-disabled')} onClick={(ev) => {
             stateManager.setKey({key: [...stateKey, "disabled"], value: !state.disabled});
             ev.stopPropagation();
-        } }/>
+        }}/>
 
         {state.style !== ButtonStyle.URL && <Fragment>
             <MenuOption src={ColorBlue} text={t('button.set-action-main')} onClick={(ev) => {
                 stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.BLUE});
                 ev.stopPropagation();
-            } }/>
+            }}/>
             <MenuOption src={ColorGrey} text={t('button.set-action-secondary')} onClick={(ev) => {
                 stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.GREY});
                 ev.stopPropagation();
-            } }/>
+            }}/>
             <MenuOption src={ColorGreen} text={t('button.set-action-confirmation')} onClick={(ev) => {
                 stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.GREEN});
                 ev.stopPropagation();
-            } }/>
+            }}/>
             <MenuOption src={ColorRed} text={t('button.set-action-destructive')} onClick={(ev) => {
                 stateManager.setKey({key: [...stateKey, "style"], value: ButtonStyle.RED});
                 ev.stopPropagation();
@@ -185,11 +214,11 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent, act
 
         {!!removeKeyParent && <MenuOption src={TrashIcon} text={t('button.delete')} onClick={() => {
             stateManager.deleteKey({key: stateKey, removeKeyParent})
-        }} />}
+        }}/>}
     </>
 }
 
-export function MenuOption({ src, text, onClick, className }: {
+export function MenuOption({src, text, onClick, className}: {
     src: string;
     text: string;
     onClick?: MouseEventHandler<HTMLDivElement>;
@@ -198,14 +227,14 @@ export function MenuOption({ src, text, onClick, className }: {
     return (
         <div className={CapsuleStyles.large_button_ctx_item} onClick={onClick}>
             <div className={CapsuleStyles.large_button_ctx_item_img}>
-                <img src={src} alt="" />
+                <img src={src} alt=""/>
             </div>
             <div className={CapsuleStyles.large_button_ctx_item_text + ' ' + className}>{text}</div>
         </div>
     );
 }
 
-export function MenuEmoji({stateKey, stateManager, passProps} : {
+export function MenuEmoji({stateKey, stateManager, passProps}: {
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
     passProps: ComponentsProps['passProps']
@@ -219,7 +248,16 @@ export function MenuEmoji({stateKey, stateManager, passProps} : {
     />
 }
 
-export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = false, closeLockRef, placeholder, lockClose = true} : {
+export function MenuLabel({
+                              state,
+                              stateKey,
+                              stateManager,
+                              setOpen,
+                              nullable = false,
+                              closeLockRef,
+                              placeholder,
+                              lockClose = true
+                          }: {
     state: string,
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
@@ -247,6 +285,6 @@ export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = fa
                 value: nullable ? (ev.target.value || null) : ev.target.value
             })}
         />
-        <img width={30} height={30} src={TimesSolid} alt={'x'} onClick={() => setOpen(0)} />
+        <img width={30} height={30} src={TimesSolid} alt={'x'} onClick={() => setOpen(0)}/>
     </div>
 }

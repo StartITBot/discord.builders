@@ -3,25 +3,25 @@ import {FileComponent} from "../utils/componentTypes";
 import {useFilePicker} from "use-file-picker";
 import Styles from "./File.module.css"
 import FileIcon from "../icons/FileIcon.svg"
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 function sanitizeFilename(input: string) {
-  return input
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^\x00-\x7F]/g, '')
-      .replace(/[^A-Za-z0-9._-]+/g, '_')
-      .replace(/_+/g, '_')
-      .replace(/^_+|_+$/g, '');
+    return input
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^\x00-\x7F]/g, '')
+        .replace(/[^A-Za-z0-9._-]+/g, '_')
+        .replace(/_+/g, '_')
+        .replace(/^_+|_+$/g, '');
 }
 
 
-export function File({state, stateManager, stateKey, passProps} : ComponentsProps & {state: FileComponent}) {
+export function File({state, stateManager, stateKey, passProps}: ComponentsProps & { state: FileComponent }) {
 
-    const { openFilePicker: openFileSelector } = useFilePicker({
+    const {openFilePicker: openFileSelector} = useFilePicker({
         multiple: false,
         readFilesContent: false,
-        onFilesSelected: async ({ plainFiles }) => {
+        onFilesSelected: async ({plainFiles}) => {
             if (!plainFiles) return;
             const link = await passProps.setFile(sanitizeFilename(plainFiles[0].name) || 'file.bin', plainFiles[0]);
             if (link === null) return;

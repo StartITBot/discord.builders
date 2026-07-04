@@ -1,4 +1,4 @@
-import { Dispatch, MutableRefObject, SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
+import {Dispatch, MutableRefObject, SetStateAction, useCallback, useEffect, useRef, useState} from 'react';
 
 export function useStateOpen<T>(defaultValue: T): {
     open: T
@@ -31,5 +31,5 @@ export function useStateOpen<T>(defaultValue: T): {
         }
     }, []);
 
-    return { open, setOpen, ignoreRef, closeLockRef }
+    return {open, setOpen, ignoreRef, closeLockRef}
 }

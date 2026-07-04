@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { actions, RootState } from './state';
-import { useDispatch, useSelector } from 'react-redux';
-import { webhookImplementation } from './webhook.impl';
-import { migrateMediaUrls, withMediaProxyUrls } from './mediaSerialization';
+import {useEffect, useRef} from 'react';
+import {actions, RootState} from './state';
+import {useDispatch, useSelector} from 'react-redux';
+import {webhookImplementation} from './webhook.impl';
+import {migrateMediaUrls, withMediaProxyUrls} from './mediaSerialization';
 
 async function encodeState(state: any): Promise<string> {
     const serializedState = withMediaProxyUrls(state);
@@ -85,7 +85,7 @@ export function useHashRouter() {
             });
         };
 
-        handleChange({ newURL: window.location.toString() });
+        handleChange({newURL: window.location.toString()});
         window.addEventListener('hashchange', handleChange);
         return () => window.removeEventListener('hashchange', handleChange);
     }, []);

@@ -1,5 +1,5 @@
 import {ColorPicker as ColorPickerType} from "components-sdk";
-import { SketchPicker } from 'react-color';
+import {SketchPicker} from 'react-color';
 import Trash from './icons/Trash.svg';
 import Styles from './ColorPicker.module.css';
 

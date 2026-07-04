@@ -1,10 +1,10 @@
 import Styles from './MediaGallery.module.css';
-import { Thumbnail } from './Thumbnail';
-import { ComponentsProps } from '../Capsule';
-import { MediaGalleryComponent, MediaGalleryItem } from '../utils/componentTypes';
-import { DroppableID } from '../dnd/components';
-import { useMemo } from 'react';
-import { useRandomString } from '../utils/useRegenerate';
+import {Thumbnail} from './Thumbnail';
+import {ComponentsProps} from '../Capsule';
+import {MediaGalleryComponent, MediaGalleryItem} from '../utils/componentTypes';
+import {DroppableID} from '../dnd/components';
+import {useMemo} from 'react';
+import {useRandomString} from '../utils/useRegenerate';
 
 function getClass(len: number) {
     if (len === 1) return Styles.alone;
@@ -16,11 +16,13 @@ function getClass(len: number) {
     if (len % 3 === 2) return Styles.two;
 }
 
-export function MediaGallery({state, stateKey, stateManager, passProps} : ComponentsProps & {state: MediaGalleryComponent}) {
+export function MediaGallery({state, stateKey, stateManager, passProps}: ComponentsProps & {
+    state: MediaGalleryComponent
+}) {
     const randomString = useRandomString();
 
     const mediaGalleryItems = state?.items || [];
-    return <div className={Styles.gallery + ' ' + getClass(mediaGalleryItems.length) }>
+    return <div className={Styles.gallery + ' ' + getClass(mediaGalleryItems.length)}>
         {mediaGalleryItems.map((component, index) => {
             return <MediaGalleryInner
                 key={`${randomString}::${index}`}
@@ -35,7 +37,18 @@ export function MediaGallery({state, stateKey, stateManager, passProps} : Compon
     </div>
 }
 
-function MediaGalleryInner({state, stateKey, stateManager, passProps, index, allowAddition} : Omit<ComponentsProps, 'state' | 'actionCallback'> & {state: MediaGalleryItem, index: number, allowAddition: boolean}) {
+function MediaGalleryInner({
+                               state,
+                               stateKey,
+                               stateManager,
+                               passProps,
+                               index,
+                               allowAddition
+                           }: Omit<ComponentsProps, 'state' | 'actionCallback'> & {
+    state: MediaGalleryItem,
+    index: number,
+    allowAddition: boolean
+}) {
     const stateKeyCached = useMemo(() => [...stateKey, 'items', index], [...stateKey, 'items', index]);
 
     return <Thumbnail

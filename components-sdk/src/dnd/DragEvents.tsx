@@ -1,13 +1,13 @@
-import { FC, ReactNode, useEffect } from 'react';
-import { StateManager } from '../polyfills/StateManager';
-import { DragContextType } from './types';
+import {FC, ReactNode, useEffect} from 'react';
+import {StateManager} from '../polyfills/StateManager';
+import {DragContextType} from './types';
 
-import { useDragContext } from './DragContext';
-import { handleDragDrop } from './handleDragDrop';
-import { handleDragOver } from './handleDragOver';
-import { BoundariesProps, testBoundaries } from './boundaries';
+import {useDragContext} from './DragContext';
+import {handleDragDrop} from './handleDragDrop';
+import {handleDragOver} from './handleDragOver';
+import {BoundariesProps, testBoundaries} from './boundaries';
 
-const handleDragStart = (e: DragEvent, { boundaries }: BoundariesProps) => {
+const handleDragStart = (e: DragEvent, {boundaries}: BoundariesProps) => {
     if (!testBoundaries(e.target, boundaries)) return;
 
     // Some items (like images) have a default dragstart event that we need to prevent
@@ -32,8 +32,8 @@ const handleDragEnd = (
 export const DragEvents: FC<{
     children: ReactNode;
     stateManager: StateManager;
-} & BoundariesProps> = ({ children, stateManager, boundaries }) => {
-    const { refs, visible, setVisible, keyToDelete } = useDragContext();
+} & BoundariesProps> = ({children, stateManager, boundaries}) => {
+    const {refs, visible, setVisible, keyToDelete} = useDragContext();
 
     useEffect(() => {
         const onDragOver = (e: DragEvent) => handleDragOver(e, {
@@ -42,8 +42,8 @@ export const DragEvents: FC<{
             setVisible,
             boundaries
         });
-        const onDragStart = (e: DragEvent) => handleDragStart(e, {boundaries });
-        const onDragEnd = (e: DragEvent) => handleDragEnd(e, { setVisible, boundaries });
+        const onDragStart = (e: DragEvent) => handleDragStart(e, {boundaries});
+        const onDragEnd = (e: DragEvent) => handleDragEnd(e, {setVisible, boundaries});
         const onDragDrop = (e: DragEvent) => handleDragDrop(e, {
             visible,
             setVisible,

@@ -1,15 +1,17 @@
 import CapsuleStyles from '../Capsule.module.css';
-import { COMPONENTS, ComponentsProps } from '../Capsule';
+import {COMPONENTS, ComponentsProps} from '../Capsule';
 import Styles from './Section.module.css';
-import { CapsuleButton } from '../CapsuleButton';
-import { CapsuleInner } from '../CapsuleInner';
-import { SectionComponent } from '../utils/componentTypes';
-import { ReactNode, useMemo } from 'react';
-import { useDragLine } from '../dnd/DragLine';
-import { dragline_hor } from '../dnd/DragLine.module.css';
-import { DroppableID } from '../dnd/components';
+import {CapsuleButton} from '../CapsuleButton';
+import {CapsuleInner} from '../CapsuleInner';
+import {SectionComponent} from '../utils/componentTypes';
+import {ReactNode, useMemo} from 'react';
+import {useDragLine} from '../dnd/DragLine';
+import {dragline_hor} from '../dnd/DragLine.module.css';
+import {DroppableID} from '../dnd/components';
 
-export function Section({ state, stateKey, stateManager, passProps, actionCallback }: ComponentsProps & { state: SectionComponent }) {
+export function Section({state, stateKey, stateManager, passProps, actionCallback}: ComponentsProps & {
+    state: SectionComponent
+}) {
     const Accessory = COMPONENTS[state.accessory.type];
     if (typeof Accessory === 'undefined') return null;
 
@@ -56,13 +58,14 @@ export function Section({ state, stateKey, stateManager, passProps, actionCallba
         </div>
     );
 }
-export function SectionFrame({children, stateKey, stateManager, interactiveDisabled} : {
+
+export function SectionFrame({children, stateKey, stateManager, interactiveDisabled}: {
     children: ReactNode,
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
     interactiveDisabled: boolean
 }) {
-    const { ref: el, visible } = useDragLine({stateKey, droppableId: DroppableID.SECTION_ADD_ACCESSORY});
+    const {ref: el, visible} = useDragLine({stateKey, droppableId: DroppableID.SECTION_ADD_ACCESSORY});
     return <div className={Styles.section}>
         <div>
             {children}
@@ -84,7 +87,8 @@ export function SectionFrame({children, stateKey, stateManager, interactiveDisab
                 interactiveDisabled={interactiveDisabled}
             />
 
-            {(!!el.current && visible?.ref.element === el.current) && <div key={'top-dragline'} className={dragline_hor} style={{right: 0, maxHeight: 50}} />}
+            {(!!el.current && visible?.ref.element === el.current) &&
+                <div key={'top-dragline'} className={dragline_hor} style={{right: 0, maxHeight: 50}}/>}
         </div>
     </div>
 }

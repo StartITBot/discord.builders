@@ -8,7 +8,7 @@ import seoPlugin from './src/seoPlugin';
 
 export default defineConfig(({command, mode}) => ({
     plugins: [react({
-      jsxRuntime: 'classic',
+        jsxRuntime: 'classic',
     }), ejsTemplatePlugin({
         compileDebug: mode === 'development'
     }), seoPlugin()],
@@ -34,6 +34,5 @@ export default defineConfig(({command, mode}) => ({
         host: '127.0.0.1',
         port: 3000,
     },
-    build: {
-    }
+    build: {}
 }));

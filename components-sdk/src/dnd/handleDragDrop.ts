@@ -1,9 +1,9 @@
-import { ClosestType, DragContextType } from './types';
-import { StateManager } from '../polyfills/StateManager';
-import { customDropActions, getValidObj } from './components';
-import { default_settings } from '../Capsule';
-import { TextDisplayComponent } from '../utils/componentTypes';
-import { BoundariesProps, testBoundaries } from './boundaries';
+import {ClosestType, DragContextType} from './types';
+import {StateManager} from '../polyfills/StateManager';
+import {customDropActions, getValidObj} from './components';
+import {default_settings} from '../Capsule';
+import {TextDisplayComponent} from '../utils/componentTypes';
+import {BoundariesProps, testBoundaries} from './boundaries';
 
 function assertValidJSON(arg: unknown): asserts arg is object {
     if (typeof arg !== 'object' || arg === null) throw new Error('Invalid component type');

@@ -1,6 +1,6 @@
-import { stateKeyType } from '../polyfills/StateManager';
-import { Dispatch, MutableRefObject, SetStateAction } from 'react';
-import { DroppableID } from './components';
+import {stateKeyType} from '../polyfills/StateManager';
+import {Dispatch, MutableRefObject, SetStateAction} from 'react';
+import {DroppableID} from './components';
 
 export interface KeyToDeleteType {
     readonly sessionId: string;

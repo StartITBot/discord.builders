@@ -1,16 +1,16 @@
-import { ClosestState, ClosestType, DistanceProps, DistanceReturn } from './types';
+import {ClosestState, ClosestType, DistanceProps, DistanceReturn} from './types';
 
 export const MOVE_THRESHOLD: 10 = 10;
 
 
 export function distanceHorizontal({
-    closest,
-    closestDistance,
-    ref,
-    visible,
-    activeDistance,
-    mouseY,
-}: DistanceProps): DistanceReturn {
+                                       closest,
+                                       closestDistance,
+                                       ref,
+                                       visible,
+                                       activeDistance,
+                                       mouseY,
+                                   }: DistanceProps): DistanceReturn {
     const rect = ref.element!.getBoundingClientRect();
     const distanceTop = Math.abs(rect.top - mouseY);
     const distanceBottom = Math.abs(rect.bottom - mouseY);
@@ -43,14 +43,14 @@ export function distanceHorizontal({
 }
 
 export function distanceVertical({
-    closest,
-    closestDistance,
-    ref,
-    visible,
-    activeDistance,
-    mouseY,
-    mouseX,
-}: DistanceProps): DistanceReturn {
+                                     closest,
+                                     closestDistance,
+                                     ref,
+                                     visible,
+                                     activeDistance,
+                                     mouseY,
+                                     mouseX,
+                                 }: DistanceProps): DistanceReturn {
     const rect = ref.element!.getBoundingClientRect();
 
     const topOrBottom = Math.min(Math.abs(rect.top - mouseY), Math.abs(rect.bottom - mouseY));
@@ -86,14 +86,14 @@ export function distanceVertical({
 }
 
 export function distanceCenter({
-    closest,
-    closestDistance,
-    ref,
-    visible,
-    activeDistance,
-    mouseY,
-    mouseX,
-}: DistanceProps): DistanceReturn {
+                                   closest,
+                                   closestDistance,
+                                   ref,
+                                   visible,
+                                   activeDistance,
+                                   mouseY,
+                                   mouseX,
+                               }: DistanceProps): DistanceReturn {
     const rect = ref.element!.getBoundingClientRect();
 
     const dx = Math.max(rect.left - mouseX, 0, mouseX - rect.right);
@@ -101,7 +101,7 @@ export function distanceCenter({
     const delta = Math.sqrt(dx * dx + dy * dy);
 
     if (delta < closestDistance) {
-        closest = { ref, type: ClosestType.CENTER } as ClosestState;
+        closest = {ref, type: ClosestType.CENTER} as ClosestState;
         closestDistance = delta;
     }
 

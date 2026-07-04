@@ -5,11 +5,11 @@ import {
     parseComponent,
     StringSelectComponent,
 } from '../utils/componentTypes';
-import { SECTIONABLE } from '../Capsule';
-import { uuidv4 } from '../utils/randomGen';
-import { DistanceProps, DistanceReturn, KeyToDeleteType } from './types';
-import { distanceCenter, distanceHorizontal, distanceVertical } from './distance';
-import { stateKeyType, StateManager } from '../polyfills/StateManager';
+import {SECTIONABLE} from '../Capsule';
+import {uuidv4} from '../utils/randomGen';
+import {DistanceProps, DistanceReturn, KeyToDeleteType} from './types';
+import {distanceCenter, distanceHorizontal, distanceVertical} from './distance';
+import {stateKeyType, StateManager} from '../polyfills/StateManager';
 
 /*
     * This file gathers all configuration how components can be dragged and dropped
@@ -26,7 +26,6 @@ export enum DroppableID {
     STRING_SELECT,
     CONTAINER,
 }
-
 
 
 export function getDroppableOrientation(droppableId: DroppableID): (props: DistanceProps) => DistanceReturn {
@@ -170,17 +169,17 @@ export function getValidObj(comp: object, droppableId: DroppableID, randomizeId:
 }
 
 function arraysEqual<T>(arr1: T[], arr2: T[]): boolean {
-  if (arr1.length !== arr2.length) return false;
-  return arr1.every((value, index) => value === arr2[index]);
+    if (arr1.length !== arr2.length) return false;
+    return arr1.every((value, index) => value === arr2[index]);
 }
 
 export function customDropActions({
-    stateManager,
-    keyToDelete,
-    droppableId,
-    key,
-    value,
-} : {
+                                      stateManager,
+                                      keyToDelete,
+                                      droppableId,
+                                      key,
+                                      value,
+                                  }: {
     stateManager: StateManager;
     keyToDelete: KeyToDeleteType | null;
     droppableId: DroppableID;

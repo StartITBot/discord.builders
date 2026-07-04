@@ -1,11 +1,11 @@
-import { Capsule } from '../src/Capsule';
-import { Component, TextDisplayComponent } from '../src/utils/componentTypes';
-import { useMemo, useState } from 'react';
-import { DummyStateManager } from './StateManager.impl';
-import { DummyBetterInput } from './BetterInput.impl';
-import { DummyEmojiPicker } from './EmojiPicker.impl';
-import { DummyEmojiShow } from './EmojiShow.impl';
-import { DummyColorPicker } from './ColorPicker.impl';
+import {Capsule} from '../src/Capsule';
+import {Component, TextDisplayComponent} from '../src/utils/componentTypes';
+import {useMemo, useState} from 'react';
+import {DummyStateManager} from './StateManager.impl';
+import {DummyBetterInput} from './BetterInput.impl';
+import {DummyEmojiPicker} from './EmojiPicker.impl';
+import {DummyEmojiShow} from './EmojiShow.impl';
+import {DummyColorPicker} from './ColorPicker.impl';
 
 function App() {
     const stateManager = useMemo(() => new DummyStateManager(), []);

@@ -1,14 +1,13 @@
 import Styles from './Separator.module.css';
-import { ComponentsProps } from '../Capsule';
-import { SeparatorComponent, SeparatorSpacingSize } from '../utils/componentTypes';
-import { useTransition } from 'react';
-import { useTranslation } from 'react-i18next';
+import {ComponentsProps} from '../Capsule';
+import {SeparatorComponent, SeparatorSpacingSize} from '../utils/componentTypes';
+import {useTranslation} from 'react-i18next';
 
-export function Separator({ state, stateKey, stateManager }: ComponentsProps & { state: SeparatorComponent }) {
+export function Separator({state, stateKey, stateManager}: ComponentsProps & { state: SeparatorComponent }) {
     const {t} = useTranslation("components-sdk");
     return (
         <div className={Styles.separator_container}>
-            <div style={state.spacing === SeparatorSpacingSize.LARGE ? { height: 50 } : { height: 20 }}></div>
+            <div style={state.spacing === SeparatorSpacingSize.LARGE ? {height: 50} : {height: 20}}></div>
             <div className={Styles.separator_line}>
                 <div>
                     <input
@@ -26,7 +25,7 @@ export function Separator({ state, stateKey, stateManager }: ComponentsProps & {
             </div>
             <div
                 className={Styles.separator}
-                style={state.spacing === SeparatorSpacingSize.LARGE ? { height: 50 } : {}}
+                style={state.spacing === SeparatorSpacingSize.LARGE ? {height: 50} : {}}
                 onClick={() =>
                     stateManager.setKey({
                         key: [...stateKey, 'spacing'],

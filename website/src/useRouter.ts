@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { libs, supportedLngs, translatePath } from '../libs.config';
+import {useCallback, useEffect, useState} from 'react';
+import {libs, supportedLngs, translatePath} from '../libs.config';
 
 const isCrawler = () => /(bot|crawler|spider|crawling|google|baidu|bing|teoma|slurp|yandex)/.test(navigator.userAgent.toLowerCase());
 
@@ -49,7 +49,7 @@ export function useRouter(): [string, (page: string) => void] {
     const [pageInternal, setPageInternal] = useState(firstLoadPage);
 
     useEffect(() => {
-        const handlePopState = () =>  setPageInternal(findPage(window.location.pathname));
+        const handlePopState = () => setPageInternal(findPage(window.location.pathname));
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
     }, []);

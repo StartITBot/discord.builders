@@ -1,21 +1,20 @@
-import { CodeBlock, dracula } from 'react-code-blocks';
+import {CodeBlock, dracula} from 'react-code-blocks';
 import Styles from './App.module.css';
-import Select, { Props } from 'react-select';
-import { select_styles } from './Select';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { libs } from '../libs.config';
-import { ClientFunction, IncludeCallback } from 'ejs';
-import { RootState } from './state';
-import { OnChangeValue } from 'react-select/dist/declarations/src/types';
-import { Component } from 'components-sdk';
-import { useTranslation } from 'react-i18next';
-import { withMediaProxyUrls } from './mediaSerialization';
+import Select, {Props} from 'react-select';
+import {select_styles} from './Select';
+import {useState} from 'react';
+import {libs} from '../libs.config';
+import {ClientFunction, IncludeCallback} from 'ejs';
+import {OnChangeValue} from 'react-select/dist/declarations/src/types';
+import {Component} from 'components-sdk';
+import {useTranslation} from 'react-i18next';
+import {withMediaProxyUrls} from './mediaSerialization';
 
 const codegenModules: {
     [name: string]: { default: ClientFunction };
-} = import.meta.glob('./codegen/**/*.ejs', { eager: true });
+} = import.meta.glob('./codegen/**/*.ejs', {eager: true});
 
-const libComponents: {[name: string]: ClientFunction} = {};
+const libComponents: { [name: string]: ClientFunction } = {};
 
 for (const key of Object.keys(codegenModules)) {
     const match = key.match(/^\.\/codegen\/([^/]+)\/main(?:\.[^/]*)?\.ejs$/);
@@ -36,7 +35,7 @@ type selectOption = {
     value: string;
 }
 
-export function Codegen({state, page, setPage} : {
+export function Codegen({state, page, setPage}: {
     state: Component[],
     page: string,
     setPage: (page: string) => void
@@ -80,10 +79,10 @@ export function Codegen({state, page, setPage} : {
 
     return (
         <>
-            <p style={{ marginBottom: '0.5rem', marginTop: '8rem' }}>{t('codegen.title')}</p>
+            <p style={{marginBottom: '0.5rem', marginTop: '8rem'}}>{t('codegen.title')}</p>
 
-            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
-                <div style={{ flex: 1 }}>
+            <div style={{display: 'flex', gap: '0.5rem', marginBottom: '1rem'}}>
+                <div style={{flex: 1}}>
                     <Select
                         styles={select_styles}
                         options={selectOptions}
@@ -101,14 +100,14 @@ export function Codegen({state, page, setPage} : {
                     className={Styles.button}
                     onClick={handleCopy}
                     disabled={copied}
-                    style={{ whiteSpace: 'nowrap', minWidth: '100px' }}
+                    style={{whiteSpace: 'nowrap', minWidth: '100px'}}
                 >
                     {copied ? t('codegen.copied.button') : t('codegen.copy.button')}
                 </button>
             </div>
 
             <div className={Styles.data}>
-                <CodeBlock text={data} language={language} showLineNumbers={false} theme={dracula} />
+                <CodeBlock text={data} language={language} showLineNumbers={false} theme={dracula}/>
             </div>
         </>
     );
