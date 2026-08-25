@@ -1,6 +1,6 @@
 <section 
     accessory=(
-<%_ %><%- indent(include('/discord-net-component-designer/components.cx.ejs', {comp: comp}), 8); %>
+<%_ %><%- indent(include('/discord-net-component-designer/components.cx.ejs', {comp: data.comp.accessory}), 8); %>
     )
 >
 <%_ %><% data.comp.components.forEach(function(comp){ -%>
