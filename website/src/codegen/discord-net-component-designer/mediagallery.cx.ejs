@@ -1,0 +1,5 @@
+<gallery>
+<%_ %><% data.comp.items.forEach(function(comp, i){ -%>
+<%- indent(include('/discord-net-component-designer/mediagalleryitem.cx.ejs', {comp: comp}), 4); %>
+<% }); -%>
+</gallery>

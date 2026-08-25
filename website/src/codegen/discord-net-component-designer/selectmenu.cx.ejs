@@ -1,0 +1,33 @@
+<%
+const builderConstructor = {
+    3: 'string',
+    5: 'user',
+    6: 'role',
+    7: 'mentionable',
+    8: 'channel',
+};
+-%><% _%>
+<select
+    type="<%- builderConstructor[data.comp.type] %>"
+    customId=<%= data.comp.custom_id %><% _%>
+<%_ %><% if (data.comp.disabled) { %>
+    disabled<% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.placeholder) { %>
+    placeholder=<%= data.comp.placeholder %><% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.min_values && data.comp.min_values !== 1) { %>
+    min="<%= data.comp.min_values %>"<% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.max_values && data.comp.max_values !== 1) { %>
+    max="<%= data.comp.max_values %>"<% _%>
+<% } %><% _%>
+<%_ %><% if (data.comp.options) { %>
+>
+<%_ %><% data.comp.options.forEach(function(comp){ -%>
+<%- indent(include('/discord-net-component-designer/selectmenu_option.cx.ejs', {comp: comp}), 4); %>
+<% }); -%>
+</select>
+<% } else { %><% _%>
+/><% _%>
+<% } %><% _%>

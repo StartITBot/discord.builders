@@ -1,0 +1,10 @@
+using System;
+using Discord;
+
+using static Discord.ComponentDesigner;
+
+var components = cx($"""
+<% data.components.forEach(function(comp, i){ -%>
+<%_ %><%- indent(include('/discord-net-component-designer/components.cx.ejs', {comp: comp}), 4); %>
+<% }); -%>
+""");

@@ -1,0 +1,14 @@
+<container<% _%>
+<% if (data.comp.accent_color) { %>
+    color="<%- data.comp.accent_color %>"<% _%>
+<% } -%><% _%>
+<% if (data.comp.spoiler) { %>
+    spoiler<% _%>
+<% } -%><% _%>
+<% if (data.comp.accent_color || data.comp.spoiler) { %>
+<% } -%>
+><%_ %><% data.comp.components.forEach(function(comp){ %>
+<%_ %><%- indent(include('/discord-net-component-designer/components.cx.ejs', {comp: comp}), 4); %><% _%>
+<% }); -%>
+
+</container>
