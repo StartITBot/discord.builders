@@ -68,6 +68,12 @@ export const libs: {
         path: '/jda-java-code-generator',
     },
 
+    discord4j: {
+        name: 'Java: Discord4J',
+        language: 'java',
+        path: '/discord4j-code-generator',
+    },
+
     discatsharp: {
         name: 'C#: DisCatSharp',
         language: 'csharp',

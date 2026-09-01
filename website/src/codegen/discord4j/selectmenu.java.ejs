@@ -1,0 +1,18 @@
+SelectMenu.of(
+<%=data.comp.custom_id%>,
+<%_ data.comp.options.forEach(function(comp, i){ _%>
+    <%_ %><%- indent(include('/discord4j/selectmenu_option.java.ejs', {comp: comp}), 4); %><% if (i !== data.comp.options.length - 1) { %>,<% } %>
+<%_ }); _%>
+)
+<% if (data.comp.disabled) { -%>
+    .disabled()
+<% } -%>
+<% if (data.comp.placeholder) { -%>
+    .withPlaceholder(<%=data.comp.placeholder%>)
+<% } -%>
+<% if (data.comp.min_values && data.comp.min_values !== 1) { -%>
+    .withMinValues(<%- data.comp.min_values %>)
+<% } -%>
+<% if (data.comp.max_values && data.comp.max_values !== 1) { -%>
+    .withMaxValues(<%- data.comp.max_values %>)
+<% } -%>

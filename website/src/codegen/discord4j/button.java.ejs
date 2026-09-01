@@ -1,0 +1,19 @@
+<%
+const buttonStyle = {
+    1: "primary",
+    2: "secondary",
+    3: "success",
+    4: "danger",
+    5: "link"
+}
+
+-%>
+Button.<%-buttonStyle[data.comp.style]%>(
+    <%= data.comp.style === 5 ? data.comp.url : data.comp.custom_id%><% if (data.comp.emoji || data.comp.label) { %>,<% } %>
+<% if (data.comp.emoji) { _%>
+    <%- include('/discord4j/emoji.java.ejs', {emoji: data.comp.emoji}) %><% if (data.comp.emoji) { %>,<% } %>
+<% } -%>
+<% if (data.comp.label) { _%>
+    <%=data.comp.label%>
+<% } -%>
+)<% _%>
