@@ -1,0 +1,11 @@
+Container.of(
+<% if (data.comp.accent_color) { -%>
+  Color.of("<%- "#" + Number(data.comp.accent_color).toString(16).padStart(6, '0').toUpperCase() %>"),
+<% } -%>
+<% if (data.comp.spoiler) { -%>
+  true,<% _%>
+<% } -%>
+  <%_ data.comp.components.forEach(function(comp, i){ _%>
+    <%_ %><%- indent(include('/discord4j/components.java.ejs', {comp: comp}), 4); %><% if (i !== data.comp.components.length - 1) { %>,<% } %>
+  <%_ }); _%>
+)<% _%>
