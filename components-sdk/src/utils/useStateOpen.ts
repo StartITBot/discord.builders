@@ -23,10 +23,10 @@ export function useStateOpen<T>(defaultValue: T): {
     }, [])
 
     useEffect(() => {
-        document.addEventListener('mousedown', documentClick);
+        document.addEventListener('mousedown', documentClick, true);
         document.addEventListener('keydown', documentKeyDown);
         return () => {
-            document.removeEventListener('mousedown', documentClick);
+            document.removeEventListener('mousedown', documentClick, true);
             document.removeEventListener('keydown', documentKeyDown);
         }
     }, []);

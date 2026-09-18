@@ -43,7 +43,6 @@ export function Container({
                 stateKey={stateKeyComponents}
                 stateManager={stateManager}
                 showSectionButton={true}
-                removeKeyParent={stateKey}
                 buttonContext={'container'}
                 droppableId={DroppableID.CONTAINER}
                 // buttonClassName={CapsuleStyles.inline}

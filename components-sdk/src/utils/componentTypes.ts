@@ -261,6 +261,7 @@ export interface UnfurledMediaItem {
     // Supports arbitrary urls _and_ attachment://<filename> references
     url: string;
     attachment_id?: string
+    proxy_url?: string;
 }
 
 function parseUnfurledMediaItem(media: unknown): UnfurledMediaItem | null {
@@ -268,6 +269,9 @@ function parseUnfurledMediaItem(media: unknown): UnfurledMediaItem | null {
     if (!('url' in media) || typeof media.url !== 'string') return null;
 
     const rtn: UnfurledMediaItem = {url: media.url};
+
+    if ('proxy_url' in media && typeof media.proxy_url === 'string')
+        rtn.proxy_url = media.proxy_url;
 
     if ('attachment_id' in media && typeof media.attachment_id === 'string' && media.attachment_id.length > 0)
         rtn.attachment_id = media.attachment_id;

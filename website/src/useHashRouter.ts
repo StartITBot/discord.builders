@@ -3,12 +3,15 @@ import { actions, RootState } from './state';
 import { useDispatch, useSelector } from 'react-redux';
 import { webhookImplementation } from './webhook.impl';
 import { ComponentType } from 'components-sdk';
+import {migrateMediaUrls, withMediaProxyUrls} from './mediaSerialization';
 
 async function encodeState(state: any): Promise<string> {
+    const serializedState = withMediaProxyUrls(state);
+
     try {
         const cs = new CompressionStream("gzip");
         const writer = cs.writable.getWriter();
-        writer.write(new TextEncoder().encode(JSON.stringify(state)));
+        writer.write(new TextEncoder().encode(JSON.stringify(serializedState)));
         writer.close();
         const data = await new Response(cs.readable).bytes();
 
@@ -17,7 +20,7 @@ async function encodeState(state: any): Promise<string> {
         return '1$' + btoa(binary);
     } catch (e) {
         console.error('Failed to encode compressed state to URL', e);
-        return btoa(encodeURIComponent(JSON.stringify(state)));
+        return btoa(encodeURIComponent(JSON.stringify(serializedState)));
     }
 }
 
@@ -92,7 +95,7 @@ export function useHashRouter() {
             const f = newHash.startsWith('1$') ? decodeState : decodeStateOld;
 
             f(newHash).then((value) => {
-                dispatch(actions.setKey({key: ['data'], value}))
+                dispatch(actions.setKey({key: ['data'], value: migrateMediaUrls(value)}))
                 currentHash.current = event.newURL.substring(1);
             });
         };

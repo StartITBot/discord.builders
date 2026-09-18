@@ -29,6 +29,7 @@ import Action from '../icons/Action.svg';
 import Lock from '../icons/Lock.svg';
 import Url from '../icons/Url.svg';
 import DescriptionPen from '../icons/DescriptionPen.svg';
+import EditIcon from '../icons/Edit.svg';
 import { DragLines } from '../dnd/DragLine';
 import { ClosestType } from '../dnd/types';
 import { DroppableID } from '../dnd/components';
@@ -117,6 +118,7 @@ export function Button(
                 {open === 2 && <MenuEmoji stateKey={[...stateKey, 'emoji']} stateManager={stateManager} passProps={passProps}/>}
                 {open === 3 && <MenuLabel closeLockRef={closeLockRef} state={state.label || ""} stateKey={[...stateKey, 'label']} stateManager={stateManager} setOpen={setOpen}/>}
                 {open === 4 && <MenuLabel closeLockRef={closeLockRef} state={state.url || ""} stateKey={[...stateKey, 'url']} stateManager={stateManager} setOpen={setOpen}/>}
+                {open === 5 && <MenuLabel closeLockRef={closeLockRef} state={state.custom_id || ""} stateKey={[...stateKey, 'custom_id']} stateManager={stateManager} setOpen={setOpen} placeholder="custom_id" lockClose={false}/>}
             </div>}
         </div></DragLines>
     )
@@ -151,6 +153,10 @@ function MenuFirst({state, stateKey, stateManager, setOpen, removeKeyParent, act
         }} />
         {state.style === ButtonStyle.URL && <MenuOption src={Url} text={t('button.change-url')} onClick={(ev) => {
             setOpen(4);
+            ev.stopPropagation();
+        }} />}
+        {state.style !== ButtonStyle.URL && <MenuOption src={EditIcon} text={t('button.change-custom-id')} onClick={(ev) => {
+            setOpen(5);
             ev.stopPropagation();
         }} />}
         <MenuOption src={state.disabled ? LockActive : Lock} text={state.disabled ? t('button.mark-enabled') : t('button.mark-disabled')} onClick={(ev) => {
@@ -213,17 +219,18 @@ export function MenuEmoji({stateKey, stateManager, passProps} : {
     />
 }
 
-export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = false, closeLockRef, placeholder} : {
+export function MenuLabel({state, stateKey, stateManager, setOpen, nullable = false, closeLockRef, placeholder, lockClose = true} : {
     state: string,
     stateKey: ComponentsProps['stateKey'],
     stateManager: ComponentsProps['stateManager'],
     setOpen: Dispatch<SetStateAction<number>>,
     nullable?: boolean,
     closeLockRef: RefObject<any>,
-    placeholder?: string
+    placeholder?: string,
+    lockClose?: boolean
 }) {
     const ref = useRef<HTMLInputElement>(null);
-    useImperativeHandle(closeLockRef, () => true);
+    useImperativeHandle(closeLockRef, () => lockClose ? true : null, [lockClose]);
 
     useEffect(() => {
         if (ref.current) ref.current.focus();
