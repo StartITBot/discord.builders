@@ -5,7 +5,8 @@
     "scripts": {
         "dev": "rimraf node_modules/.vite && vite",
         "build": "vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "deploy": "wrangler pages deploy --branch=main"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^1.8.5",
@@ -36,6 +37,7 @@
         "postcss-nesting": "^13.0.1",
         "rimraf": "^5.0.0",
         "typescript": "^5.9.0",
-        "vite": "^7.0.0"
+        "vite": "^7.0.0",
+        "wrangler": "^4.135.0"
     }
 }

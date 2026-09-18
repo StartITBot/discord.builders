@@ -2,8 +2,9 @@
     "name": "builders",
     "private": true,
     "scripts": {
-        "build": "cd components-sdk && yarn build && cd ..",
-        "dev": "cd website && yarn dev"
+        "build": "cd components-sdk && yarn build && cd .. && cd website && yarn build",
+        "dev": "cd website && yarn dev",
+        "deploy": "cd website && yarn deploy"
     },
     "workspaces": {
         "packages": [

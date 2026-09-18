@@ -40,7 +40,14 @@ function App() {
     const isDefault = useSelector((state: RootState) => state.display.isDefault);
     const [page, setPage] = useRouter();
     const [postTitle, setPostTitle] = useState<string>("");
-    useHashRouter();
+    const {embedRef, embedButtonRef} = useHashRouter();
+    const [copied, setCopied] = useState(false);
+    const handleCopy = useCallback(() => {
+        if (embedRef.current) navigator.clipboard.writeText(embedRef.current.value).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        });
+    }, []);
 
     const setFile = useCallback(webhookImplementation.setFile, []);
     const getFile = useCallback(webhookImplementation.getFile, [])
@@ -202,6 +209,16 @@ function App() {
                                     color: '#dd9898'
                                 }}>{JSON.stringify(response, undefined, 4)}</div>}
 
+
+            <p style={{marginBottom: '0.5rem', marginTop: '4rem'}}><span style={{fontSize: 16, color: 'white', fontWeight: '500'}}>{t('embed.title')}</span></p>
+            <div className={Styles.input_pair}>
+                <div>
+                    <input className={Styles.input} placeholder={t('embed.single-container')} readOnly type="text" ref={embedRef} />
+                </div>
+                <button className={Styles.button} onClick={handleCopy} ref={embedButtonRef} >
+                    {copied ? t('codegen.copied.button') : t('codegen.copy.button')}
+                </button>
+            </div>
 
             <Codegen state={state} page={page} setPage={setPage} />
 

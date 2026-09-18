@@ -17,5 +17,7 @@
     "author": "Project backed by the <a>StartIT bot</a>.",
     "codegen.title": "Generator for programmers",
     "codegen.copy.button": "Copy",
-    "codegen.copied.button": "Copied!"
+    "codegen.copied.button": "Copied!",
+    "embed.title": "Discord share preview link",
+    "embed.single-container": "Create a single container to generate a link that previews on Discord."
 }

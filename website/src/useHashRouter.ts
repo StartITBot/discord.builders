@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { actions, RootState } from './state';
 import { useDispatch, useSelector } from 'react-redux';
 import { webhookImplementation } from './webhook.impl';
+import { ComponentType } from 'components-sdk';
 
 async function encodeState(state: any): Promise<string> {
     try {
@@ -43,8 +44,17 @@ async function decodeStateOld(data: string) {
     }
 }
 
+function getEmbedUrl(state: RootState['display']['data'], value: string) {
+    if (state.length !== 1 || state[0].type !== ComponentType.CONTAINER) return '';
+    const newUrl = new URL("/embed", window.origin)
+    newUrl.search = `?v1=${value}`;
+    return newUrl.toString();
+}
+
 export function useHashRouter() {
     const dispatch = useDispatch();
+    const embedRef = useRef<HTMLInputElement>(null);
+    const embedButtonRef = useRef<HTMLButtonElement>(null);
     const currentHash = useRef<string | null>(null);
     const state = useSelector((state: RootState) => state.display.data);
 
@@ -57,10 +67,15 @@ export function useHashRouter() {
             return;
         }
 
+        if (embedRef.current) embedRef.current.value = '';
+        if (embedButtonRef.current) embedButtonRef.current.disabled = true;
         const getData = setTimeout(async () => {
             const value = await encodeState(state);
             currentHash.current = value; // infinite loop resolver
             if (!isDefault) document.location.hash = value;
+            const embedUrl = getEmbedUrl(state, value);
+            if (embedRef.current) embedRef.current.value = embedUrl;
+            if (embedButtonRef.current) embedButtonRef.current.disabled = embedUrl === '';
         }, 600)
 
         return () => clearTimeout(getData)
@@ -86,4 +101,6 @@ export function useHashRouter() {
         window.addEventListener('hashchange', handleChange);
         return () => window.removeEventListener('hashchange', handleChange);
     }, []);
+
+    return {embedRef, embedButtonRef}
 }

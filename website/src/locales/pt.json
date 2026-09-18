@@ -17,5 +17,7 @@
     "author": "Projeto mantido pelo <a>bot StartIT</a>.",
     "codegen.title": "Gerador para programadores",
     "codegen.copy.button": "Copiar",
-    "codegen.copied.button": "Copiado!"
+    "codegen.copied.button": "Copiado!",
+    "embed.title": "Link com pré-visualização para partilhar no Discord",
+    "embed.single-container": "Crie um único contentor para obter um link com pré-visualização no Discord."
 }
