@@ -1,0 +1,11 @@
+SelectMenu.Option.of(<%=data.comp.label%>, <%=data.comp.value%>)<% _%>
+<% if (data.comp.default) { -%>
+.withDefault(true)<% _%>
+<% } -%>
+<% if (data.comp.description) { -%>
+.withDescription(<%=data.comp.description%>)<% _%>
+<% } -%>
+<% if (data.comp.emoji) { -%>
+.withEmoji(<%- include('/discord4j/emoji.java.ejs', {emoji: data.comp.emoji}) -%>)<% _%>
+<% } -%>
+<% _%>

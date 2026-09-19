@@ -1,0 +1,69 @@
+<%
+const builders = {
+    1: 'import discord4j.core.object.component.ActionRow;',
+    2: 'import discord4j.core.object.component.Button;',
+    3: 'import discord4j.core.object.component.SelectMenu;',
+    5: 'import discord4j.core.object.component.SelectMenu;',
+    6: 'import discord4j.core.object.component.SelectMenu;',
+    7: 'import discord4j.core.object.component.SelectMenu;',
+    8: 'import discord4j.core.object.component.SelectMenu;',
+    9: 'import discord4j.core.object.component.Section;',
+    10: 'import discord4j.core.object.component.TextDisplay;',
+    11: 'import discord4j.core.object.component.Thumbnail;' ,
+    12: 'import discord4j.core.object.component.MediaGallery;\nimport discord4j.core.object.component.MediaGalleryItem;' ,
+    13: 'import discord4j.core.object.component.File;',
+    14: 'import discord4j.core.object.component.Separator;' ,
+    17: 'import discord4j.core.object.component.Container;'
+}
+function neededImports(components) {
+    return components.reduce((acc, component)=> acc.union(neededImports(component.components ?? [])).union(new Set(component.accessory ? [builders[component.accessory.type]] :[])).add(builders[component.type]), new Set());
+}
+
+-%>
+import discord4j.core.DiscordClientBuilder;
+import discord4j.core.event.domain.message.MessageCreateEvent;
+<%- [...neededImports(data.components)].join("\n") %>
+import discord4j.core.object.component.UnfurledMediaItem;
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.reaction.ReactionEmoji;
+import discord4j.gateway.intent.Intent;
+import discord4j.gateway.intent.IntentSet;
+import discord4j.rest.util.Color;
+import reactor.core.publisher.Mono;
+
+import java.util.Optional;
+
+public class Main {
+
+  private static Mono<?> handle(MessageCreateEvent event) {
+    Optional<Member> memberOptional = event.getMember();
+    if (memberOptional.isEmpty() || memberOptional.get().isBot()) {
+      return Mono.empty();
+    }
+
+    return event.getMessage()
+          .getChannel()
+          .flatMap(messageChannel -> {
+            return messageChannel.createMessage()
+                .withComponents(
+                  <%_ data.components.forEach(function(comp, i){ _%>
+                    <%_ %><%- indent(include('/discord4j/components.java.ejs', {comp: comp}), 20); %><% if (i !== data.components.length - 1) { %>,<% } %>
+                  <%_ }); _%>
+                );
+          });
+    }
+
+  public static void main() {
+    DiscordClientBuilder.create(System.getenv("BOT_TOKEN"))
+        .build()
+        .gateway()
+        .setEnabledIntents(IntentSet.nonPrivileged().or(IntentSet.of(Intent.MESSAGE_CONTENT)))
+        .withGateway(client -> {
+          return Mono.when(
+            client.on(MessageCreateEvent.class, Main::handle),
+            client.onDisconnect()
+          );
+        })
+        .block();
+    }
+}
